@@ -1,0 +1,50 @@
+API Task
+
+Using an existing datasource (SQL)
+Consider using ‘PythonOnWheels’ - Python 3 web framework based on Tornado
+
+Code to connect to the database
+
+@relation.setup_sql_schema()
+class Employee(Base, metaclass=PowBaseMeta):
+   
+   #
+   # cerberus style schema
+   #
+   schema = { }
+   # if you want to define a custom tablename for this model:
+   __tablename__ = "employees" 
+   # if you dont want to use the pow schema extension
+   _use_pow_schema_attrs= False
+   # define class attributes/variables here that should be included in to_dict() 
+   # conversion and also handed to the encoders but that are NOT part of the schema.
+   include_attributes=[]
+   # Add sqlalchemy table_args here. Add "autoload" : True for database reflection
+   __table_args__ = { "extend_existing": True, "autoload" : True  }
+   
+   #
+   # init
+   #
+   def __init__(self, **kwargs):
+       self.setup_instance_values()
+       self.init_on_load(**kwargs)
+   #
+   # your model's methods down here
+   #
+
+Is Tornado better to use than Flask?
+The difference between the two is that tornado is made to handle asynchronous processes - installed using a setup.py
+
+Do we need to connect the database to both Kosmos and OBF?
+Probably -> that way we could access the ingredients and our information at the same time 
+Are we designing our own API? 
+Tornado has an input-output-loop built in -> the application can now listen for requests and return responses
+Because of the GIL Python focuses on executing one single thread at a time - so Tornado might be useful because it allows you to run more then one operation at a time
+Depends how many functions we want to run - if we’re dong the base like ‘one role’ model then it might be useful to just connect to the one API and SQL database and then add on if we have time
+We should be fine doing the connection like this (DB <- Python -> API) because we can request data from both parts 
+https://programminghistorian.org/en/lessons/creating-apis-with-python-and-flask
+SQL - how do we create random ID
+
+We could add parameters to the online API
+
+
