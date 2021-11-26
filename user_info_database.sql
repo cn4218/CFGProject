@@ -24,4 +24,3 @@ select * from user_info;
 
 -- I submitted a doc so people could have a look but I'm currently working on trying to generate a random user ID, sorry if itakes 
 -- time, I'm not the best with MySQL so wanted to practice with this task hehe
-
