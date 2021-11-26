@@ -21,10 +21,17 @@ ALTER TABLE user_info
 ADD UNIQUE (User_ID);
 
 ALTER TABLE user_info
--- make the user id the primary key as this will be a unique value per customer 
+-- make the user ID the primary key as this will be a unique value per customer once I figure out how to code it
+ADD primary key (User_ID);
+
+ALTER TABLE user_info
+DROP COLUMN `User_ID`;
+
+ALTER TABLE user_info
+ADD COLUMN `User_ID` int NOT NULL AUTO_INCREMENT FIRST,
 ADD primary key (User_ID);
 
 select * from user_info;
 
--- I submitted a doc so people could have a look but I'm currently working on trying to generate a random user ID, sorry if itakes 
--- time, I'm not the best with MySQL so wanted to practice with this task hehe
+-- THIS IS super messy I know but once I'm completely finished it and I have other peoples codes I'll clean it up
+
