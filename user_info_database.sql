@@ -20,6 +20,10 @@ ALTER TABLE user_info
 -- add the following constraint so that all the values in the user id column are unique
 ADD UNIQUE (User_ID);
 
+ALTER TABLE user_info
+-- make the user id the primary key as this will be a unique value per customer 
+ADD primary key (User_ID);
+
 select * from user_info;
 
 -- I submitted a doc so people could have a look but I'm currently working on trying to generate a random user ID, sorry if itakes 
