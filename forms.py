@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, EmailField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from website.models import User
+
 
 # Allowing users to make an account and input their data in a UI interface with the use of Flask
 class UserAccountForm(FlaskForm):
