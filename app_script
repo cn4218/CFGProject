@@ -1,4 +1,4 @@
-# app script (db utils)
+# app script (db utils) adapted from lesson 20 (app.py)
 
 from flask import Flask, jsonify, request
 from db_utils import search_all_ingredients
