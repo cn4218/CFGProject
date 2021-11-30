@@ -1,0 +1,22 @@
+# app script (db utils)
+
+from flask import Flask, jsonify, request
+from db_utils import search_all_ingredients
+
+app = Flask(__name__)
+
+
+# Ingredient Search
+
+@app.route("/availability/<ingredient>")
+def search_ingredients(ingredient):
+    """Gets data from database and returns a JSON response to the client"""
+    result = search_all_ingredients(ingredient)
+    return jsonify(result)
+
+# http://127.0.0.1:8000/ingredientquery/(insert ingredient here)
+
+# debugging
+
+if __name__ == "__main__":
+    app.run(debug=True, port=8000)
