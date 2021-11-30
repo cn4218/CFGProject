@@ -99,10 +99,13 @@ subf['ingredients_text'] = subf['ingredients_text'].str.lower()
 # subf['ingredients_text']
 
 # subf
+#####################
+## SAVE DF as CSV: TABLE Ab (subf) (7082 rows x 18 columns)
+subf.to_csv(r'OBF_TABLE_Ab.csv',  header = True, index = True, index_label='productID')
 
 
 # #####################
-# # # TABLE Ac
+# # # TABLE Ac (7082 rows x 22 columns)
 # # New columns with ingredients and categories as lists in lower case --> 18843 rows x 22 columns
 # # Function df_func_string_to_list_strip_lower() from my module ListDF!
 df_func_string_to_list_strip_lower(subf, 'ingredients_text')
@@ -137,7 +140,7 @@ subf = subf[['code',
 # subf
 
 #####################
-## SAVE DF as CSV: TABLE Ac (subf)
+## SAVE DF as CSV: TABLE Ac (subf) (7082 rows x 22 columns)
 subf.to_csv(r'OBF_TABLE_Ac.csv',  header = True, index = True, index_label='productID')
 
 
