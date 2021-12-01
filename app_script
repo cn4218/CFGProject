@@ -1,3 +1,4 @@
+# Done for practice (routes)
 # app script (db utils) adapted from lesson 20 (app.py)
 
 from flask import Flask, jsonify, request
