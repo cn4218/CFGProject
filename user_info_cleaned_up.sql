@@ -2,6 +2,7 @@ CREATE DATABASE user_info;
 use user_info;
 
 CREATE TABLE `User_Info` (
+-- after we get an MVP, can possible implement user/password
 `User_ID` int NOT NULL UNIQUE AUTO_INCREMENT,
 `Name_User` varchar(50) NOT NULL,
 `Email_Address` varchar(100) NOT NULL,
