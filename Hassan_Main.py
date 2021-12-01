@@ -1,3 +1,6 @@
+# this is not the code for our project
+# this is the code i'm using as a base to try understand what to do for our code 
+
 import requests
 import json
 
