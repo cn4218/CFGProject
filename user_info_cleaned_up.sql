@@ -17,5 +17,3 @@ BEGIN
 END$$
 DELIMITER ;
 
-
-select * from user_info; 
