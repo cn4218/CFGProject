@@ -13,10 +13,7 @@ DELIMITER $$
 -- i halved the capacity i.e. for NameUser is defined as varchar(50) in column but in the SP as varchar(25)
 CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_user_info`(NameUser varchar(25), EmailAddress varchar(50))
 BEGIN
-  WHILE dateStart <= dateEnd DO
     INSERT INTO User_Info (Name_User, Email_Address) VALUES (NameUser, EmailAddress);
-    SET dateStart = date_add(dateStart, INTERVAL 1 DAY);
-  END WHILE;
 END$$
 DELIMITER ;
 
