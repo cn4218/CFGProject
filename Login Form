@@ -1,0 +1,17 @@
+<!-- Starting Code - just for testing, will add more today-->
+  
+  <!DOCTYPE html>
+<!-- Set language to English -->
+<html lang="en">
+	<head>
+		<!-- set characters to utf-8 which means code can be read by a computer
+		(turns it into a binary)-->
+		<meta charset="utf-8">
+		<!-- Name the page -->
+		<h1>Login Form</h1>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+
+	</body>
+</html>
