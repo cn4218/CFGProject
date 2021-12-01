@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!-- Set language to English -->
+<html lang="en">
+<head>
+  <!-- set characters to utf-8 which means code can be read by a computer
+  (turns it into a binary)-->
+  <meta charset="utf-8">
+  <!-- Name the page -->
+  <h1>Create Account</h1>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+      <form action="POST" class="form" id="login">
+
+        <div class="email_address_input">Email Address</div>
+        <div class="form__input"></div>
+          <input type="text" class="form__inputb" autofocus placeholder="Insert Email Address">
+        </div>
+        <div class="username_input">Username</div>
+        <div class="form__input"></div>
+          <input type="text" class="form_inputc" autofocus placeholder="Choose a Username">
+        </div>
+        <div class="password_form_input">Password</div>
+        <div class="form__input"></div>
+          <input type="text" class="form__inputb" autofocus placeholder="Choose a Password">
+        </div>
+        <button class="form__button" type="submit">Sign Up</button>
+      </form>
+    </div>
+</body>
+</html>
