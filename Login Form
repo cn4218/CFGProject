@@ -1,6 +1,4 @@
-<!-- Starting Code - just for testing, will add more today-->
-  
-  <!DOCTYPE html>
+	<!DOCTYPE html>
 <!-- Set language to English -->
 <html lang="en">
 	<head>
@@ -12,6 +10,24 @@
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
+			<div class="container">
+				<form action="POST" class="form" id="login">
 
+					<div class="email_address_input">Email Address</div>
+					<div class="form__input"></div>
+						<input type="text" class="form__inputb" autofocus placeholder="Insert Email Address">
+						<div class="password_form_input">Password</div>
+					</div>
+					<div class="form__input"></div>
+						<input type="text" class="form__inputb" autofocus placeholder="Insert Password">
+					</div>
+					<button class="form__button" type="submit">Sign In</button>
+					<p class="for__text">
+						<a href="#" class="form__link">Forgot your password? Click here</a>
+						<a href=""
+					</p>
+				</form>
+			</div>
 	</body>
 </html>
+
