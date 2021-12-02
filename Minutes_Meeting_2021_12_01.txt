@@ -1,0 +1,78 @@
+## Functions
+# User creates account --> info sent to the api
+# create routes
+
+Api chooses the routing for the localhost  
+--> different endpoints = url
+# takes posted/put info from user
+# uses function
+# formats it (dict) 
+# send it to  NNG DB  via API ---> how?
+
+
+# GET methods/functions
+# ingredient Y/N
+# ingredient X in 1st / 2nd / 3rd position 
+
+
+@app.route('/products', methods=['GET'])
+def get_products
+
+SELECT productID
+FROM ingredients_table
+WHERE 0 LIKE 'glycerin'
+
+
+
+
+# Nikita (Users) / Claire (Products)
+
+# Create main.py to mimic sending dictionary info to the DB (Nikita)
+# {'User_ID': None, 'Name_User': None, 'Email_Address'}
+
+# Create request.get_json()
+# JSON-dump the dictionary into this url
+
+
+
+# ADDING A USER
+# PUT METHOD
+@app.route('/users', methods=['PUT'])
+def add_user():
+	user = request.get_json()
+	add_user_to_db(
+		user_id = user['User_ID'],
+		name_user = user['Name_User'],
+		email_address = user['Email_Address'],
+	)
+	return user
+
+
+# Function to create a new wishlist item from UI (Nikita)
+
+# Create main.py to mimic sending wishlist dictionary info to the DB (Nikita)
+# API needs to take it and ADD it to the wishlist LIST
+# --> UPDATE DB
+
+# db_utils_products (Claire)
+# Need function taking all wishlist data from D
+# --> from db_utils_products import search_product, get_productID
+# Format it a list of dictionaries
+# [{}, {}, {}, {}] 
+# Retrieve it and send it to the UI so the user can see it
+
+NIKITA
+# db_utils_users
+# api_users
+# mock_ui_user (≈ main.py)
+# db_utils_ api_wishlist
+# api_wishlist
+# mock_ui_user (≈ main.py)
+
+
+CLAIRE
+# db_utils_products
+# api_users
+# mock_ui_wishlist (≈ main.py) ?
+
+		
