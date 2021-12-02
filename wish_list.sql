@@ -25,7 +25,7 @@ CONSTRAINT PK_UserID PRIMARY KEY (User_ID, productID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_wish_list`(ProductID INTEGER, Code_Wish MEDIUMTEXT NULL, Product_name VARCHAR(500),
+CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_wish_list`(ProductID INTEGER, Code_Wish MEDIUMTEXT, Product_name VARCHAR(500),
 Quantity VARCHAR(100), Brands VARCHAR(500), Brands_tags VARCHAR(500), Categories_Tags VARCHAR(500), Countries_en VARCHAR(500), 
 Ingredients_Text VARCHAR(1000), Image_url VARCHAR(1000), Image_Small_url VARCHAR(1000), Image_Ingredients_url VARCHAR(1000), 
 Image_Ingredients_Small_url VARCHAR(1000), Image_Nutrition_url VARCHAR(1000), Image_Nutrition_Small_url VARCHAR(1000))
