@@ -71,10 +71,10 @@ N.B! This template is just a starting point and not all sections need to be comp
 
 
 
-									Project Management Weekly Status Report
+							Project Management Weekly Status Report
 
 
-										Completed Items:
+								Completed Items:
 
 TASK:
 
@@ -109,7 +109,7 @@ NOTES:
 
 
 				
-										In Progress:
+								In Progress:
 
 
 TASK:
@@ -154,7 +154,7 @@ NOTES:
 
 			
 				
-										Assigned but not Started:
+								Assigned but not Started:
 
 TASKS:
 
