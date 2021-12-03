@@ -94,9 +94,9 @@ PRIORITY:
 
 	1. High
 	
-	2.
+	2. Medium
 	
-	3.
+	3. High
 	
 	4. Medium
 	
