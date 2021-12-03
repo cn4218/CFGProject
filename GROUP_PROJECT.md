@@ -51,7 +51,7 @@ N.B! This template is just a starting point and not all sections need to be comp
 
 
 	3.	What were the main challenges this week? 
-
+	
   	a.	How did you solve any issues encountered? What worked and what didn’t?
   		- we has some issue with the user database and the MySQL/ MySQL-Python connector script which needed to be redone. When creating these scripts we were following lesson 19 when we needed to follow lesson 20 and so we have gone back over this and tried to fix it. 
   		- Additionally, we had some issues with everyone being confused about their tasks and so there was some overlapping codes/ people doing similar tasks which we were able to sort out through our long meeting at the start of the week.
