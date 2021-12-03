@@ -59,12 +59,12 @@ Objectives:
   b.	What is still to be solved and who is in charge of the task? How did you approach the issue so far? 
   -  Get all our seperate scripts to work together 
   
-  c.	Please specifically mention any help you need from your instructor (we will also give general feedback and provide our thoughts and ideas, but this is your chance to specifically point to aspects where you are complete stuck). 
-  - 
+  c. Please specifically mention any help you need from your instructor (we will also give general feedback and provide our thoughts and ideas, but this is your chance to specifically point to aspects where you are complete stuck). 
 
 
 4.	What are the group’s main objectives for next week?
   - Have a minimal viable product (MVP) of our project complete
+  - Complete the databases for users/ wishlist and get the route.py completed for both 
 
 
 
