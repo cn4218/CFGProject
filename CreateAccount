@@ -1,32 +1,89 @@
 <!DOCTYPE html>
 <!-- Set language to English -->
 <html lang="en">
-<head>
-  <!-- set characters to utf-8 which means code can be read by a computer
-  (turns it into a binary)-->
-  <meta charset="utf-8">
-  <!-- Name the page -->
-  <h1>Create Account</h1>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-      <form action="POST" class="form" id="login">
-
-        <div class="email_address_input">Email Address</div>
-        <div class="form__input"></div>
-          <input type="text" class="form__inputb" autofocus placeholder="Insert Email Address">
+    <head>
+    <!-- set characters to utf-8 which means code can be read by a computer
+    (turns it into a binary)-->
+    <meta charset="utf-8">
+    <style>
+        h1 {
+            text-align: left;
+        }
+    </style>
+    </head>
+    <body>
+        <form>
+        <div class="container">
+            <div class="row">
+              <div class="column">
+                <h1>Create an Account</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column">
+                <form>
+                <label for="nameField">Name</label>
+                <input
+                    name="name"
+                    type="text"
+                    autofocus placeholder="Insert first and last name"
+                    id="nameField"
+                />
+                <label for="userField">Username</label>
+                <input
+                    name="username"
+                    type="text"
+                    autofocus placeholder="Choose a username"
+                    id="userField" 
+                />
+                <label for="passwordField">Password</label>
+                <input
+                    name="password"
+                    autofocus placeholder="Choose a password"
+                    type="text"
+                    id="passwordField"
+                />
+                <input class="button-primary" type="submit" value="Sign Up" />
+            </form>
+            </div>
         </div>
-        <div class="username_input">Username</div>
-        <div class="form__input"></div>
-          <input type="text" class="form_inputc" autofocus placeholder="Choose a Username">
-        </div>
-        <div class="password_form_input">Password</div>
-        <div class="form__input"></div>
-          <input type="text" class="form__inputb" autofocus placeholder="Choose a Password">
-        </div>
-        <button class="form__button" type="submit">Sign Up</button>
-      </form>
     </div>
-</body>
-</html>
+    </form>
+
+        <script>
+            // dummy endpoint
+            const url = 'https://hookb.in/mZYnqpYqGeslzXNNzObP';
+            const signup = document.querySelector("form");
+            // use a sync because the server's time to response varies
+            signup.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                // store data in new data object
+                const formData = new FormData(signup);
+                // new constant which creates an object from form data
+                const theformData = Object.fromEntries(formData);
+                const jsonObject = {
+                ...theformData
+                };
+                try {
+                    // fetch data stored in form through an API
+                const response = await fetch(url, {
+                    method: "POST",
+                    // turn the data into a JSON
+                    body: JSON.stringify(jsonObject),
+                    headers: {
+                        // tell the server that the data it receives is a JSON
+                    "Content-Type": "application/json",
+                    },
+                });
+                const json = await response.json();
+                // log the json response in the console
+                console.log(json);
+                // if something goes wrong, catch it and generate an error
+                } catch (e) {
+                console.error(e);
+                alert("Error!");
+                }
+            });
+        </script>
+    </body>
+  </html>
