@@ -113,6 +113,8 @@ TASK:
 	1. Db_Utils (connector) & Config for users & user routes in python file to be completed. 
 
 	2. Db_Utils & Config for wish list.
+	
+	3. Backend Products API 
 
 
 PRIORITY:
@@ -120,6 +122,8 @@ PRIORITY:
 	1. High
 
 	2. High
+	
+	3. High
 
 
 TEAM MEMBER:
@@ -127,6 +131,8 @@ TEAM MEMBER:
 	1. Nikita
 
 	2. Nasian
+	
+	3. Claire, Chizu
 
 
 NOTES:
