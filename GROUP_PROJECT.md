@@ -134,7 +134,7 @@ NOTES:
 Assigned but not Started:
 
 TASKS:
-1.Testing 
+1. Testing 
 2. Backend Main
 3. Kosmo API
 4. Presentation
