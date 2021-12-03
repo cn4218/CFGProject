@@ -104,7 +104,7 @@ NOTES:
 
 TASK:
 
-	1. Db_Utils & Config for users & routes pythoon file for users to be completed. 
+	1. Db_Utils (connector) & Config for users & user routes in python file to be completed. 
 
 	2. Db_Utils & Config for wish list.
 
