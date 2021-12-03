@@ -77,37 +77,55 @@ N.B! This template is just a starting point and not all sections need to be comp
 								Completed Items:
 
 TASK:
-
+	
 	1. Setting up GitHub repo, app architecture
+	
 	2. Frontend ?
+	
 	3. Wish list and user databases
+	
 	4. Design login and create webpages
+	
 	5. Make webpages produce data that can be added to the databases
+	
 	6. CSV DB for OBF Products
 
 PRIORITY:
 
 	1. High
+	
 	2.
+	
 	3.
+	
 	4. Medium
+	
 	5. Medium
+	
 	6. High
 
 TEAM MEMBERS:
 
 	1. Chizu, Claire
+	
 	2. Chizu, Georgia
+	
 	3. Nasian
+	
 	4. Georgia
+	
 	5. Georgia
+	
 	6. Claire
 
 NOTES:
 
 	1. Still not sure about the final architecture.
+	
 	2. 
+	
 	3.
+	
 	4. Ensure that data from the create account and login pages is stored as a JSON object and passed to the database
 
 
@@ -167,8 +185,11 @@ NOTES:
 	2. And I hope to get the routes done early next week so me & my sub-group can move onto working on the wishlist aspect of our app. 
 
 	3. I completed my SQL databases this week, starting this but want to have a first draft of this done by the weekend so we can get an MVP (minimal viable product)
+	
 	4. 
+	
 	5. 
+	
 	6. I really advanced my db_utils_products file (I hope it works) and also worked a little bit on the products_api file. Pushed modifications to my GitHub branch. Added functions in db_utils_products.py and api_products.py scripts, modified clean_csv_tables.py to replace thick median bullet points by commas and change the OBF CSV file path, because the OBF website certificate expired so could not directly download their CSV DB from the script anymore. 
 
 
@@ -180,22 +201,31 @@ NOTES:
 TASKS:
 
 	1. Testing 
+	
 	2. Backend Main
+	
 	3. Kosmo API
+	
 	4. Presentation
 
 PRIORITY: 
 
 	1. Low
+	
 	2. Medium
+	
 	3. Medium
+	
 	4. Low
 
 TEAM MEMBER: 
-
+	
 	1. Nasian, Nikita, Sophie
+	
 	2. Claire, Georgia, Sophie
+	
 	3. Claire, Chizu
+	
 	4. Claire
 
 NOTES:
