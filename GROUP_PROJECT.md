@@ -74,7 +74,7 @@ Objectives:
 Project Management Weekly Status Report
 
 
-Completed Items:
+							Completed Items:
 
 TASK:
 1. Setting up GitHub repo, app architecture
@@ -95,41 +95,37 @@ NOTES:
 2. 
 
 				
-In Progress:
+							In Progress:
 
 TASK:
+
 1. Db_Utils & Config for users & routes pythoon file for users to be completed. 
-2. 
+
+2. Db_Utils & Config for wish list.
+
 
 PRIORITY:
+
 1. High
-2. 
+
+2. High
+
 
 TEAM MEMBER:
+
 1. Nikita
 
+2. Nasian
+
+
 NOTES:
+
 1. Almost done with User Db_Utils & Config. I had to re-do the connector script this week and so it's very important that this is completed this weekend. And I hope to get the routes done early next week so me & my sub-group can move onto working on the wishlist aspect of our app. 
 
-In Progress:
-
-TASK:
-1. Db_Utils & Config for wish list.
-2. 
-
-PRIORITY:
-1. High
-2. 
-
-TEAM MEMBER:
-1. Nasian
-
-NOTES:
-1. I completed my SQL databases this week, starting this but want to have a first draft of this done by the weekend so we can get an MVP (minimal viable product)
+2. I completed my SQL databases this week, starting this but want to have a first draft of this done by the weekend so we can get an MVP (minimal viable product)
 
 
-
-				
+			
 				
 Assigned but not Started:
 
