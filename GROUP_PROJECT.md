@@ -81,22 +81,28 @@ TASK:
 	1. Setting up GitHub repo, app architecture
 	2. Frontend ?
 	3. Wish list and user databases
+	4. Design login and create webpages & Make webpages produce data that can be added to the databases
 
 PRIORITY:
 
 	1. High
 	2.
+	3.
+	4. Medium
 
 TEAM MEMBERS:
 
 	1. Chizu, Claire
 	2. Chizu, Georgia
 	3. Nasian
+	4. Georgia
 
 NOTES:
 
 	1. Still not sure about the final architecture.
 	2. 
+	3.
+	4. Ensure that data from the create account and login pages is stored as a JSON object and passed to the database
 
 				
 							In Progress:
