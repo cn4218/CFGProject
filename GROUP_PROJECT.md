@@ -57,7 +57,7 @@ Objectives:
   - Additionally, we had some issues with everyone being confused about their tasks and so there was some overlapping codes/ people doing similar tasks which we were able to sort out through our long meeting at the start of the week.
 
   b.	What is still to be solved and who is in charge of the task? How did you approach the issue so far? 
-  -  Get all our seperate scripts to work together 
+  -  Get all our seperate scripts to work together - everyone
   
   c. Please specifically mention any help you need from your instructor (we will also give general feedback and provide our thoughts and ideas, but this is your chance to specifically point to aspects where you are complete stuck). 
 
@@ -71,7 +71,7 @@ Objectives:
 
 
 
-Project Management Weekly Status Report
+						Project Management Weekly Status Report
 
 
 							Completed Items:
@@ -127,7 +127,7 @@ NOTES:
 
 			
 				
-						Assigned but not Started:
+							Assigned but not Started:
 
 TASKS:
 1. Testing 
