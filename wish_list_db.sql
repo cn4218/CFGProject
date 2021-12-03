@@ -65,9 +65,26 @@ BEGIN
     image_ingredients_url, 
     image_ingredients_small_url, 
     image_nutrition_url, 
-    image_nutrition_small_url) VALUES (UserID, ProductID, Code_Wish, Product_name, Quantity, 
-    Brands, Brands_tags, Categories_Tags, Categories_En, Countries, Countries_Tags, Countries_en, Ingredients_Text, Image_url, 
-    Image_Small_url, Image_Ingredients_url, Image_Ingredients_Small_url, Image_Nutrition_url, Image_Nutrition_Small_url);
+    image_nutrition_small_url) VALUES (
+    UserID, 
+    ProductID, 
+    Code_Wish, 
+    Product_name, 
+    Quantity, 
+    Brands, 
+    Brands_tags, 
+    Categories_Tags, 
+    Categories_En, 
+    Countries, 
+    Countries_Tags, 
+    Countries_en, 
+    Ingredients_Text, 
+    Image_url, 
+    Image_Small_url, 
+    Image_Ingredients_url, 
+    Image_Ingredients_Small_url, 
+    Image_Nutrition_url, 
+    Image_Nutrition_Small_url);
 END$$
 DELIMITER ;
 
