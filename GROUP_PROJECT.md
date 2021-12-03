@@ -156,7 +156,8 @@ NOTES:
 	1. Almost done with User Db_Utils & Config. I had to re-do the connector script this week and so it's very important that this is completed this weekend. And I hope to get the routes done early next week so me & my sub-group can move onto working on the wishlist aspect of our app. 
 
 	2. I completed my SQL databases this week, starting this but want to have a first draft of this done by the weekend so we can get an MVP (minimal viable product)
-
+	3. 
+	4. I really advanced my db_utils_products file (I hope it works) and also worked a little bit on the products_api file. Pushed modifications to my GitHub branch. Added functions in db_utils_products.py and api_products.py scripts, modified clean_csv_tables.py to replace thick median bullet points by commas and change the OBF CSV file path, because the OBF website certificate expired so could not directly download their CSV DB from the script anymore. 
 
 			
 				
