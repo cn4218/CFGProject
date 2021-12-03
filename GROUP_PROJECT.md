@@ -139,13 +139,15 @@ TASK:
 	
 	2. User routes in python 
 
-	2. Db_Utils & Config for wish list.
+	3. Db_Utils & Config for wish list.
 	
-	3. Backend Products API 
+	4. Backend Products API 
 	
-	4. OBF_Cosmo_Products DB 
+	5. OBF_Cosmo_Products DB 
 	
-	5. Products DB_Utils & Config
+	6. Products DB_Utils & Config
+	
+	7. API Wishlist
 
 
 PRIORITY:
@@ -161,6 +163,8 @@ PRIORITY:
 	5. High
 	
 	6. High
+	
+	7. High
 
 
 TEAM MEMBER:
@@ -169,13 +173,15 @@ TEAM MEMBER:
 	
 	2. Nikita
 
-	2. Nasian
-	
-	3. Claire, Chizu
+	3. Nasian
 	
 	4. Claire, Chizu
 	
-	5. Claire
+	5. Claire, Chizu
+	
+	6. Claire
+	
+	7. Sophie
 
 
 NOTES:
