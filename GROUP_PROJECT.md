@@ -77,52 +77,52 @@ Objectives:
 							Completed Items:
 
 TASK:
-1. Setting up GitHub repo, app architecture
-2. Frontend ?
-3. Wish list and user databases
+	1. Setting up GitHub repo, app architecture
+	2. Frontend ?
+	3. Wish list and user databases
 
 PRIORITY:
-1. High
-2.
+	1. High
+	2.
 
 TEAM MEMBERS:
-1. Chizu, Claire
-2. Chizu, Georgia
-3. Nasian
+	1. Chizu, Claire
+	2. Chizu, Georgia
+	3. Nasian
 
 NOTES:
-1. Still not sure about the final architecture.
-2. 
+	1. Still not sure about the final architecture.
+	2. 
 
 				
 							In Progress:
 
 TASK:
 
-1. Db_Utils & Config for users & routes pythoon file for users to be completed. 
+	1. Db_Utils & Config for users & routes pythoon file for users to be completed. 
 
-2. Db_Utils & Config for wish list.
+	2. Db_Utils & Config for wish list.
 
 
 PRIORITY:
 
-1. High
+	1. High
 
-2. High
+	2. High
 
 
 TEAM MEMBER:
 
-1. Nikita
+	1. Nikita
 
-2. Nasian
+	2. Nasian
 
 
 NOTES:
 
-1. Almost done with User Db_Utils & Config. I had to re-do the connector script this week and so it's very important that this is completed this weekend. And I hope to get the routes done early next week so me & my sub-group can move onto working on the wishlist aspect of our app. 
+	1. Almost done with User Db_Utils & Config. I had to re-do the connector script this week and so it's very important that this is completed this weekend. And I hope to get the routes done early next week so me & my sub-group can move onto working on the wishlist aspect of our app. 
 
-2. I completed my SQL databases this week, starting this but want to have a first draft of this done by the weekend so we can get an MVP (minimal viable product)
+	2. I completed my SQL databases this week, starting this but want to have a first draft of this done by the weekend so we can get an MVP (minimal viable product)
 
 
 			
@@ -130,25 +130,29 @@ NOTES:
 							Assigned but not Started:
 
 TASKS:
-1. Testing 
-2. Backend Main
-3. Kosmo API
-4. Presentation
+
+	1. Testing 
+	2. Backend Main
+	3. Kosmo API
+	4. Presentation
 
 PRIORITY: 
-1. Low
-2. Medium
-3. Medium
-4. Low
+
+	1. Low
+	2. Medium
+	3. Medium
+	4. Low
 
 TEAM MEMBER: 
-1. Nasian, Nikita, Sophie
-2. Claire, Georgia, Sophie
-3. Claire, Chizu
-4. Claire
+
+	1. Nasian, Nikita, Sophie
+	2. Claire, Georgia, Sophie
+	3. Claire, Chizu
+	4. Claire
 
 NOTES:
-1.   
+
+	1.
 
 
 				
