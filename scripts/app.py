@@ -1,5 +1,4 @@
-
-
+# Notes, this script is probably useless.. but I keep it here
 
 # Product class — fields should correspond to those in the SQL DB Products table
 
@@ -18,6 +17,7 @@ class User:
 		self.first_name = first_name
 		self.last_name = last_name
 		self.email = email
+		self.wishlist = []
 
 
 if __name__ == '__main__':

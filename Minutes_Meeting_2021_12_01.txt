@@ -55,7 +55,7 @@ def add_user():
 # --> UPDATE DB
 
 # db_utils_products (Claire)
-# Need function taking all wishlist data from D
+# Need function taking all wishlist data from DB
 # --> from db_utils_products import search_product, get_productID
 # Format it a list of dictionaries
 # [{}, {}, {}, {}] 
@@ -63,16 +63,15 @@ def add_user():
 
 NIKITA
 # db_utils_users
-# api_users
-# mock_ui_user (≈ main.py)
+# api_users   + SOPHIE
+# mock_ui_user (≈ main.py)  --> SOPHIE
 # db_utils_ api_wishlist
-# api_wishlist
-# mock_ui_user (≈ main.py)
+# api_wishlist   + SOPHIE
+# mock_ui_wishlist (≈ main.py)  --> SOPHIE
 
 
 CLAIRE
 # db_utils_products
-# api_users
-# mock_ui_wishlist (≈ main.py) ?
+# api_products
 
 		

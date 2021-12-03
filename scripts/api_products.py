@@ -1,7 +1,7 @@
 ## app.py ---  API UI/products SQL DB
 from flask import Flask, jsonify, request
-from products_data import products
-from db_utils_products import search_product, get_productID
+# from products_data import products
+from db_utils_products import get_products_containing # search_product, get_productID
 
 app = Flask(__name__)
 
@@ -12,14 +12,18 @@ def get_products():
 	return jsonify(products)
 
 # GET to retrieve data
-# Endpoint to get a product with a specific productID
-@app.route("/products/<int:id>")
-def get_product_by_id(id):
-	product = search_product(productID, products)
-	return jsonify(product)
+# Endpoint to get a product with a specific ingredient
+@app.route("/products/<int:ingredient>")
+def get_product_with_ingredient(ingredient):
+	list_products = get_products_containing(get_products_containing)
+	return jsonify(list_products)
 
-# To get product 555
-# http://127.0.0.1:5000/products/555
+# # GET to retrieve data
+# # Endpoint to get a product with a specific productID
+# @app.route("/products/<int:productID>")
+# def get_product_by_id(productID):
+# 	product = search_product(productID, products)
+# 	return jsonify(product)
 
 
 # POST to add data
@@ -32,7 +36,7 @@ def add_product():
 
 # PUT to update data
 @app.route("/products/<int:id>", methods=["PUT"])
-def update_product(id):
+def update_product(productID):
 	product_to_update = request.get_json()
 	index = get_index(productID, products)
 	products[index] = product_to_update
@@ -40,7 +44,7 @@ def update_product(id):
 
 # DELETE to remove data
 @app.route("/products/<int:id>", methods=["DELETE"])
-def delete_product(id):
+def delete_product(productID):
 	index = get_index(productID, products)
 	deleted = products.pop(index)
 	return jsonify(deleted)

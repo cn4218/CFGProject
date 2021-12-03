@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
 
-import numpy as np
-import pandas as pd
-import matplotlib as plt
-
 # MY MODULE!
 import ListDF as ldf
 from ListDF import *
+import pandas as pd
 
-from sklearn.feature_extraction.text import TfidfVectorizer
+# import numpy as np
+# import matplotlib as plt
+# from sklearn.feature_extraction.text import TfidfVectorizer
 
 
-url = 'https://world.openbeautyfacts.org/data/en.openbeautyfacts.org.products.csv'
-
+# url = 'https://world.openbeautyfacts.org/data/en.openbeautyfacts.org.products.csv'
+# github_url = 'https://github.com/VioletteToussaint/PythonJupyter/blob/27086036e7aad2450c924a867a0abca1935183a4/Projects/OpenBeautyFacts/en.openbeautyfacts.org.products.csv#L1'
+filepath = '/Users/ClaireBoitet/PythonJupyter/Projects/OpenBeautyFacts/en.openbeautyfacts.org.products.csv'
 
 # 18843 rows x 176 columns
-obf_file = pd.read_csv(url, sep='\t', low_memory=False)    # Download last version of the OBF CSV DB from URL
-# f = pd.read_csv('en.openbeautyfacts.org.products.csv', sep='\t', low_memory=False)    # From file
+
+# obf_file = pd.read_csv(url, sep='\t', low_memory=False)    # Download last version of the OBF CSV DB from URL
+# obf_file = pd.read_csv(github_url, sep='\t', low_memory=False)    # Download last version of the OBF CSV DB from URL
+obf_file = pd.read_csv(filepath, sep='\t', low_memory=False)    # From file
 # type(f)
 
 # headers = list(f.columns)
@@ -94,6 +96,7 @@ products_table = products_table.loc[products_table['ingredients_text'] != '']
 
 # products_table['ingredients_text'] = products_table['ingredients_text'].replace('.', ',')  # seems to cause trouble
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('∙', ',')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('•', ',')
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace(';', ',')
 products_table['ingredients_text'] = products_table['ingredients_text'].str.lower()
 # products_table['ingredients_text']
@@ -101,7 +104,7 @@ products_table['ingredients_text'] = products_table['ingredients_text'].str.lowe
 # products_table
 #####################
 ## SAVE DF as CSV: TABLE Ab (products_table) (7082 rows x 18 columns)
-products_table.to_csv(r'OBF_TABLE_Ab.csv',  header = True, index = True, index_label='productID')
+products_table.to_csv(r'OBF_TABLE_Ab.csv',  header = True, index = True, index_label='productID', encoding="utf-8")
 
 
 # #####################
@@ -141,7 +144,7 @@ products_table = products_table[['code',
 
 #####################
 ## SAVE DF as CSV: TABLE Ac (products_table) (7082 rows x 22 columns)
-products_table.to_csv(r'OBF_TABLE_Ac.csv',  header = True, index = True, index_label='productID')
+products_table.to_csv(r'OBF_TABLE_Ac.csv',  header = True, index = True, index_label='productID', encoding="utf-8")
 
 
 # ############################################################
@@ -161,7 +164,7 @@ ingredients_table = ingredients_table.fillna('')
 
 #####################
 ## SAVE DF as CSV: TABLE B (ingredients_table)
-ingredients_table.to_csv(r'OBF_TABLE_B.csv',  header = True, index = True, index_label='productID')
+ingredients_table.to_csv(r'OBF_TABLE_B.csv',  header = True, index = True, index_label='productID', encoding="utf-8")
 
 
 # ############################################################
@@ -214,15 +217,15 @@ ingredients_table.to_csv(r'OBF_TABLE_B.csv',  header = True, index = True, index
 ### Filter the dataframe depending on the value of a column
 ### MAYBE replaced by SQL queries instead!!!
 
-def filter_by_ingredient_index(table, ingredient:str, index:int)
-    filtered_table = table.loc[table[index] == ingredient]
-    return filtered_table
+# def filter_by_ingredient_index(table, ingredient:str, index:int)
+#     filtered_table = table.loc[table[index] == ingredient]
+#     return filtered_table
 
 # # Subset based on specific value of the first ingredient (index 0)
 # # Glycerin as a 1st ingredient: 36 rows
 # filter_ingredients_table_glycerin_1 = ingredients_table.loc[ingredients_table[0] == 'glycerin']
 # filter_ingredients_table_glycerin_1
-filter_by_ingredient_index(ingredients_table, 'glycerin', 0)
+# filter_by_ingredient_index(ingredients_table, 'glycerin', 0)
 
 # # Subset based on specific value of the second ingredient (index 1)
 # # Glyceryl Stearate as a 2nd ingredient: 6 rows
