@@ -54,6 +54,7 @@ Objectives:
   - Additionally, we had some issues with everyone being confused about their tasks and so there was some overlapping codes/ people doing similar tasks which we were able to sort out through our long meeting at the start of the week.
 
   b.	What is still to be solved and who is in charge of the task? How did you approach the issue so far? 
+  - 
   
   c.	Please specifically mention any help you need from your instructor (we will also give general feedback and provide our thoughts and ideas, but this is your chance to specifically point to aspects where you are complete stuck). 
   - 
@@ -61,7 +62,7 @@ Objectives:
 
 4.	What are the group’s main objectives for next week?
 
-
+- Have an minimum viable product (MVP) that we can test and add further features to.
 
 
 
@@ -73,7 +74,10 @@ Completed Items:
 
 TASK:
 1. Setting up GitHub repo, app architecture
-2. Frontend ?
+2. Frontend
+3. Backend
+4. Database
+5. API
 
 PRIORITY:
 1. High
@@ -92,17 +96,23 @@ In Progress:
 
 TASK:
 1. Db_Utils & Config for users & routes pythoon file for users to be completed. 
-2. 
+2. Design login and create webpages 
+3. Make webpages produce data that can be added to the databases
 
 PRIORITY:
 1. High
-2. 
+2. High
+3. High
 
 TEAM MEMBER:
 1. Nikita
+2. Georgia
+3. Georgia
 
 NOTES:
 1. Almost done with User Db_Utils & Config. I had to re-do the connector script this week and so it's very important that this is completed this weekend. And I hope to get the routes done early next week so me & my sub-group can move onto working on the wishlist aspect of our app. 
+2. None
+3. Ensure that data from the create account and login pages is stored as a JSON object and passed to the database (50% done, applied to one page but need to do the second)
 
 
 
@@ -124,7 +134,7 @@ PRIORITY:
 
 TEAM MEMBER: 
 1. Nasian, Nikita, Sophie
-2. Claire, Georgia, Sophie
+2. Georgia, Sophie
 3. Claire, Chizu
 4. Claire
 
