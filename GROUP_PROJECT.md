@@ -4,21 +4,21 @@ This is the template that should be used by each group to provide a BRIEF progre
 N.B! This template is just a starting point and not all sections need to be completed. It all depends on your progress and what you need more help within that particular week. Not submitting these reports will not affect your grade, but your instructor will not be able to provide feedback in any other way. 
 
 
-1.	Please describe your project idea. If this changes from the previous week, please describe how; if it does not change, please just copy the main objectives of the project. 
+	1.	Please describe your project idea. If this changes from the previous week, please describe how; if it does not change, please just copy the main objectives of the project. 
 
-Project Idea: A search engine for cosmetics which allows you to find items by ingredients. Using the open beauty facts (OBF) API: https://world.openbeautyfacts.org/ 
+		Project Idea: A search engine for cosmetics which allows you to find items by ingredients. Using the open beauty facts (OBF) API: https://world.openbeautyfacts.org/ 
 
 
-Objectives: 
+		Objectives: 
 
-- Enable users to search by ingredient X 
-- Allow users to search for items without ingredient Y
-- Or let users search for items with ingredient X but without ingredient Y
-- Enable users to search for products with 1st/2nd ingredient X (remove water)
-- Allow users to create an account
-- And let users create a wish list with items they would like to purchase/ save
-- Enable multi-criteria search (with A and B in first 3 ingredients but without C)
-- Let users filter by categories, location of stores, price of items etc
+		- Enable users to search by ingredient X 
+		- Allow users to search for items without ingredient Y
+		- Or let users search for items with ingredient X but without ingredient Y
+		- Enable users to search for products with 1st/2nd ingredient X (remove water)
+		- Allow users to create an account
+		- And let users create a wish list with items they would like to purchase/ save
+		- Enable multi-criteria search (with A and B in first 3 ingredients but without C)
+		- Let users filter by categories, location of stores, price of items etc
 
 
 
