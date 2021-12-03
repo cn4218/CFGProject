@@ -81,7 +81,8 @@ TASK:
 	1. Setting up GitHub repo, app architecture
 	2. Frontend ?
 	3. Wish list and user databases
-	4. Design login and create webpages & Make webpages produce data that can be added to the databases
+	4. Design login and create webpages
+	5. Make webpages produce data that can be added to the databases
 
 PRIORITY:
 
@@ -89,6 +90,7 @@ PRIORITY:
 	2.
 	3.
 	4. Medium
+	5. Medium
 
 TEAM MEMBERS:
 
@@ -96,6 +98,7 @@ TEAM MEMBERS:
 	2. Chizu, Georgia
 	3. Nasian
 	4. Georgia
+	5. Georgia
 
 NOTES:
 
@@ -116,6 +119,8 @@ TASK:
 	2. Db_Utils & Config for wish list.
 	
 	3. Backend Products API 
+	
+	4. OBF_Cosmo_Products DB 
 
 
 PRIORITY:
@@ -125,6 +130,8 @@ PRIORITY:
 	2. High
 	
 	3. High
+	
+	4. High
 
 
 TEAM MEMBER:
@@ -134,6 +141,8 @@ TEAM MEMBER:
 	2. Nasian
 	
 	3. Claire, Chizu
+	
+	4. Claire, Chizu
 
 
 NOTES:
