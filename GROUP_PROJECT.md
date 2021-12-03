@@ -121,6 +121,8 @@ TASK:
 	3. Backend Products API 
 	
 	4. OBF_Cosmo_Products DB 
+	
+	5. Products DB_Utils & Config
 
 
 PRIORITY:
@@ -132,6 +134,8 @@ PRIORITY:
 	3. High
 	
 	4. High
+	
+	5. High
 
 
 TEAM MEMBER:
@@ -143,6 +147,8 @@ TEAM MEMBER:
 	3. Claire, Chizu
 	
 	4. Claire, Chizu
+	
+	5. Claire
 
 
 NOTES:
