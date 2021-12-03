@@ -23,30 +23,30 @@ N.B! This template is just a starting point and not all sections need to be comp
 
 
 
-2.	What did the group (or each member of the group) work on this week?
+	2.	What did the group (or each member of the group) work on this week?
 
-- Front End Web Page - Chizu, Georgia & Nikita
-- Backend Users & Wishlist API - Nikita, Sophie
-- Backend Products API - Claire, Chizu
-- Users & Wishlist DB - Nasian, Georgia, Nikita
-- OBF_Cosmo_Products DB - Chizu, Claire (not using OBF DB directly)
-- Users DB_Utils & Config - Nasian, Nikita
-- Wishlist DB_Utils & Config - Nikita, Nasian
-- Products DB_Utils & Config - Claire
+	- Front End Web Page - Chizu, Georgia & Nikita
+	- Backend Users & Wishlist API - Nikita, Sophie
+	- Backend Products API - Claire, Chizu
+	- Users & Wishlist DB - Nasian, Georgia, Nikita
+	- OBF_Cosmo_Products DB - Chizu, Claire (not using OBF DB directly)
+	- Users DB_Utils & Config - Nasian, Nikita
+	- Wishlist DB_Utils & Config - Nikita, Nasian
+	- Products DB_Utils & Config - Claire
     
-  a.	What progress has been made? 
+  	a.	What progress has been made? 
     
-    - This week we had to restructure our database so the MySQL DB and Python- MySQL DB scripts have been re-written.
-    - completed a first draft the users and wishlist databases (these databases are subject to change and can be changed accordingly as code develops)
-    - Started working on the Wish list DB_Utils & Config
-    - We have been working on Users DB_Utils & Config & the User routes file
-    - The frontend scripts are almost complete 
-    - We have also been working on the Backend products API
-    - An SQL database for the OBF products has been created 
+    	- This week we had to restructure our database so the MySQL DB and Python- MySQL DB scripts have been re-written.
+    	- completed a first draft the users and wishlist databases (these databases are subject to change and can be changed accordingly as code develops)
+    	- Started working on the Wish list DB_Utils & Config
+    	- We have been working on Users DB_Utils & Config & the User routes file
+    	- The frontend scripts are almost complete 
+    	- We have also been working on the Backend products API
+    	- An SQL database for the OBF products has been created 
     
-  b.	How would you evaluate your progress (e.g., exceptional, good, satisfactory, bad, etc.). Why?
-    - Our progress is in a better place than last week, after having a long meeting this week it seems as if we're more aligned in what we have to complete and the tasks which everyone is working on. We also have a much better understanding on how each person's code will relate to the entire app itself. We're on a good path, and we're making progress, we had a few set backs this week in terms of having to re-do some of our scripts but overall it seems to be coming together very well. 
-    - Had to start the databases work from scratch as we were trying to figure out the best way to accomplish it, but after our really long meeting this week it's a lot clearer what we have to accomplish and how to do it.
+  	b.	How would you evaluate your progress (e.g., exceptional, good, satisfactory, bad, etc.). Why?
+    	- Our progress is in a better place than last week, after having a long meeting this week it seems as if we're more aligned in what we have to complete and the tasks which everyone is working on. We also have a much better understanding on how each person's code will relate to the entire app itself. We're on a good path, and we're making progress, we had a few set backs this week in terms of having to re-do some of our scripts but overall it seems to be coming together very well. 
+    	- Had to start the databases work from scratch as we were trying to figure out the best way to accomplish it, but after our really long meeting this week it's a lot clearer what we have to accomplish and how to do it.
 
 
 
