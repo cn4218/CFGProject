@@ -77,20 +77,24 @@ Objectives:
 							Completed Items:
 
 TASK:
+
 	1. Setting up GitHub repo, app architecture
 	2. Frontend ?
 	3. Wish list and user databases
 
 PRIORITY:
+
 	1. High
 	2.
 
 TEAM MEMBERS:
+
 	1. Chizu, Claire
 	2. Chizu, Georgia
 	3. Nasian
 
 NOTES:
+
 	1. Still not sure about the final architecture.
 	2. 
 
