@@ -159,8 +159,10 @@ NOTES:
 	3. 
 	4. I really advanced my db_utils_products file (I hope it works) and also worked a little bit on the products_api file. Pushed modifications to my GitHub branch. Added functions in db_utils_products.py and api_products.py scripts, modified clean_csv_tables.py to replace thick median bullet points by commas and change the OBF CSV file path, because the OBF website certificate expired so could not directly download their CSV DB from the script anymore. 
 
-			
-				
+
+
+
+
 								Assigned but not Started:
 
 TASKS:
