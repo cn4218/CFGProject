@@ -50,21 +50,21 @@ N.B! This template is just a starting point and not all sections need to be comp
 
 
 
-3.	What were the main challenges this week? 
+	3.	What were the main challenges this week? 
 
-  a.	How did you solve any issues encountered? What worked and what didn’t?
-  - we has some issue with the user database and the MySQL/ MySQL-Python connector script which needed to be redone. When creating these scripts we were following lesson 19 when we needed to follow lesson 20 and so we have gone back over this and tried to fix it. 
-  - Additionally, we had some issues with everyone being confused about their tasks and so there was some overlapping codes/ people doing similar tasks which we were able to sort out through our long meeting at the start of the week.
+  	a.	How did you solve any issues encountered? What worked and what didn’t?
+  		- we has some issue with the user database and the MySQL/ MySQL-Python connector script which needed to be redone. When creating these scripts we were following lesson 19 when we needed to follow lesson 20 and so we have gone back over this and tried to fix it. 
+  		- Additionally, we had some issues with everyone being confused about their tasks and so there was some overlapping codes/ people doing similar tasks which we were able to sort out through our long meeting at the start of the week.
 
-  b.	What is still to be solved and who is in charge of the task? How did you approach the issue so far? 
-  -  Get all our seperate scripts to work together - everyone
+  	b.	What is still to be solved and who is in charge of the task? How did you approach the issue so far? 
+  		-  Get all our seperate scripts to work together - everyone
   
-  c. Please specifically mention any help you need from your instructor (we will also give general feedback and provide our thoughts and ideas, but this is your chance to specifically point to aspects where you are complete stuck). 
+  	c. Please specifically mention any help you need from your instructor (we will also give general feedback and provide our thoughts and ideas, but this is your chance to specifically point to aspects where you are complete stuck). 
 
 
-4.	What are the group’s main objectives for next week?
-  - Have a minimal viable product (MVP) of our project complete
-  - Complete the databases for users/ wishlist and get the route.py completed for both 
+	4.	What are the group’s main objectives for next week?
+  		- Have a minimal viable product (MVP) of our project complete
+  		- Complete the databases for users/ wishlist and get the route.py completed for both 
 
 
 
