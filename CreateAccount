@@ -29,6 +29,13 @@
                     autofocus placeholder="Insert first and last name"
                     id="nameField"
                 />
+                <label for="emailField">Email</label>
+                <input
+                    name="name"
+                    type="text"
+                    autofocus placeholder="Insert email address"
+                    id="emailField"
+                />
                 <label for="userField">Username</label>
                 <input
                     name="username"
