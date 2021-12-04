@@ -24,7 +24,7 @@ login.html
             <div class="row">
               <div class="column">
                 <form>
-                <label for="emailField">Name</label>
+                <label for="emailField">Email Address</label>
                 <input
                     name="email"
                     type="text"
