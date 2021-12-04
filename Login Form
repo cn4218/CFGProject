@@ -1,124 +1,84 @@
-	<!DOCTYPE html>
+login.html
+
+<!DOCTYPE html>
 <!-- Set language to English -->
 <html lang="en">
-	<head>
-		<script scr="https://google.com"></script>
-		<script>
-			$(document).ready(function(){
-		    $("button").click(function(){
-		        var x = $("form").serializeArray();
-		        $.each(x, function(i, field){
-		            $("#results").append(field.name + ":" + field.value + " ");
-		        });
-		    });
-		});
-		</script>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {
-  box-sizing: border-box;
-}
+    <head>
+    <!-- set characters to utf-8 which means code can be read by a computer
+    (turns it into a binary)-->
+    <meta charset="utf-8">
+    <style>
+        h1 {
+            text-align: left;
+        }
+    </style>
+    </head>
+    <body>
+        <form>
+        <div class="container">
+            <div class="row">
+              <div class="column">
+                <h1>Login Form</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column">
+                <form>
+                <label for="emailField">Name</label>
+                <input
+                    name="email"
+                    type="text"
+                    autofocus placeholder="Insert email address"
+                    id="emailField"
+                />
+                <label for="passwordField">Password</label>
+                <input
+                    name="password"
+                    autofocus placeholder="Choose a password"
+                    type="text"
+                    id="passwordField"
+                />
+                <input class="button-primary" type="submit" value="Sign Up" />
+            </form>
+            </div>
+        </div>
+    </div>
+    </form>
 
-input[type=text], select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-}
-
-label {
-  padding: 12px 12px 12px 0;
-  display: inline-block;
-}
-
-input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right;
-}
-
-input[type=submit]:hover {
-  background-color: #45a049;
-}
-
-.container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-
-.col-25 {
-  float: left;
-  width: 25%;
-  margin-top: 6px;
-}
-
-.col-75 {
-  float: left;
-  width: 75%;
-  margin-top: 6px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .col-25, .col-75, input[type=submit] {
-    width: 100%;
-    margin-top: 0;
-  }
-}
-</style>
-</head>
-<body>
-		<!-- set characters to utf-8 which means code can be read by a computer
-		(turns it into a binary)-->
-		<meta charset="utf-8">
-		<!-- Name the page -->
-		<h1>Login Form</h1>
-		<link rel="stylesheet" href="style.css">
-			<div class="container">
-				<form action="POST" class="form" id="login">
-					<div class="row">
-						<div class="col">
-								<div class="email_address_input">Email Address</div>
-							<div class="form__input"></div>
-						<input type="text" class="form__inputb" autofocus placeholder="Insert Email Address">
-						</div>
-						<div class="col">
-								<div class="first_name_input">First Name</div>
-							<div class="form__input"></div>
-						<input type="text" class="form__inputb" autofocus placeholder="Insert First Name">
-						</div>
-						<div class="col">
-								<div class="last_name_input">Last Name</div>
-							<div class="form__input"></div>
-						<input type="text" class="form__inputb" autofocus placeholder="Insert Last Name">
-						</div>
-					<div class="row">
-						<div class="col">
-								<div class="password_form_input">Password</div>
-							<div class="form__input"></div>
-						<input type="text" class="form__inputb" autofocus placeholder="Insert Password">
-						</div>
-
-					<button class="form__button" type="submit">Sign In</button>
-					<p class="for__text">
-						<a href="#" class="form__link">Forgot your password? Click here</a>
-					</p>
-					<p class="for__textb">
-						<a href="" class="form_link">Don't have an account? Sign Up Here</a>
-					</p>
-				</form>
-	</body>
-</html>
+        <script>
+            // dummy endpoint
+            const url = 'https://hookb.in/b9Za0bRXaVTKGq00GJq1';
+            const signup = document.querySelector("form");
+            // use a sync because the server's time to response varies
+            signup.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                // store data in new data object
+                const formData = new FormData(signup);
+                // new constant which creates an object from form data
+                const theformData = Object.fromEntries(formData);
+                const jsonObject = {
+                ...theformData
+                };
+                try {
+                    // fetch data stored in form through an API
+                const response = await fetch(url, {
+                    method: "POST",
+                    // turn the data into a JSON
+                    body: JSON.stringify(jsonObject),
+                    headers: {
+                        // tell the server that the data it receives is a JSON
+                    "Content-Type": "application/json",
+                    },
+                });
+                const json = await response.json();
+                // log the json response in the console
+                console.log(json);
+                // if something goes wrong, catch it and generate an error
+                } catch (e) {
+                console.error(e);
+                alert("Error!");
+                }
+            });
+        </script>
+    </body>
+  </html>
