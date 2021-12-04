@@ -25,22 +25,22 @@ def _map_values(result):
             {
                 "productID": item[0],
                 "code": item[1],
-                "product_name": item[3],
-                "quantity": item[4]
-                "brands": item[5],
-                "brands_tags": item[6],
-                "categories_tags": item[7],
-                "categories_en": item[8],
-                "countries": item[9],
-                "countries_tags": item[10],
-                "countries_en": item[11],
-                "ingredients_text": item[12],
-                "image_url": item[13],
-                "image_small_url": item[14],
-                "image_ingredients_url": item[15],
-                "image_ingredients_small_url": item[16],
-                "image_nutrition_url": item[17],
-                "image_nutrition_small_url": item[18],
+                "product_name": item[2],
+                "quantity": item[3]
+                "brands": item[4],
+                "brands_tags": item[5],
+                "categories_tags": item[6],
+                "categories_en": item[7],
+                "countries": item[8],
+                "countries_tags": item[9],
+                "countries_en": item[10],
+                "ingredients_text": item[11],
+                "image_url": item[12],
+                "image_small_url": item[13],
+                "image_ingredients_url": item[14],
+                "image_ingredients_small_url": item[15],
+                "image_nutrition_url": item[16],
+                "image_nutrition_small_url": item[17],
             }
         )
     return mapped
