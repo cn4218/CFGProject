@@ -27,7 +27,7 @@ def get_product_with_ingredient_nth_position(ingredient,n):
 
 # # GET to retrieve data
 # # Endpoint to get a product with a specific productID
-# @app.route("/products/<int:productID>")
+# @app.route("/products/<productID>")
 # def get_product_by_id(productID):
 # 	product = search_product(productID, products)
 # 	return jsonify(product)
@@ -42,7 +42,7 @@ def get_product_with_ingredient_nth_position(ingredient,n):
 # 	return product
 #
 # # PUT to update data
-# @app.route("/products/<int:id>", methods=["PUT"])
+# @app.route("/products/<productID>", methods=["PUT"])
 # def update_product(productID):
 # 	product_to_update = request.get_json()
 # 	index = get_index(productID, products)
@@ -50,7 +50,7 @@ def get_product_with_ingredient_nth_position(ingredient,n):
 # 	return jsonify(products[index])
 #
 # # DELETE to remove data
-# @app.route("/products/<int:id>", methods=["DELETE"])
+# @app.route("/products/<productID>", methods=["DELETE"])
 # def delete_product(productID):
 # 	index = get_index(productID, products)
 # 	deleted = products.pop(index)
