@@ -16,6 +16,35 @@ def _connect_to_db(db_name):
     )
     return cnx
 
+# lord only know if i even need this function , as i have later updated the MySQL database with a seperate function
+# im following lesson 20 and im a bit confused
+def _map_values(result):
+    mapped = []
+    for item in result:
+        mapped.append(
+            {
+                "productID": item[0],
+                "code": item[1],
+                "product_name": item[3],
+                "quantity": item[4]
+                "brands": item[5],
+                "brands_tags": item[6],
+                "categories_tags": item[7],
+                "categories_en": item[8],
+                "countries": item[9],
+                "countries_tags": item[10],
+                "countries_en": item[11],
+                "ingredients_text": item[12],
+                "image_url": item[13],
+                "image_small_url": item[14],
+                "image_ingredients_url": item[15],
+                "image_ingredients_small_url": item[16],
+                "image_nutrition_url": item[17],
+                "image_nutrition_small_url": item[18],
+            }
+        )
+    return mapped
+
 # have no idea if this code even works or makes sense as I don't have everyones codes so i don't actually
 # know how the DB will be fetching the data and inserting it
 
