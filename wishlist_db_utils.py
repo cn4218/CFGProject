@@ -125,7 +125,7 @@ def _get_wish_list_individual(UserID, ProductID):
         cur.execute(query)
 
         result = (cur.fetchall())
-        wish = result
+        wish = _map_values(result)
         cur.close()
     except Exception:
         raise Error("Failed to get data from Database")
