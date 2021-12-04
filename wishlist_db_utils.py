@@ -112,7 +112,7 @@ def add_wish_list(UserID, ProductID, Code_Wish, Product_name, Quantity,
 
 # return info for a wishlist entry at a time
 # need both user ID and product ID for the specific entry
-def _get_wish_list(UserID, ProductID):
+def _get_wish_list_individual(UserID, ProductID):
     try:
         db_name = "wish_list"
         db_connection = _create_db_connection(db_name)
@@ -125,7 +125,7 @@ def _get_wish_list(UserID, ProductID):
         cur.execute(query)
 
         result = (cur.fetchall())
-        wish = _get_wish_list(result)
+        wish = result
         cur.close()
     except Exception:
         raise Error("Failed to get data from Database")
@@ -134,6 +134,29 @@ def _get_wish_list(UserID, ProductID):
             db_connection.close()
             print("Database connection is closed")
     return wish
+
+def _get_wish_list_all(UserID):
+    try:
+        db_name = "wish_list"
+        db_connection = _create_db_connection(db_name)
+        cur = db_connection.cursor()
+        print("Connected to DB: %s" % db_name)
+
+        query = """ SELECT * FROM wish_list 
+         WHERE User_ID = '{}' """.format(UserID)
+
+        cur.execute(query)
+
+        result = (cur.fetchall())
+        wishlist = _map_values(result)
+        cur.close()
+    except Exception:
+        raise Error("Failed to get data from Database")
+    finally:
+        if db_connection:
+            db_connection.close()
+            print("Database connection is closed")
+    return wishlist
 
 
 # if __name__ == "__main__":
