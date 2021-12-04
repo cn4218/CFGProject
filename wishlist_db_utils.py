@@ -81,6 +81,32 @@ def add_wish_list(UserID, ProductID, Code_Wish, Product_name, Quantity,
         if db_connection:
             db_connection.close()
 
+# return info for a wishlist entry at a time
+# need both user ID and product ID for the specific entry
+def _get_wish_list(UserID, ProductID):
+    try:
+        db_name = "wish_list"
+        db_connection = _create_db_connection(db_name)
+        cur = db_connection.cursor()
+        print("Connected to DB: %s" % db_name)
+
+        query = """ SELECT * FROM wish_list 
+         WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
+
+        cur.execute(query)
+
+        result = (cur.fetchall())
+        wish = _get_wish_list(result)
+        cur.close()
+    except Exception:
+        raise Error("Failed to get data from Database")
+    finally:
+        if db_connection:
+            db_connection.close()
+            print("Database connection is closed")
+    return wish
+
 
 # if __name__ == "__main__":
 #
+
