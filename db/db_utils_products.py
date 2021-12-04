@@ -18,7 +18,7 @@ def _connect_to_db(db_name):
 
 
 def _map_values(result):
-    """ 
+    """
     Transforms (productID, product_name, ingredients_list) item tuple results
     (3 elements) from cur.fetchall() into a list of dictionaries having values item[0-2].
     Depending on which information we want to display, we may only choose these 3 columns
@@ -55,7 +55,7 @@ def _map_values(result):
 
 
 def get_products_containing(ingredient):
-    """ Returns a list of dictionaries of products containing a 
+    """ Returns a list of dictionaries of products containing a
     specific ingredient in their ingredient_list (fuzzy search) """
     list_products = []
     try:
@@ -71,7 +71,8 @@ def get_products_containing(ingredient):
             """
 
         cur.execute(query)
-        # this is a list with db records where each record is a tuple
+        # This is a list with db records where each record is a tuple with as
+        # many elements as columns you selected in your query
         result = (cur.fetchall())
         list_products = _map_values(result)  # not sure what to do about that
         cur.close()
@@ -89,9 +90,9 @@ def get_products_containing(ingredient):
 
 
 def get_products_ingt_in_nth_position(ingredient,n):
-    """ Returns a list of dictionaries of products containing a 
-    specific ingredient in nth position in their ingredient_list 
-    (fuzzy search) --> or exact search?"""
+    """ Returns a list of dictionaries of products containing a
+    specific ingredient in Nth position in their ingredient_list
+    (fuzzy search) --> or exact search? """
     list_products = []
     try:
         db_name = "Products"
@@ -102,18 +103,19 @@ def get_products_ingt_in_nth_position(ingredient,n):
         # Nth position: N = index - 1
         # Ex: N = 1 --> i = 0      i = N + 1
         idx = str(int(n)+1)
-       
+
         query = f"""
-            SELECT p.productID, p.product_name, p.ingredients_list   -- *  ?
+            SELECT p.productID, p.product_name, p.ingredients_list   --  *  ?
             FROM products_table AS p
             LEFT JOIN ingredients_table AS i
             ON p.productID = i.productID
             WHERE i.`{idx}` LIKE '%{ingredient}%'   --  = '{ingredient}'  ?
-            ORDER BY p.productID ASC;    -- p.product_name ASC;  ?
+            ORDER BY p.productID ASC;    --  p.product_name ASC;  ?
             """
 
         cur.execute(query)
-        # this is a list with db records where each record is a tuple
+        # This is a list with db records where each record is a tuple with as
+        # many elements as columns you selected in your query
         result = (cur.fetchall())
         list_products = _map_values(result)  # not sure what to do about that
         cur.close()
