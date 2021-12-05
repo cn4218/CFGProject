@@ -42,3 +42,7 @@ def add_wish_list_put():
     )
 
     return wishlist_dict
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
