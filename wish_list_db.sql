@@ -3,6 +3,7 @@ use wish_list;
 
 CREATE TABLE `Wish_List` (
 `User_ID` int NOT NULL,
+`User_Name` varchar(50) NOT NULL,
 `productID` INTEGER,
 `code` MEDIUMTEXT NULL,
 `product_name` VARCHAR(500) NULL,
@@ -21,12 +22,13 @@ CREATE TABLE `Wish_List` (
 `image_ingredients_small_url` VARCHAR(1000) NULL,
 `image_nutrition_url` VARCHAR(1000) NULL,
 `image_nutrition_small_url` VARCHAR(1000) NULL,
-CONSTRAINT PK_UserID PRIMARY KEY (User_ID, productID)
+CONSTRAINT PK_User PRIMARY KEY (User_Name, User_ID, productID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_wish_list`(
 UserID INT, 
+UserName varchar(50), 
 ProductID INTEGER, 
 Code_Wish MEDIUMTEXT, 
 Product_name VARCHAR(500),
@@ -49,6 +51,7 @@ Image_Nutrition_Small_url VARCHAR(1000)
 BEGIN
     INSERT INTO Wish_List (
     User_ID, 
+    User_Name,
     productID, 
     code, 
     product_name, 
@@ -68,6 +71,7 @@ BEGIN
     image_nutrition_url, 
     image_nutrition_small_url) VALUES (
     UserID, 
+    UserName,
     ProductID, 
     Code_Wish, 
     Product_name, 
