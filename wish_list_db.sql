@@ -1,5 +1,5 @@
-CREATE DATABASE wish_list;
-use wish_list;
+CREATE DATABASE CFG_Project;
+use CFG_Project;
 
 CREATE TABLE `Wish_List` (
 `User_ID` int NOT NULL,

@@ -1,5 +1,5 @@
-CREATE DATABASE user_info;
-use user_info;
+CREATE DATABASE CFG_Project;
+use CFG_Project;
 
 CREATE TABLE `User_Info` (
 -- after we get an MVP, can possible implement user/password
