@@ -23,24 +23,26 @@ def _map_values(result):
     for item in result:
         mapped.append(
             {
-                "productID": item[0],
-                "code": item[1],
-                "product_name": item[2],
-                "quantity": item[3]
-                "brands": item[4],
-                "brands_tags": item[5],
-                "categories_tags": item[6],
-                "categories_en": item[7],
-                "countries": item[8],
-                "countries_tags": item[9],
-                "countries_en": item[10],
-                "ingredients_text": item[11],
-                "image_url": item[12],
-                "image_small_url": item[13],
-                "image_ingredients_url": item[14],
-                "image_ingredients_small_url": item[15],
-                "image_nutrition_url": item[16],
-                "image_nutrition_small_url": item[17],
+                "User_ID": item[0],
+                "User_Name": item[1],
+                "productID": item[2],
+                "code": item[3],
+                "product_name": item[4],
+                "quantity": item[5]
+                "brands": item[6],
+                "brands_tags": item[7],
+                "categories_tags": item[8],
+                "categories_en": item[9],
+                "countries": item[10],
+                "countries_tags": item[11],
+                "countries_en": item[12],
+                "ingredients_text": item[13],
+                "image_url": item[14],
+                "image_small_url": item[15],
+                "image_ingredients_url": item[16],
+                "image_ingredients_small_url": item[17],
+                "image_nutrition_url": item[18],
+                "image_nutrition_small_url": item[19],
             }
         )
     return mapped
@@ -48,7 +50,7 @@ def _map_values(result):
 # have no idea if this code even works or makes sense as I don't have everyones codes so i don't actually
 # know how the DB will be fetching the data and inserting it
 
-def add_wish_list(UserID, ProductID, Code_Wish, Product_name, Quantity,
+def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity,
     Brands, Brands_tags, Categories_Tags, Countries_en, Ingredients_Text, Image_url, Image_Small_url, Image_Ingredients_url,
     Image_Ingredients_Small_url, Image_Nutrition_url, Image_Nutrition_Small_url):
     try:
@@ -60,6 +62,8 @@ def add_wish_list(UserID, ProductID, Code_Wish, Product_name, Quantity,
         query = """
                   UPDATE  wish_list
                   SET 
+                      `{User_ID}` = '{UserID}',
+                      `{User_Name}` = '{UserName}',
                       `{productID}` = '{ProductID}',
                       `{code}` = '{Code_Wish}',
                       `{product_name}` = '{Product_name}',
@@ -80,6 +84,8 @@ def add_wish_list(UserID, ProductID, Code_Wish, Product_name, Quantity,
                       `{image_nutrition_small_url}` = '{Image_Nutrition_Small_url}'
                   WHERE `{User_ID}` = '{UserID}' AND  `{productID}` = '{ProductID}'
                   """.format(
+            User_ID = UserID,
+            User_Name = UserName,
             productID = ProductID,
             code = Code_Wish,
             product_name = Product_name,
