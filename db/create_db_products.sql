@@ -1,5 +1,5 @@
-CREATE DATABASE OBF_Cosmo_Products;
-USE OBF_Cosmo_Products;
+CREATE DATABASE Products;
+USE Products;
 
 CREATE TABLE products_table(
     productID INTEGER PRIMARY KEY,
@@ -20,11 +20,15 @@ CREATE TABLE products_table(
     image_ingredients_small_url VARCHAR(1000) NULL,
     image_nutrition_url VARCHAR(1000) NULL,
     image_nutrition_small_url VARCHAR(1000) NULL
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
+
+
+SELECT * 
+FROM products_table;
 
 /*
 STORED PROCEDURE to insert data from products_table.csv (TABLE Ab) CSV file
-into OBF_Cosmo_Products.products_table SQL table
+into Products.products_table SQL table
 */
 DELIMITER $$
 CREATE DEFINER='root'@'localhost' PROCEDURE fillproducts(
@@ -90,4 +94,17 @@ BEGIN
 	);
 END$$
 DELIMITER ;
+
+/*
+STORED PROCEDURE to get products containing ingredients from Products.products_table SQL table
+*/
+DELIMITER $$
+CREATE PROCEDURE getproduct(ingredient)
+BEGIN
+SELECT productID, product_name, ingredients_text
+FROM products_table
+WHERE ingredient IN ingredients_text;
+END$$
+DELIMITER ;
+
 
