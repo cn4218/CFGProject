@@ -1,7 +1,7 @@
-CREATE DATABASE CFG_Project;
+CREATE DATABASE if not exists CFG_Project;
 use CFG_Project;
 
-CREATE TABLE `User_Info` (
+CREATE TABLE if not exists  `User_Info` (
 -- after we get an MVP, can possible implement user/password
 `User_ID` int NOT NULL UNIQUE AUTO_INCREMENT,
 `User_Name` varchar(50) NOT NULL,

@@ -1,7 +1,7 @@
-CREATE DATABASE CFG_Project;
+CREATE DATABASE if not exists CFG_Project;
 use CFG_Project;
 
-CREATE TABLE `Wish_List` (
+CREATE TABLE if not exists `Wish_List` (
 `User_ID` int,
 `User_Name` varchar(50),
 `productID` INTEGER,
@@ -22,8 +22,8 @@ CREATE TABLE `Wish_List` (
 `image_ingredients_small_url` VARCHAR(1000) NULL,
 `image_nutrition_url` VARCHAR(1000) NULL,
 `image_nutrition_small_url` VARCHAR(1000) NULL,
-FOREIGN KEY (User_Info_User_ID) REFERENCES User_Info(User_ID),
-FOREIGN KEY (User_Info_User_Name) REFERENCES User_Info(User_Name),
+FOREIGN KEY (User_ID) REFERENCES User_Info (User_ID),
+FOREIGN KEY (User_Name) REFERENCES User_Info (User_Name),
 CONSTRAINT PK_User PRIMARY KEY (User_Name, User_ID, productID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
