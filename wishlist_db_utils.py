@@ -14,6 +14,14 @@ def _connect_to_db(db_name):
         auth_plugin="mysql_native_password",
         database=db_name,
     )
+    print("MySQL Database Connection is Successful")
+    except mysql.connector.Error as e:
+    print("Error code:"), e.errno  # error number
+    print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
+    print("Error message:"), e.msg  # error message
+    print("Error:"), e  # errno, sqlstate, msg values
+    s = str(e)
+    print("Error:"), s  # errno, sqlstate, msg values
     return cnx
 
 # lord only know if i even need this function , as i have later updated the MySQL database with a seperate function
@@ -47,8 +55,10 @@ def _map_values(result):
         )
     return mapped
 
-# have no idea if this code even works or makes sense as I don't have everyones codes so i don't actually
-# know how the DB will be fetching the data and inserting it
+'''
+It's really annoying to have all the parameters being passed as an argument but this is the only way to do it
+You cannot pass another function or such into the argument for the add_wish_list function as it outside of the localised scope
+'''
 
 def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity,
     Brands, Brands_tags, Categories_Tags, Countries_en, Ingredients_Text, Image_url, Image_Small_url, Image_Ingredients_url,
@@ -84,27 +94,27 @@ def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity
                       `{image_nutrition_small_url}` = '{Image_Nutrition_Small_url}'
                   WHERE `{User_ID}` = '{UserID}' AND  `{productID}` = '{ProductID}'
                   """.format(
-            User_ID = UserID,
-            User_Name = UserName,
-            productID = ProductID,
-            code = Code_Wish,
-            product_name = Product_name,
-            quantity = Quantity,
-            brands = Brands,
-            brands_tags = Brands_tags,
-            categories_tags = Categories_Tags,
-            categories_en = Categories_En,
-            countries = Countries,
-            countries_tags = Countries_Tags,
-            countries_en = Countries_en,
-            ingredients_text = Ingredients_Text,
-            image_url = Image_url,
-            image_small_url = Image_Small_url,
-            image_ingredients_url = Image_Ingredients_url,
-            image_ingredients_small_url = Image_Ingredients_Small_url,
-            image_nutrition_url = Image_Nutrition_url,
-            image_nutrition_small_url = Image_Nutrition_Small_url,
-            User_ID = UserID
+            UserID = UserID,
+            UserName = UserName,
+            ProductID = ProductID,
+            Code_Wish = Code_Wish,
+            Product_name = Product_name,
+            Quantity = Quantity,
+            Brands = Brands,
+            Brands_tags = Brands_tags,
+            Categories_Tags = Categories_Tags,
+            Categories_En = Categories_En,
+            Countries = Countries,
+            Countries_Tags = Countries_Tags,
+            Countries_en = Countries_en,
+            Ingredients_Text = Ingredients_Text,
+            Image_url = Image_url,
+            Image_Small_url = Image_Small_url,
+            Image_Ingredients_url = Image_Ingredients_url,
+            Image_Ingredients_Small_url = Image_Ingredients_Small_url,
+            Image_Nutrition_url = Image_Nutrition_url,
+            Image_Nutrition_Small_url = Image_Nutrition_Small_url,
+            UserID = UserID
         )
 
         cur.execute(query)
