@@ -174,7 +174,8 @@ def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity
 
 # return info for a wishlist entry at a time
 # need both user ID and product ID for the specific entry
-def _get_wish_list_individual(UserID, ProductID):
+def _get_wish_list_individual(UserID, UserName, ProductID):
+    print('The User ID: {}. The User Name: {}. The Product ID: {}.'.format(UserID, UserName, ProductID))
     try:
         db_name = "wish_list"
         db_connection = _create_db_connection(db_name)
@@ -182,7 +183,7 @@ def _get_wish_list_individual(UserID, ProductID):
         print("Connected to DB: %s" % db_name)
 
         query = """ SELECT * FROM wish_list 
-         WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
+         WHERE User_ID = '{}' AND User_Name = '{}' AND productID = '{}' """.format(UserID, UserName, ProductID)
 
         cur.execute(query)
 
@@ -197,7 +198,8 @@ def _get_wish_list_individual(UserID, ProductID):
             print("Database connection is closed")
     return wish
 
-def _get_wish_list_all(UserID):
+def _get_wish_list_all(UserID, UserName):
+    print('The User ID: {}. The User Name: {}'.format(UserID, UserName))
     try:
         db_name = "wish_list"
         db_connection = _create_db_connection(db_name)
@@ -205,7 +207,7 @@ def _get_wish_list_all(UserID):
         print("Connected to DB: %s" % db_name)
 
         query = """ SELECT * FROM wish_list 
-         WHERE User_ID = '{}' """.format(UserID)
+         WHERE User_ID = '{}' AND  User_Name = '{}'""".format(UserID, UserName)
 
         cur.execute(query)
 
