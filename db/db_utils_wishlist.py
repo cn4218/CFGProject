@@ -1,3 +1,4 @@
+"""IGNORE!!!"""
 ### IGNORE THIS FILE, AS WE WILL BE USING NASIANS wishlist_db_utils.py
 
 import mysql.connector
@@ -128,7 +129,54 @@ def add_wishlist_item(UserID, ProductID, Code_Wish, Product_name, Quantity,
     finally:
         if db_connection:
             db_connection.close()
+def delete_wishlist_item(user_id, product_id):
+    try:
+        empty_list = []
+        db_name = 'wish_list'
+        db_connection = create_db_connection(host_name, user_name, user_password,db_name)
+        cur = db_connection.cursor()
+        print("Connected to DB: %s" % db_name)
 
+        query = """
+        DELETE FROM Wish_List 
+        WHERE User_ID = {} and productID ={};
+        """.format(user_id, product_id)
+
+        cur.execute(query)
+        db_connection.commit()
+        cur.close()
+    except Exception as e:
+        raise DbConnectionError("Failed to read data from DB",e)
+    finally:
+        if db_connection:
+            db_connection.close()
+
+    return empty_list
+
+
+def delete_wishlist(user_id):
+    try:
+        empty_list = []
+        db_name = 'wish_list'
+        db_connection = create_db_connection(host_name, user_name, user_password,db_name)
+        cur = db_connection.cursor()
+        print("Connected to DB: %s" % db_name)
+
+        query = """
+        DELETE FROM Wish_List 
+        WHERE User_ID = {};
+        """.format(user_id)
+
+        cur.execute(query)
+        db_connection.commit()
+        cur.close()
+    except Exception as e:
+        raise DbConnectionError("Failed to read data from DB",e)
+    finally:
+        if db_connection:
+            db_connection.close()
+
+    return empty_list
 
 if __name__ == '__main__':
     add_wishlist_item(1,2,3,4,5,6,7,8,9,10,11,23,14,15,16,17)
