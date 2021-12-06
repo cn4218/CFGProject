@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from wishlist_db_utils import _get_wish_list_all, add_wish_list, _get_wish_list_individual
+from wishlist_db_utils import _get_wish_list_all, add_wish_list, _get_wish_list_individual, delete_wishlist_individual, delete_wishlist
 
 
 app = Flask(__name__)
@@ -41,7 +41,17 @@ def add_wish_list_put():
 
     )
 
-    return wishlist_dict
+    return jsonify(wishlist_dict)
+
+@app.route('/wishlist/<int:user_id>/<int:product_id>', methods=['DELETE'])
+def delete_wislist_item(user_id,product_id):
+    empty_wishlist_item = delete_wishlist_individual(user_id,product_id)
+    return jsonify(empty_wishlist_item)
+
+@app.route('/wishlist/<int:user_id>', methods = ['DELETE'])
+def delete_entire_wishlist(user_id):
+    empty_user_wishlist = delete_wishlist(user_id)
+    return jsonify(empty_user_wishlist)
 
 
 if __name__ == '__main__':
