@@ -4,19 +4,20 @@ from wishlist_db_utils import _get_wish_list_all, add_wish_list, _get_wish_list_
 
 app = Flask(__name__)
 
-
+## function that connects to db utils and retrieves list of dictionaries of products in a wishlist for a user id 
 @app.route('/wishlist/<int:user_id>', methods=['GET'])
 def get_wishlist(user_id):
     wishlist = _get_wish_list_all(user_id)
-    return jsonify(wishlist)
+    return jsonify(wishlist)  ##returns list of dictionaries
 
-@app.route('/wishlist/<int:user_id>/<int:product_id>', methods=['GET'])
+## function that connects to db utils and retrieves one specific product from wishlist using user id and product id
+@app.route('/wishlist/<int:user_id>/<int:product_id>', methods=['GET'])   ## not too sure if need /<int:product_id> in the url here, depends on ui
 def get_wishlist_item(user_id, product_id):
     wishlist_item = _get_wish_list_individual(user_id, product_id)
-    return jsonify(wishlist_item)
+    return jsonify(wishlist_item)  ##returns one dicionary
 
 
-
+## function that formats dictionary as entries to put in db utils function, this adds an item to a users wishlist
 @app.route('/wishlist',methods = ['PUT'])
 def add_wish_list_put():
     wishlist_dict = request.get_json()
@@ -41,17 +42,21 @@ def add_wish_list_put():
 
     )
 
-    return jsonify(wishlist_dict)
+    return jsonify(wishlist_dict)   ## dictionary containing all above values
 
-@app.route('/wishlist/<int:user_id>/<int:product_id>', methods=['DELETE'])
+## deletes specific product from a users wishlist using db utils
+@app.route('/wishlist/<int:user_id>', methods=['DELETE'])
 def delete_wislist_item(user_id,product_id):
     empty_wishlist_item = delete_wishlist_individual(user_id,product_id)
-    return jsonify(empty_wishlist_item)
+    wishlist = _get_wish_list_all(user_id)
+    return jsonify(wishlist)
 
+## app route that deletes entire wishlist for user
 @app.route('/wishlist/<int:user_id>', methods = ['DELETE'])
 def delete_entire_wishlist(user_id):
     empty_user_wishlist = delete_wishlist(user_id)
-    return jsonify(empty_user_wishlist)
+    wishlist = _get_wish_list_all(user_id)
+    return jsonify(wishlist) ## this should be an empty list so can just return an empty list instead 
 
 
 if __name__ == '__main__':
