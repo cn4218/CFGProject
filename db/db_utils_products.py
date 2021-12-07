@@ -162,13 +162,13 @@ def get_products_ingt_in_nth_position(ingredient, n):
     list_products = []
     try:
         db_name = "Products"
-        db_connection = _connect_to_db( db_name )
+        db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
-        print( "Connected to DB: %s" % db_name )
+        print("Connected to DB: %s" % db_name)
 
-        # Nth position: N = index - 1
-        # Ex: N = 1 --> i = 0      i = N + 1
-        idx = str( int( n ) + 1 )
+        # Nth position: N = index + 1
+        # Ex: N = 1 --> i = 0      i = N - 1
+        idx = str(int(n)-1)
 
         query = f"""
             SELECT * 

@@ -88,9 +88,9 @@ products_table = products_table.loc[products_table['ingredients_text'] != '']
 # # PROBLEM: Some lists of ingredients are not separated by commas! >.<
 # products_table['ingredients_text_list'][18842]
 # # SOLUTION:
-# Replace full stops, semicolons and bulletpoints into commas in the ingredients_text column
+# Replace full stops, semicolons and bullet points into commas in the ingredients_text column
 
-# DOESN'T WORK PRoPERLY: Cuts last letter of every word before a comma >.<
+# DOESN'T WORK PROPERLY: Cuts last letter of every word before a comma >.<
 # Function replace_by_commas() from my module ListDF!
 # replace_by_commas(products_table,'ingredients_text')
 
@@ -99,6 +99,24 @@ products_table['ingredients_text'] = products_table['ingredients_text'].str.repl
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('•', ',')
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace(';', ',')
 products_table['ingredients_text'] = products_table['ingredients_text'].str.lower()
+
+# Replace special characters the cause trouble: àèé–д®čı©óšöäüä
+
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('à', 'a')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('è', 'e')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('é', 'e')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('–', '-')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('д', 'D')  # or delta Δ ?
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('®', '')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('č', 'c')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('ó', 'o')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('š', 's')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('ö', 'o')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('ä', 'a')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('ü', 'u')
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('ä', 'a')
+# products_table['ingredients_text'] = SPLIT STRING AFTER 'ingredients: ' AND KEEP LEFT PART
+
 # products_table['ingredients_text']
 
 # products_table
