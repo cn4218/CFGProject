@@ -206,21 +206,26 @@ def get_products_ingt_in_nth_position(ingredient, n):
 #              }
 # }
 
-# 1) FIRST this function receives the ingredients_input dictionary and format it with format_input(ingredients_input)
-# 2) Then A) If it is 'ordered' it sends it to
 def get_proper_ingredients_list(_dict):
-    filter = _dict['filter']
+    """
+    1) FIRST this function receives the ingredients_input dictionary and format it with format_input(ingredients_input)
+    2) THEN A) If it is 'unordered' it sends it to get_products_unordered()
+            B) If it is 'ordered' it sends it to get_products_multi_criteria_search()
+    """
+    filtered = _dict['filter']
     ingredients_input = _dict['data']
     ingredients_output = format_input(ingredients_input)
 
-    if filter == 'unordered':
-        pass
-    elif filter == 'ordered':
-        pass
+    if filtered == 'unordered':
+        list_products = get_products_unordered(ingredients_output)
+        return list_products # List of product dictionaries
+
+    elif filtered == 'ordered':
+        list_products = get_products_multi_criteria_search(ingredients_output)
+        return list_products # List of product dictionaries
 
 
 def format_input(ingredients_input):  # Chizu's function modified by Claire
-    # need to make sure white spaces are removed before they are sent over the api
     """ This takes a dictionary input in the structure
     {"1":["ingredient1",True], "2": ["ingredient2",False],.....,"5":["ingredient5",True]}
     and returns a list containing tuples with ingredients to include (key number) or not (0)
@@ -236,10 +241,12 @@ def format_input(ingredients_input):  # Chizu's function modified by Claire
             else:
                 tup = (ingredient.strip(), '0')  # position '0' means 'not included'
                 ingredients_output.append(tup)
-    return ingredients_output
+    return ingredients_output   # List of tuples
+
 
 # ### Transmitted request format (ingredients_output):
 # ingredients_output = [('water','1'),('glycerin','0'),('alcohol','3'),('parfum','4'),('','5')]
+
 
 # IF UNORDERED ####################
 def get_products_unordered(output):
@@ -251,14 +258,30 @@ def get_products_unordered(output):
             pass
         else:
             if n == '0':
-                exclude_list = get_products_not_containing(ingredient)
-                exclude.extend(exclude_list)  # [4] E = products not having X  # CORRECT THAT!!!!
-            else:
+                # Strategy 1: exclude X = [products with X] --> [4]
+                exclude_list = get_products_containing(ingredient)
+                exclude.append(exclude_list)
+
+                # (abandoned, too long)
+                # Strategy 2: intersect with ∁X = [products without X] --> ∁[4]
+                # exclude_list = get_products_not_containing(ingredient)
+                # exclude.extend(exclude_list)
+
+            else: # List of lists of products containing the given ingredients
                 include_list = get_products_containing(ingredient)
-                include.append(include_list) # [[1,2,3,4,5,6,7,10],[1,3,4,5,8],[2,4,5,9]] I = products having A OR B OR C
-    intersection_include = list(set.intersection(*map(set,include)))   # [4,5] II = products having A AND B AND C
-    difference_exclude = list(set(intersection_include).difference(set(exclude)))   # [5]  II - E = III
-    return difference_exclude   # III products having A AND B AND C but NOT X
+                include.append(include_list)
+                # Example: I = A ∪ B ∪ C  -->  [[1,2,3,4,5,6,7],[1,3,4,5,8],[2,4,5,9]]
+
+    # Intersection of lists for included ingredients: II = A ∩ B ∩ C  -->  [4,5]
+    intersection_include = list(set.intersection(*map(set,include)))
+
+    # Strategy 1: exclude X = [products with X] --> III = II ∆ X --> [5]
+    difference_exclude = list(set(intersection_include).difference(set(exclude)))
+    return difference_exclude    # III = (A ∩ B ∩ C) ∆ X
+
+    # Strategy 2: intersect with ∁X = [products without X] --> III = II ∩ ∁X --> [5]
+    # intersection_exclude =  list(set(intersection_include).intersection(set(exclude)))
+    # return intersection_exclude    # III = (A ∩ B ∩ C) ∩ ∁X
 
 
 # IF ORDERED ##################################
@@ -268,14 +291,30 @@ def get_products_multi_criteria_search(output):
     for pair in output:
         ingredient, n = pair
         if n == '0':
-            exclude_list = get_products_not_containing(ingredient)
-            exclude.extend(exclude_list)  # [4] E = products not having X
-        else:
+            # Strategy 1: exclude X = [products with X] --> [4]
+            exclude_list = get_products_containing(ingredient)
+            exclude.append(exclude_list)
+
+            # (abandoned, too long)
+            # Strategy 2: intersect with ∁X = [products without X] --> ∁[4]
+            # exclude_list = get_products_not_containing(ingredient)
+            # exclude.extend(exclude_list)
+
+        else: # List of lists of products containing the given ingredients in nth position
             include_list = get_products_ingt_in_nth_position(ingredient, n)
-            include.append(include_list) # [[1,2,3,4,5,6,7,10],[1,3,4,5,8],[2,4,5,9]] I = products having A1 OR B2 OR C3
-    intersection_include = list(set.intersection(*map(set,include)))   # [4,5] II = products having A1 AND B2 AND C3
-    difference_exclude = list(set(intersection_include).difference(set(exclude)))   # [5]  II - E = III
-    return difference_exclude    # III products having A1 AND B2 AND C3 but NOT X
+            include.append(include_list)
+            # Example: I = A1 ∪ B2 ∪ C3  -->  [[1,2,3,4,5,6,7],[1,3,4,5,8],[2,4,5,9]]
+
+    # Intersection of lists for included ingredients: II = A1 ∩ B2 ∩ C3  -->  [4,5]
+    intersection_include = list(set.intersection(*map(set,include)))
+
+    # Strategy 1: exclude X = [products with X] --> III = II ∆ X --> [5]
+    difference_exclude = list(set(intersection_include).difference(set(exclude)))
+    return difference_exclude    # III = (A1 ∩ B2 ∩ C3) ∆ X
+
+    # Strategy 2: intersect with ∁X = [products without X] --> III = II ∩ ∁X --> [5]
+    # intersection_exclude =  list(set(intersection_include).intersection(set(exclude)))
+    # return intersection_exclude    # III = (A1 ∩ B2 ∩ C3) ∩ ∁X
 
 
 #############
