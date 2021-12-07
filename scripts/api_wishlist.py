@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from wishlist_db_utils import _get_wish_list_all, add_wish_list, _get_wish_list_individual, delete_wishlist_individual, delete_wishlist
+from wishlist_db_utils import _get_wish_list_all, add_wish_list, _get_wish_list_individual, delete_wishlist_item, delete_wishlist
 
 
 app = Flask(__name__)
@@ -22,8 +22,8 @@ def get_wishlist_item(user_id, product_id):
 def add_wish_list_put():
     wishlist_dict = request.get_json()
     add_wish_list(
-        Username = wishlist_dict['username'],
         UserID = wishlist_dict['UserID'], 
+        Username = wishlist_dict['username'],
         ProductID = wishlist_dict['wishlist']['ProductID'], 
         Code_Wish = wishlist_dict['wishlist']['Code_Wish'], 
         Product_name = wishlist_dict['wishlist']['Product_name'], 
@@ -46,14 +46,14 @@ def add_wish_list_put():
 
 ## deletes specific product from a users wishlist using db utils
 @app.route('/wishlist/<int:user_id>', methods=['DELETE'])
-def delete_wislist_item(user_id,product_id):
-    empty_wishlist_item = delete_wishlist_individual(user_id,product_id)
+def delete_wislist_individual(user_id,user_name product_id):
+    empty_wishlist_item = delete_wishlist_item(user_id,user_name,product_id)
     wishlist = _get_wish_list_all(user_id)
     return jsonify(wishlist)
 
 ## app route that deletes entire wishlist for user
 @app.route('/wishlist/<int:user_id>', methods = ['DELETE'])
-def delete_entire_wishlist(user_id):
+def delete_entire_wishlist(user_id,user_name):
     empty_user_wishlist = delete_wishlist(user_id)
     wishlist = _get_wish_list_all(user_id)
     return jsonify(wishlist) ## this should be an empty list so can just return an empty list instead 
