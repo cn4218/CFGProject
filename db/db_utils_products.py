@@ -56,6 +56,7 @@ def _map_values(result):
         )
     return mapped
 
+
 def get_all_products():
     """ Returns a list of dictionaries for all products """
     list_products = []
@@ -83,6 +84,7 @@ def get_all_products():
             print( "DB connection is closed" )
 
     return list_products
+
 
 def get_products_containing(ingredient):
     """ Returns a list of dictionaries of products containing a
@@ -194,7 +196,6 @@ def get_products_ingt_in_nth_position(ingredient, n):
 
     return list_products
 
-
 # # ### Received request format (ingredient_input):
 # input = {
 #     'filter': 'ordered',
@@ -205,25 +206,6 @@ def get_products_ingt_in_nth_position(ingredient, n):
 #              '5': ['', True]
 #              }
 # }
-
-def get_proper_ingredients_list(_dict):
-    """
-    1) FIRST this function receives the ingredients_input dictionary and format it with format_input(ingredients_input)
-    2) THEN A) If it is 'unordered' it sends it to get_products_unordered()
-            B) If it is 'ordered' it sends it to get_products_multi_criteria_search()
-    """
-    filtered = _dict['filter']
-    ingredients_input = _dict['data']
-    ingredients_output = format_input(ingredients_input)
-
-    if filtered == 'unordered':
-        list_products = get_products_unordered(ingredients_output)
-        return list_products # List of product dictionaries
-
-    elif filtered == 'ordered':
-        list_products = get_products_multi_criteria_search(ingredients_output)
-        return list_products # List of product dictionaries
-
 
 def format_input(ingredients_input):  # Chizu's function modified by Claire
     """ This takes a dictionary input in the structure
@@ -242,7 +224,6 @@ def format_input(ingredients_input):  # Chizu's function modified by Claire
                 tup = (ingredient.strip(), '0')  # position '0' means 'not included'
                 ingredients_output.append(tup)
     return ingredients_output   # List of tuples
-
 
 # ### Transmitted request format (ingredients_output):
 # ingredients_output = [('water','1'),('glycerin','0'),('alcohol','3'),('parfum','4'),('','5')]
@@ -317,7 +298,28 @@ def get_products_multi_criteria_search(output):
     # return intersection_exclude    # III = (A1 ∩ B2 ∩ C3) ∩ ∁X
 
 
-#############
+def get_proper_ingredients_list(_dict):
+    """
+    1) FIRST this function receives the ingredients_input dictionary and format it with format_input(ingredients_input)
+    2) THEN A) If it is 'unordered' it sends it to get_products_unordered()
+            B) If it is 'ordered' it sends it to get_products_multi_criteria_search()
+    """
+    filtered = _dict['filter']
+    ingredients_input = _dict['data']
+    ingredients_output = format_input(ingredients_input)
+
+    if filtered == 'unordered':
+        list_products = get_products_unordered(ingredients_output)
+        return list_products # List of product dictionaries
+
+    elif filtered == 'ordered':
+        list_products = get_products_multi_criteria_search(ingredients_output)
+        return list_products # List of product dictionaries
+
+######################################################
+# TEST TO RUN (NEED A WORKING SQL DB "Products"
+# WITH TABLES "products_table" AND "ingredients_table"
+# ----------------------------------------------------
 # ### Received request format (ingredient_input):
 input = {
     'filter': 'ordered',
@@ -331,26 +333,6 @@ input = {
 print(input)
 print(format_input(input['data']))
 
-# def format_input(ingredient_input):   # Chizu's function
-#     # need to make sure white spaces are removed before they are sent over the api
-#     """ This takes a dictionary input in the structure
-#     {"1":["ingredient1",True], "2": ["ingredient2",False],.....,"5":["ingredient5",True]}
-#     and creates a dictionary of 2 list values containing ingredients to include and not to include
-#     """
-#     ingredient_list = []
-#     not_ingredient_list = []
-#     for key,value in ingredient_input.items():
-#         ingredient,decision = value
-#         # if decision = True it means include ingredient, otherwise don't include
-#         if ingredient: # if not empty string
-#             if decision:
-#                 tup = (key,ingredient)
-#                 ingredient_list.append(tup)
-#             else:
-#                 not_ingredient_list.append(ingredient)
-#     return {"included": ingredient_list, "not_included": not_ingredient_list}
 
-
-#
 # if __name__ == "__main__":
 #     get_products_containing('glycerin')
