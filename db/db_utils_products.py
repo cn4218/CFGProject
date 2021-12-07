@@ -4,8 +4,8 @@ import mysql.connector
 from config import USER, PASSWORD, HOST
 
 
-class DbConnectionError(Exception):
-    pass
+# class DbConnectionError(Exception):
+#     pass
 
 
 def _connect_to_db(db_name):
@@ -13,7 +13,7 @@ def _connect_to_db(db_name):
         host=HOST,
         user=USER,
         password=PASSWORD,
-        # auth_plugin="mysql_native_password",
+        # auth_plugin="mysql_native_password",  # Do we need that? Could't make mock DB and check
         database=db_name,
     )
     return cnx
@@ -24,7 +24,7 @@ def _map_values(result):
     Example: Transforms (productID, product_name, ingredients_list) item tuple results
     (3 elements) from cur.fetchall() into a list of dictionaries having values item[0-2].
     Depending on which information we want to display, we may only choose these 3 columns
-    or add more. For N columns we would have to values item[0-(N-1)].
+    or add more. For N columns we would have values item[0-(N-1)].
     If we select all columns (*) in the queries, N=19 so we have item[0-18].
     /!\ Pay attention to match the order of the columns in the queries with this list!
     --> We chose to select all fields here: SELECT *
@@ -58,8 +58,8 @@ def _map_values(result):
 
 
 def get_all_products():
-    """ Returns a list of dictionaries for all products """
-    list_products = []
+    """ Returns a list of dictionaries for all products in th products_table table"""
+    list_products = []  # local value not used... or is it?
     try:
         db_name = "Products"
         db_connection = _connect_to_db( db_name )
@@ -104,7 +104,7 @@ def get_products_containing(ingredient):
 
         cur.execute(query)
         # This is a list with db records where each record is a tuple with as
-        # many elements as columns you selected in your query
+        # many elements as columns you selected in your query (here, all)
         result = (cur.fetchall())
         list_products = _map_values(result)
         cur.close()
@@ -123,7 +123,7 @@ def get_products_containing(ingredient):
 def get_products_not_containing(ingredient):
     """ Returns a list of dictionaries of products NOT containing a
     specific ingredient in their ingredient_list (fuzzy search)
-    This would appear as .../ingredient/0... in the route """
+    This would appear as .../ingredient/0... in the route (???) """
     list_products = []
     try:
         db_name = "Products"
@@ -208,9 +208,9 @@ def get_products_ingt_in_nth_position(ingredient, n):
 # }
 
 def format_input(ingredients_input):  # Chizu's function modified by Claire
-    """ This takes a dictionary input in the structure
+    """ This takes a dictionary input with the structure:
     {"1":["ingredient1",True], "2": ["ingredient2",False],.....,"5":["ingredient5",True]}
-    and returns a list containing tuples with ingredients to include (key number) or not (0)
+    and returns a list of tuples (i,k) with ingredients to include (key number k) or not (k=0)
     """
     ingredients_output = []
     for key,value in ingredients_input.items():
@@ -231,6 +231,10 @@ def format_input(ingredients_input):  # Chizu's function modified by Claire
 
 # IF UNORDERED ####################
 def get_products_unordered(output):
+    """
+    This function retrieves a list of dictionaries for products having some ingredients
+    and not having some others, regardless of their position in the ingredient_list table
+    """
     include = []
     exclude = []
     for pair in output:
@@ -267,6 +271,10 @@ def get_products_unordered(output):
 
 # IF ORDERED ##################################
 def get_products_multi_criteria_search(output):
+    """
+    This function retrieves a list of dictionaries for products having some ingredients
+    at a specific nth position and not having some other ingredients (no position required).
+    """
     include = []
     exclude = []
     for pair in output:
@@ -297,6 +305,7 @@ def get_products_multi_criteria_search(output):
     # intersection_exclude =  list(set(intersection_include).intersection(set(exclude)))
     # return intersection_exclude    # III = (A1 ∩ B2 ∩ C3) ∩ ∁X
 
+    # III = (A1 ∩ B2 ∩ C3) ∆ X = (A1 ∩ B2 ∩ C3) ∩ ∁X
 
 def get_proper_ingredients_list(_dict):
     """
@@ -317,7 +326,7 @@ def get_proper_ingredients_list(_dict):
         return list_products # List of product dictionaries
 
 ######################################################
-# TEST TO RUN (NEED A WORKING SQL DB "Products"
+# TEST TO RUN (NEED A WORKING SQL DB "Products")
 # WITH TABLES "products_table" AND "ingredients_table"
 # ----------------------------------------------------
 # ### Received request format (ingredient_input):
