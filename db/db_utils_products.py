@@ -245,9 +245,9 @@ def get_products_unordered(output):
             if n == '0':
                 # Strategy 1: exclude X = [products with X] --> [4]
                 exclude_list = get_products_containing(ingredient)
-                exclude.append(exclude_list)
+                exclude.extend(exclude_list)  # There might be duplicates but it doesn't matter
 
-                # (abandoned, too long)
+                # (abandoned, too long & big)
                 # Strategy 2: intersect with ∁X = [products without X] --> ∁[4]
                 # exclude_list = get_products_not_containing(ingredient)
                 # exclude.extend(exclude_list)
@@ -282,9 +282,9 @@ def get_products_multi_criteria_search(output):
         if n == '0':
             # Strategy 1: exclude X = [products with X] --> [4]
             exclude_list = get_products_containing(ingredient)
-            exclude.append(exclude_list)
+            exclude.extend(exclude_list)  # There might be duplicates but it doesn't matter
 
-            # (abandoned, too long)
+            # (abandoned, too long & big)
             # Strategy 2: intersect with ∁X = [products without X] --> ∁[4]
             # exclude_list = get_products_not_containing(ingredient)
             # exclude.extend(exclude_list)
