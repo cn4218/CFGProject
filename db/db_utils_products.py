@@ -197,7 +197,7 @@ def get_products_ingt_in_nth_position(ingredient, n):
     return list_products
 
 # # ### Received request format (ingredient_input):
-# input = {
+# user_input = {
 #     'filter': 'ordered',
 #     'data': {'1': ['water', True],
 #              '2': ['glycerin ', False],
@@ -330,7 +330,7 @@ def get_proper_ingredients_list(_dict):
 # WITH TABLES "products_table" AND "ingredients_table"
 # ----------------------------------------------------
 # ### Received request format (ingredient_input):
-input = {
+user_input = {
     'filter': 'ordered',
     'data': {'1': ['water', True],
              '2': ['glycerin ', False],
@@ -339,8 +339,8 @@ input = {
              '5': ['', True]
              }
 }
-print(input)
-print(format_input(input['data']))
+print(user_input)
+print(format_input(user_input['data']))
 
 
 # if __name__ == "__main__":
