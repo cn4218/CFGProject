@@ -117,6 +117,7 @@ def delete_user(User_ID, User_Name):
 # in case a user wants to update their user_name - not sure this works or if it's right, will need to fix!
 # also this is not necessary just thought it would be good to add? Ignore if needed
 def update_user(User_ID, Old_User_Name, New_User_Name):
+    result = False
     try:
         db_name = "user_info"
         db_connection = _create_db_connection(db_name)
@@ -127,12 +128,15 @@ def update_user(User_ID, Old_User_Name, New_User_Name):
         if Old_User_Name == cur.fetchone(['User_Name']):
             cur.execute("""UPDATE user_info SET user_name=%s WHERE user_id=%s""".format(New_User_Name, User_ID))
             db_connection.commit()
+            result = True
         else:
             print("The current user_name is incorrect")
+            result = False
     except Exception as err:
         raise DbConnectionError("Failed to read data from Database", err)
     finally:
         if db_connection:
             db_connection.close()
             cur.close()
+    return result
 
