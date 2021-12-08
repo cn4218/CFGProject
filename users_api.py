@@ -16,11 +16,14 @@ def user_acc():
     )
     return user
 
+
+# getting the profile for one user
 @app.route('/profile/<int:user_id>/<username>', methods=['GET'])
 def get_users(User_ID, User_Name):
     user = _get_user(User_ID, User_Name)
     return jsonify(user)
 
+# deleting a user
 @app.route('/delete/<int:user_id>')
 def delete_user(User_ID):
     user = delete_user(User_ID)
