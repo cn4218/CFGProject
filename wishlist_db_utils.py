@@ -191,8 +191,8 @@ def _get_wish_list_individual(UserID, ProductID):
         result = (cur.fetchall())
         wish = _map_values(result)
         cur.close()
-    except Exception as Error:
-        raise Error("Failed to get data from Database")
+    except Exception:
+        raise DbConnectionError("Failed to read data from DB")
     finally:
         if db_connection:
             db_connection.close()
@@ -215,8 +215,8 @@ def _get_wish_list_all(UserID):
         result = (cur.fetchall())
         wishlist = _map_values(result)
         cur.close()
-    except Exception as Error:
-        raise Error("Failed to get data from Database")
+    except Exception:
+        raise DbConnectionError("Failed to read data from DB")
     finally:
         if db_connection:
             db_connection.close()
