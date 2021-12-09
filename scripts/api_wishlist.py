@@ -18,7 +18,7 @@ def get_wishlist_item(user_id,username, product_id):
 
 
 
-@app.route('/wishlist',methods = ['PUT'])  
+@app.route('/wishlist/add',methods = ['PUT'])  
 def add_wish_list():
     wishlist_dict = request.get_json()
     add_wish_list(
