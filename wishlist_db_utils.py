@@ -153,17 +153,12 @@ def add_wish_list(UserID,
             Image_Nutrition_Small_url=Image_Nutrition_Small_url,
    )
 
-        try:
-            # the following line is because we need to execute the query on the cursor
-            cur.execute(query)
-        # To insert multiple rows into a table, use the executemany() method.
-        # this except error is in the case if multiple columns are being attempted to be inserted into the database
-        except:
-            cur.executemany(query)
-            # in Python whenever we make changes, we need to commit this as Python will otherwise treat this as a transaction
-            db_connection.commit()
-            # close the cursor connection
-            cur.close()
+    try:
+        # the following line is because we need to execute the query on the cursor
+        cur.execute(query)
+        db_connection.commit()
+        #  close the cursor connection
+        cur.close()
     except Exception:
         raise DbConnectionError("Failed to read data from DB")
     finally:
