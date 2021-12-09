@@ -4,26 +4,26 @@ from wishlist_db_utils import _get_wish_list_all, add_wish_list, _get_wish_list_
 
 app = Flask(__name__)
 
-## function that connects to db utils and retrieves list of dictionaries of products in a wishlist for a user id 
-@app.route('/wishlist/<int:user_id>', methods=['GET'])
+
+@app.route('/wishlist/<int:user_id>', methods=['GET'])   ##success
 def get_wishlist(user_id):
     wishlist = _get_wish_list_all(user_id)
-    return jsonify(wishlist)  ##returns list of dictionaries
-
-## function that connects to db utils and retrieves one specific product from wishlist using user id and product id
-@app.route('/wishlist/<int:user_id>/<int:product_id>', methods=['GET'])   ## not too sure if need /<int:product_id> in the url here, depends on ui
-def get_wishlist_item(user_id, product_id):
-    wishlist_item = _get_wish_list_individual(user_id, product_id)
-    return jsonify(wishlist_item)  ##returns one dicionary
+    return jsonify(wishlist)
 
 
-## function that formats dictionary as entries to put in db utils function, this adds an item to a users wishlist
-@app.route('/wishlist',methods = ['PUT'])
-def add_wish_list_put():
+@app.route('/wishlist/<int:user_id>/<int:product_id>', methods=['GET'])  ##success
+def get_wishlist_item(user_id,username, product_id):
+    wishlist_item = _get_wish_list_individual(user_id, username,product_id)
+    return jsonify(wishlist_item)
+
+
+
+@app.route('/wishlist',methods = ['PUT'])  
+def add_wish_list():
     wishlist_dict = request.get_json()
     add_wish_list(
-        UserID = wishlist_dict['UserID'], 
         Username = wishlist_dict['username'],
+        UserID = wishlist_dict['UserID'], 
         ProductID = wishlist_dict['wishlist']['ProductID'], 
         Code_Wish = wishlist_dict['wishlist']['Code_Wish'], 
         Product_name = wishlist_dict['wishlist']['Product_name'], 
@@ -42,21 +42,23 @@ def add_wish_list_put():
 
     )
 
-    return jsonify(wishlist_dict)   ## dictionary containing all above values
+    return jsonify(wishlist_dict)
 
-## deletes specific product from a users wishlist using db utils
-@app.route('/wishlist/<int:user_id>', methods=['DELETE'])
-def delete_wislist_individual(user_id,user_name product_id):
-    empty_wishlist_item = delete_wishlist_item(user_id,user_name,product_id)
+
+
+@app.route('/wishlist/delete/<int:user_id>/<int:product_id>')
+def delete_wislist_individual(user_id, product_id):
+    empty_wishlist_item = delete_wishlist_item(user_id,product_id)
     wishlist = _get_wish_list_all(user_id)
-    return jsonify(wishlist)
+    return jsonify(empty_wishlist_item)
+
 
 ## app route that deletes entire wishlist for user
-@app.route('/wishlist/<int:user_id>', methods = ['DELETE'])
-def delete_entire_wishlist(user_id,user_name):
+@app.route('/wishlist/delete/<int:user_id>')
+def delete_entire_wishlist(user_id):
     empty_user_wishlist = delete_wishlist(user_id)
     wishlist = _get_wish_list_all(user_id)
-    return jsonify(wishlist) ## this should be an empty list so can just return an empty list instead 
+    return jsonify([]) ## this should be an empty list so can just return an empty list instead 
 
 
 if __name__ == '__main__':
