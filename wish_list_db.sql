@@ -27,6 +27,7 @@ FOREIGN KEY (User_Name) REFERENCES User_Info (User_Name),
 CONSTRAINT PK_User PRIMARY KEY (User_Name, User_ID, productID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- this stored procedure called `fill_wish_list` to create dummy data within our database
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_wish_list`(
 UserID INT, 

@@ -1,6 +1,7 @@
 CREATE DATABASE if not exists CFG_Project;
 use CFG_Project;
 
+-- creating the user info table
 CREATE TABLE if not exists  `User_Info` (
 -- after we get an MVP, can possible implement user/password
 `User_ID` int NOT NULL UNIQUE AUTO_INCREMENT,
@@ -10,12 +11,15 @@ CREATE TABLE if not exists  `User_Info` (
 CONSTRAINT PK_User PRIMARY KEY (User_Name, User_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- this stored procedure called `fill_user_info` to create dummy data within our database
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_user_info`(UserName varchar(50), NameUser varchar(50), EmailAddress varchar(100))
 BEGIN
     INSERT INTO User_Info (User_Name, Name_User, Email_Address) VALUES (UserName, NameUser, EmailAddress);
 END$$
 DELIMITER ;
+
+-- creating the wish list table
 
 CREATE TABLE if not exists  `Wish_List` (
 `User_ID` int,
@@ -43,6 +47,7 @@ FOREIGN KEY (User_Name) REFERENCES User_Info(User_Name),
 CONSTRAINT PK_User PRIMARY KEY (User_Name, User_ID, productID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- this stored procedure called `fill_wish_list` to create dummy data within our database
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_wish_list`(
 UserID INT, 

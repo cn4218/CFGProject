@@ -10,6 +10,7 @@ CREATE TABLE if not exists  `User_Info` (
 CONSTRAINT PK_User PRIMARY KEY (User_Name, User_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- this stored procedure called `fill_user_info` to create dummy data within our database
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_user_info`(UserName varchar(50), NameUser varchar(50), EmailAddress varchar(100))
 BEGIN
@@ -17,3 +18,4 @@ BEGIN
 END$$
 DELIMITER ;
 
+select * from User_Info;
