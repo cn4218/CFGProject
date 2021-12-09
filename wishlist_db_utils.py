@@ -1,20 +1,24 @@
 import mysql.connector
 from config import USER, PASSWORD, HOST
 
+# delete the username [not add wish list]
+
 
 class DbConnectionError(Exception):
     pass
 
 
 def _connect_to_db(db_name):
-    cnx = mysql.connector.connect(
-        host=HOST,
-        user=USER,
-        password=PASSWORD,
-        auth_plugin="mysql_native_password",
-        database=db_name,
-    )
-    print("MySQL Database Connection is Successful")
+    try:
+        cnx = mysql.connector.connect(
+            host=HOST,
+            user=USER,
+            password=PASSWORD,
+            auth_plugin="mysql_native_password",
+            database=db_name,
+        )
+        print("MySQL Database Connection is Successful")
+        return cnx
     except mysql.connector.Error as e:
     print("Error code:"), e.errno  # error number
     print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
@@ -22,8 +26,7 @@ def _connect_to_db(db_name):
     print("Error:"), e  # errno, sqlstate, msg values
     s = str(e)
     print("Error:"), s  # errno, sqlstate, msg values
-    return cnx
-
+    
 
 def _map_values(result):
     mapped = []
@@ -68,7 +71,7 @@ def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
 
-        query = """ INSERT INTO wish_list ({User_ID},
+        query = """ INSERT INTO wish_list (User_ID,
          {User_Name},
         {productID},
         {code},
@@ -111,7 +114,6 @@ def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity
                        '{Image_Nutrition_Small_url}'
                   )
                   """.format(
-            User_ID = User_ID,
             UserID = UserID,
             User_Name = User_Name,
             UserName = UserName,
@@ -179,11 +181,11 @@ def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity
 
 # return info for a wishlist entry at a time
 # need both user ID and product ID for the specific entry
-def _get_wish_list_individual(UserID, UserName, ProductID):
-    print('The User ID: {}. The User Name: {}. The Product ID: {}.'.format(UserID, UserName, ProductID))
+def _get_wish_list_individual(UserID, ProductID):
+    print('The User ID: {}. The User Name: {}. The Product ID: {}.'.format(UserID, ProductID))
     try:
         db_name = "CFG_Project"
-        db_connection = _create_db_connection(db_name)
+        db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
 
@@ -195,19 +197,19 @@ def _get_wish_list_individual(UserID, UserName, ProductID):
         result = (cur.fetchall())
         wish = _map_values(result)
         cur.close()
-    except Exception:
-        raise Error("Failed to get data from Database")
+    except Exception as Error:
+        print(Error)
     finally:
         if db_connection:
             db_connection.close()
             print("Database connection is closed")
     return wish
 
-def _get_wish_list_all(UserID, UserName):
-    print('The User ID: {}. The User Name: {}'.format(UserID, UserName))
+def _get_wish_list_all(UserID):
+    print('The User ID: {}.'.format(UserID))
     try:
         db_name = "CFG_Project"
-        db_connection = _create_db_connection(db_name)
+        db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
 
@@ -232,11 +234,11 @@ def _get_wish_list_all(UserID, UserName):
 this function deletes an individual item from the wishlist
 It takes the User ID, User Name and Product ID to find the unique user
 '''
-def delete_wishlist_item(UserID, UserName, ProductID):
-    print('The User ID: {}. The User Name: {}. The Product ID: {}. to be deleted'.format(UserID, UserName, ProductID))
+def delete_wishlist_item(UserID, ProductID):
+    print('The User ID: {}. The Product ID: {}. to be deleted'.format(UserID, ProductID))
     try:
         db_name = 'CFG_Project'
-        db_connection = create_db_connection(db_name)
+        db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
 
@@ -253,18 +255,17 @@ def delete_wishlist_item(UserID, UserName, ProductID):
         if db_connection:
             db_connection.close()
 
-    return print("The new resultant wishlist for this user with User ID: {} and User Name: {}. is: {}")\
-        .format(UserID, UserName, _get_wish_list_all(UserID, UserName))
+    return {}
 
 '''
 This function deletes an entire wishlist associated with a user
 It takes the User ID and User Name to find the unique user
 '''
-def delete_wishlist(UserID, UserName):
-    print('The User ID: {}. The User Name: {}. The Product ID: {}. to be deleted'.format(UserID, UserName, ProductID))
+def delete_wishlist(UserID):
+    print('The User ID: {}, to be deleted'.format(UserID))
     try:
         db_name = 'CFG_Project'
-        db_connection = create_db_connection(db_name)
+        db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
 
