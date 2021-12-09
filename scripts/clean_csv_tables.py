@@ -84,6 +84,9 @@ products_table = products_table.loc[products_table['ingredients_text'] != '']
 # products_table = products_table[products_table['ingredients_text'].notnull()]
 # products_table
 
+# Put all ingredients in lower case  (better than .lower() because works on special characters like ß --> ss)
+products_table['ingredients_text'] = products_table['ingredients_text'].str.casefold()
+
 #####################
 # # PROBLEM: Some lists of ingredients are not separated by commas! >.<
 # products_table['ingredients_text_list'][18842]
@@ -98,10 +101,10 @@ products_table = products_table.loc[products_table['ingredients_text'] != '']
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('∙', ',')
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('•', ',')
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace(';', ',')
-products_table['ingredients_text'] = products_table['ingredients_text'].str.lower()
 
-# Replace special characters the cause trouble: àèé–д®čı©óšöäüä
+products_table['ingredients_text'] = products_table['ingredients_text'].str.replace(' / ', '/')
 
+# Replace special characters that cause trouble: àèé–д®čı©óšöäüä
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('à', 'a')
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('è', 'e')
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('é', 'e')
@@ -115,7 +118,40 @@ products_table['ingredients_text'] = products_table['ingredients_text'].str.repl
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('ä', 'a')
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('ü', 'u')
 products_table['ingredients_text'] = products_table['ingredients_text'].str.replace('ä', 'a')
+
+# char_to_replace = {
+#                       '∙': ',',
+#                       '•': ',',
+#                       ';': ','
+#                       'à': 'a',
+#                       'è': 'e',
+#                       'é': 'e',
+#                       '–': '-',
+#                       'д': 'D',
+#                       '®': '',
+#                       'č': 'c',
+#                       'ó': 'o',
+#                       'š': 's',
+#                       'ö': 'o',
+#                       'ä': 'a',
+#                       'ü': 'u',
+#                       'ä': 'a'
+# }
+
+# Now we would like to replace all water synonyms by 'aqua' but make sure we only do it once!
+# This is why I included the commas on both sides.
+words_for_aqua = [',aqua (water),', ',water (aqua),', ',water,', ',eau,', ',aqua/water/eau,', ',aqua / water,', 
+',aqua/water,', ',water/aqua,' ',water / aqua,', ',water / eau,', ',water/eau,', ',aqua / eau,', ',aqua/eau,', 
+',eau/aqua,', ',eau / aqua,', ',eau/water,', ',eau / water,', ',eau (water),', ',water (eau),', ',aqua (eau),', 
+',eau (aqua),', ',aqua/eau/water,', ',aqua/eau/water,', ',eau/water/aqua,', ',eau/aqua/water,', ',water/aqua/eau,', 
+',water/eau/aqua,']
+
+for word in words_for_aqua:
+    products_table['ingredients_text'] = products_table['ingredients_text'].str.replace(word, ',aqua,')
+
+
 # products_table['ingredients_text'] = SPLIT STRING AFTER 'ingredients: ' AND KEEP LEFT PART
+
 
 # products_table['ingredients_text']
 
@@ -173,7 +209,6 @@ products_table.to_csv(r'OBF_TABLE_Ac.csv',  header = True, index = True, index_l
 # # Now we expand the True_List_Stuff lists in a new dataframe, while keeping the order of the elements:
 # # TABLE B (7082 rows x 118 columns)
 ingredients_table = products_table["ingredients_text_list"].apply(pd.Series)
-
 
 # Get rid of the NaN values
 ingredients_table = ingredients_table.fillna('')
@@ -235,15 +270,15 @@ ingredients_table.to_csv(r'OBF_TABLE_B.csv',  header = True, index = True, index
 ### Filter the dataframe depending on the value of a column
 ### MAYBE replaced by SQL queries instead!!!
 
-# def filter_by_ingredient_index(table, ingredient:str, index:int)
-#     filtered_table = table.loc[table[index] == ingredient]
-#     return filtered_table
+def filter_by_ingredient_index(table, ingredient:str, index:int):
+    filtered_table = table.loc[table[index] == ingredient]
+    return filtered_table
 
-# # Subset based on specific value of the first ingredient (index 0)
-# # Glycerin as a 1st ingredient: 36 rows
+# Subset based on specific value of the first ingredient (index 0)
+# Glycerin as a 1st ingredient: 36 rows
 # filter_ingredients_table_glycerin_1 = ingredients_table.loc[ingredients_table[0] == 'glycerin']
 # filter_ingredients_table_glycerin_1
-# filter_by_ingredient_index(ingredients_table, 'glycerin', 0)
+filter_by_ingredient_index(ingredients_table, 'glycerin', 0)
 
 # # Subset based on specific value of the second ingredient (index 1)
 # # Glyceryl Stearate as a 2nd ingredient: 6 rows
