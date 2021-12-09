@@ -22,8 +22,8 @@ def get_wishlist_item(user_id,username, product_id):
 def add_wish_list():
     wishlist_dict = request.get_json()
     add_wish_list(
-        Username = wishlist_dict['username'],
         UserID = wishlist_dict['UserID'], 
+        Username = wishlist_dict['username'],
         ProductID = wishlist_dict['wishlist']['ProductID'], 
         Code_Wish = wishlist_dict['wishlist']['Code_Wish'], 
         Product_name = wishlist_dict['wishlist']['Product_name'], 
@@ -42,7 +42,7 @@ def add_wish_list():
 
     )
 
-    return jsonify(wishlist_dict)
+    return wishlist_dict
 
 
 
