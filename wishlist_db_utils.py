@@ -24,8 +24,7 @@ def _connect_to_db(db_name):
     print("Error:"), s  # errno, sqlstate, msg values
     return cnx
 
-# lord only know if i even need this function , as i have later updated the MySQL database with a seperate function
-# im following lesson 20 and im a bit confused
+
 def _map_values(result):
     mapped = []
     for item in result:
@@ -64,7 +63,7 @@ def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity
     Brands, Brands_tags, Categories_Tags, Countries_en, Ingredients_Text, Image_url, Image_Small_url, Image_Ingredients_url,
     Image_Ingredients_Small_url, Image_Nutrition_url, Image_Nutrition_Small_url):
     try:
-        db_name = "wish_list"
+        db_name = "CFG_Project"
         db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -158,18 +157,24 @@ def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity
             ProductID = ProductID)
 
         try:
+            # the following line is because we need to execute the query on the cursor
             cur.execute(query)
         # To insert multiple rows into a table, use the executemany() method.
         # this except error is in the case if multiple columns are being attempted to be inserted into the database
         except:
             cur.executemany(query)
 
+# in Python whenever we make changes, we need to commit this as Python will otherwise treat this as a transaction
         db_connection.commit()
+        # close the cursor connection
         cur.close()
     except Exception:
         raise DbConnectionError("Failed to read data from DB")
     finally:
         if db_connection:
+            # close the database connection
+            # good to close connection as only a limited amount of connections can be supported
+            # long standing connections are computationally expensive
             db_connection.close()
 
 # return info for a wishlist entry at a time
@@ -177,7 +182,7 @@ def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity
 def _get_wish_list_individual(UserID, UserName, ProductID):
     print('The User ID: {}. The User Name: {}. The Product ID: {}.'.format(UserID, UserName, ProductID))
     try:
-        db_name = "wish_list"
+        db_name = "CFG_Project"
         db_connection = _create_db_connection(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -201,7 +206,7 @@ def _get_wish_list_individual(UserID, UserName, ProductID):
 def _get_wish_list_all(UserID, UserName):
     print('The User ID: {}. The User Name: {}'.format(UserID, UserName))
     try:
-        db_name = "wish_list"
+        db_name = "CFG_Project"
         db_connection = _create_db_connection(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -230,7 +235,7 @@ It takes the User ID, User Name and Product ID to find the unique user
 def delete_wishlist_item(UserID, UserName, ProductID):
     print('The User ID: {}. The User Name: {}. The Product ID: {}. to be deleted'.format(UserID, UserName, ProductID))
     try:
-        db_name = 'wish_list'
+        db_name = 'CFG_Project'
         db_connection = create_db_connection(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -258,7 +263,7 @@ It takes the User ID and User Name to find the unique user
 def delete_wishlist(UserID, UserName):
     print('The User ID: {}. The User Name: {}. The Product ID: {}. to be deleted'.format(UserID, UserName, ProductID))
     try:
-        db_name = 'wish_list'
+        db_name = 'CFG_Project'
         db_connection = create_db_connection(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -288,7 +293,7 @@ def update_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quant
     Image_Ingredients_Small_url, Image_Nutrition_url, Image_Nutrition_Small_url):
     print('The User ID: {}. The User Name: {}. The Product ID: {}.'.format(UserID, UserName, ProductID))
     try:
-        db_name = "wish_list"
+        db_name = "CFG_Project"
         db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
