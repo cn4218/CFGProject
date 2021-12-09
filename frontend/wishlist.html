@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/27198caf80.js" crossorigin="anonymous"></script>
+
+    <title>Wishlist&#127800;</title>
+    <link rel="stylesheet" href="stylesheet/results_style.css">
+    <style>
+        .active {
+            background-color: rgb(245,49,99,0.5);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            
+        <a  class="navbar-brand" href="#">Cosmo&#127800;</a>
+        <!--When you shrink your browser window, at some point it gets so small that you might not be able 
+            to see all its contents and so bootstrap suggests a toggle feature that lets you still access those contents 
+            via a dropdown navbar that is activated by the click of a button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navblock">
+            <span >&#127800;</span><i class="fas fa-caret-down"></i>
+        </button>
+
+
+
+
+        <div class="collapse navbar-collapse"  id="navblock"> <!--This is what makes it possible for you to list items horizontally -->
+        <ul class="navbar-nav mr-auto"> <!--mr-auto wasn't working until I switched from bootstrap 5 to 4-->
+            <li class="nav-item "> <!--Initially these elements appear in vertically because flex direction was set to column in css(you can see this when you inspect with developer tools)-->
+                <a href="http://127.0.0.1:5500/frontend/home.html" class="nav-link " id="Home" onclick="show_active('Home')">Home</a> <!--when you first open the website it starts off at home page-->
+            </li>
+            <li class="nav-item">
+                <a href="http://127.0.0.1:5500/frontend/results.html" class="nav-link " id="Results" onclick="show_active('Results')">Results</a>
+            </li>
+            <li class="nav-item">
+                <a href="http://127.0.0.1:5500/frontend/wishlist.html" class="nav-link active" id="Wishlist" onclick="show_active('Wishlist')">Wishlist</a>
+            </li>
+        </ul>
+        
+        <ul class="navbar-nav navbar-right">
+            <li class="nav-item"><a href="#" class="nav-link" id="Profile" onclick="show_active('Profile')">Profile</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" id="Log-out" onclick="show_active('Log-out')">Log out</a></li>
+        </ul>
+        </div>
+  
+    </nav>
+
+
+    <!----------------------------------------------------------------------------------------------------------------------------------->
+
+
+
+    <div id="wishlist-parent">         
+        <h1 style="color:rgb(245,49,99,0.7)"> Wishlist</h1> 
+        <div id="wishlist-items"></div> 
+      
+    </div>
+    
+    <script src="js_scripts/wishlist_func.js"></script>
+
+</body>
+</html>
