@@ -20,12 +20,13 @@ def _connect_to_db(db_name):
         print("MySQL Database Connection is Successful")
         return cnx
     except mysql.connector.Error as e:
-    print("Error code:"), e.errno  # error number
-    print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
-    print("Error message:"), e.msg  # error message
-    print("Error:"), e  # errno, sqlstate, msg values
-    s = str(e)
-    print("Error:"), s  # errno, sqlstate, msg values
+        print("Error code:"), e.errno  # error number
+        print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
+        print("Error message:"), e.msg  # error message
+        print("Error:"), e  # errno, sqlstate, msg values
+        s = str(e)
+        print("Error:"), s  # errno, sqlstate, msg values
+
     
 
 def _map_values(result):
@@ -38,7 +39,7 @@ def _map_values(result):
                 "productID": item[2],
                 "code": item[3],
                 "product_name": item[4],
-                "quantity": item[5]
+                "quantity": item[5],
                 "brands": item[6],
                 "brands_tags": item[7],
                 "categories_tags": item[8],
@@ -72,25 +73,25 @@ def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity
         print("Connected to DB: %s" % db_name)
 
         query = """ INSERT INTO wish_list (User_ID,
-         {User_Name},
-        {productID},
-        {code},
-        {product_name},
-        {quantity},
-         {brands}, 
-        {brands_tags},
-        {categories_tags},
-        {categories_en},
-        {countries},
-        {countries_tags},
-        {countries_en},
-        {ingredients_text},
-        {image_url},
-        {image_small_url},
-         {image_ingredients_url},
-         {image_ingredients_small_url},
-        {image_nutrition_url},
-        {image_nutrition_small_url}
+         User_Name,
+        productID,
+        code,
+        product_name,
+        quantity,
+         brands, 
+        brands_tags,
+        categories_tags,
+        categories_en,
+        countries,
+        countries_tags,
+        countries_en,
+        ingredients_text,
+        image_url,
+        image_small_url,
+         image_ingredients_url,
+         image_ingredients_small_url,
+        image_nutrition_url,
+        image_nutrition_small_url
         ) 
         VALUES ( '{UserID}',
                        '{UserName}',
@@ -115,43 +116,24 @@ def add_wish_list(UserID, UserName, ProductID, Code_Wish, Product_name, Quantity
                   )
                   """.format(
             UserID = UserID,
-            User_Name = User_Name,
             UserName = UserName,
-            productID = productID,
             ProductID = ProductID,
-            code = code,
             Code_Wish = Code_Wish,
-            product_name = product_name,
             Product_name = Product_name,
-            quantity = quantity,
             Quantity = Quantity,
-            brands = brands,
             Brands = Brands,
-            brands_tags = brands_tags,
             Brands_tags = Brands_tags,
-            categories_tags = categories_tags,
             Categories_Tags = Categories_Tags,
-            categories_en = categories_en,
             Categories_En = Categories_En,
-            countries=countries,
             Countries = Countries,
-            countries_tags = countries_tags,
             Countries_Tags = Countries_Tags,
-            countries_en = countries_en,
             Countries_en = Countries_en,
-            ingredients_text = ingredients_text,
             Ingredients_Text = Ingredients_Text,
-            image_url = image_url,
             Image_url = Image_url,
-            image_small_url = image_small_url,
             Image_Small_url = Image_Small_url,
-            image_ingredients_url = image_ingredients_url,
             Image_Ingredients_url = Image_Ingredients_url,
-            image_ingredients_small_url = image_ingredients_small_url,
             Image_Ingredients_Small_url = Image_Ingredients_Small_url,
-            image_nutrition_url = image_nutrition_url,
             Image_Nutrition_url = Image_Nutrition_url,
-            image_nutrition_small_url = image_nutrition_small_url,
             Image_Nutrition_Small_url = Image_Nutrition_Small_url,
             User_ID = User_ID,
             UserID = UserID,
