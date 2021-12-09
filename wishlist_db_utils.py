@@ -116,7 +116,7 @@ def add_wish_list(UserID,
                        '{Product_name}',
                       '{Quantity}',
                       '{Brands}',
-                      ` '{Brands_tags}',
+                      '{Brands_tags}',
                      '{Categories_Tags}',
                        '{Categories_En}',
                        '{Countries}',
@@ -152,8 +152,6 @@ def add_wish_list(UserID,
             Image_Nutrition_url=Image_Nutrition_url,
             Image_Nutrition_Small_url=Image_Nutrition_Small_url,
    )
-
-    try:
         # the following line is because we need to execute the query on the cursor
         cur.execute(query)
         db_connection.commit()
@@ -352,13 +350,7 @@ def update_wish_list(UserID,
             Image_Nutrition_Small_url=Image_Nutrition_Small_url,
         )
 
-        try:
-            cur.execute(query)
-        # To insert multiple rows into a table, use the executemany() method.
-        # this except error is in the case if multiple columns are being attempted to be inserted into the database
-        except:
-            cur.executemany(query)
-
+        cur.execute(query)
         db_connection.commit()
         cur.close()
     except Exception:
