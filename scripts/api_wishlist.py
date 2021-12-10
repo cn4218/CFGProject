@@ -4,7 +4,7 @@ from wishlist_db_utils import _get_wish_list_all, add_wish_list, _get_wish_list_
 
 app = Flask(__name__)
 
-
+"""DISPLAYING WISHLIST FUNCTIONS"""
 @app.route('/wishlist/<int:user_id>', methods=['GET'])   ##success
 def get_wishlist(user_id):
     wishlist = _get_wish_list_all(user_id)
@@ -17,7 +17,7 @@ def get_wishlist_item(user_id,username, product_id):
     return jsonify(wishlist_item)
 
 
-
+"""ADDING TO DATABASE FUNCTION ENDPOINT"""
 @app.route('/wishlist/add',methods = ['PUT'])  
 def add_wish_list():
     wishlist_dict = request.get_json()
@@ -45,11 +45,10 @@ def add_wish_list():
     return wishlist_dict
 
 
-
+"""DELETING FROM DATABASE ENDPOINTS"""
 @app.route('/wishlist/delete/<int:user_id>/<int:product_id>')
 def delete_wislist_individual(user_id, product_id):
     empty_wishlist_item = delete_wishlist_item(user_id,product_id)
-    wishlist = _get_wish_list_all(user_id)
     return jsonify(empty_wishlist_item)
 
 
@@ -57,8 +56,7 @@ def delete_wislist_individual(user_id, product_id):
 @app.route('/wishlist/delete/<int:user_id>')
 def delete_entire_wishlist(user_id):
     empty_user_wishlist = delete_wishlist(user_id)
-    wishlist = _get_wish_list_all(user_id)
-    return jsonify([]) ## this should be an empty list so can just return an empty list instead 
+    return jsonify(empty_user_wishlist) ## this should be an empty list so can just return an empty list instead 
 
 
 if __name__ == '__main__':
