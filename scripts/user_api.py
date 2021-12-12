@@ -1,4 +1,4 @@
-
+"""MAINLY NIKITAS CODE, JUST MADE AFEW CHANGES SO IT ALL RUNS TOGETHER!!!"""
 from flask import Flask, jsonify, request
 from user_db_utils import add_user, _get_user, delete_user, verify_login
 from wishlist_db_utils import delete_wishlist
