@@ -1,6 +1,4 @@
-
-### sql alchemy
-## flask tutorial ; corey schafer
+"""MOST OF THIS IS NIKITAS CODE BUT I JUST MADE A FEW CHANGES SO IT ALL RUNS SMOOTHLY!!!"""
 import mysql.connector
 from mysql.connector import Error
 from config import USER, PASSWORD, HOST
