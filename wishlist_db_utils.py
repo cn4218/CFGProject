@@ -60,11 +60,6 @@ def _map_values(result):
 '''
 It's really annoying to have all the parameters being passed as an argument but this is the only way to do it
 You cannot pass another function or such into the argument for the add_wish_list function as it outside of the localised scope
-
-Use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then 
-MySQL inserts it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently 
-without generating an error. (I added a unique key constraint to the MySQL table which forces the combination of the
-User_ID, User_Name and Name_User to be a unique combination)
 '''
 
 def add_wish_list(UserID,
@@ -92,7 +87,7 @@ def add_wish_list(UserID,
         db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
-        query = """ INSERT IGNORE INTO wish_list (User_ID,
+        query = """ INSERT INTO wish_list (User_ID,
          User_Name,
         productID,
         code,

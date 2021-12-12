@@ -79,7 +79,7 @@ Image_Nutrition_url VARCHAR(1000),
 Image_Nutrition_Small_url VARCHAR(1000)
 )
 BEGIN
-    INSERT IGNORE INTO Wish_List (
+    INSERT INTO Wish_List (
     User_ID, 
     User_Name,
     productID, 
