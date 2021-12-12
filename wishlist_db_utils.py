@@ -33,101 +33,120 @@ def _map_values(result):
     for item in result:
         mapped.append(
             {
-                "User_ID": item[0],
-                "User_Name": item[1],
-                "productID": item[2],
-                "code": item[3],
-                "product_name": item[4],
-                "quantity": item[5],
-                "brands": item[6],
-                "brands_tags": item[7],
-                "categories_tags": item[8],
-                "categories_en": item[9],
-                "countries": item[10],
-                "countries_tags": item[11],
-                "countries_en": item[12],
-                "ingredients_text": item[13],
-                "image_url": item[14],
-                "image_small_url": item[15],
-                "image_ingredients_url": item[16],
-                "image_ingredients_small_url": item[17],
-                "image_nutrition_url": item[18],
-                "image_nutrition_small_url": item[19],
+                "productID": item[0],
+                "code": item[1],
+                "product_name": item[2],
+                "ingredients_text": item[3],
+                "quantity": item[4],
+                "brands": item[5],
+                "brands_tags": item[6],
+                "categories_tags": item[7],
+                "categories_en": item[8],
+                "countries": item[9],
+                "countries_tags": item[10],
+                "countries_en": item[11],
+                "image_url": item[12],
+                "image_small_url": item[13],
+                "image_ingredients_url": item[14],
+                "image_ingredients_small_url": item[15],
+                "image_nutrition_url": item[16],
+                "image_nutrition_small_url": item[17],
+                "User_ID": item[18],
             }
         )
     return mapped
+
+#I included this functon to reduce the repetition of the try, except and finall blocks in other functions
+# Having these within its own function will also make testing easier and I believe the code would be more readable
+def exception_handler(query,error_message):
+    """This function is the exception handler for exceptions that may arise when connecting to the
+    db """
+    try:
+        db_name = "CFG_Project"
+        db_connection = _connect_to_db( db_name )
+        cur = db_connection.cursor()
+        print( "Connected to DB: %s" % db_name )
+
+        cur.execute(query)
+        db_connection.commit()
+        cur.close()
+
+    except Exception:
+        raise DbConnectionError(error_message)
+    #you pass whatever error message depending on the function that exception_handler is called within
+    #eg of error messages could be "failure to insert data" , "failure to delete data"
+
+    finally:
+        if db_connection:
+            db_connection.close()
+            print( "DB connection is closed" )
+    return
+
 
 '''
 It's really annoying to have all the parameters being passed as an argument but this is the only way to do it
 You cannot pass another function or such into the argument for the add_wish_list function as it outside of the localised scope
 '''
 
-def add_wish_list(UserID,
-    UserName,
-    ProductID,
-    Code_Wish,
-    Product_name,
-    Quantity,
-    Brands,
-    Brands_tags,
-    Categories_Tags,
-    Categories_En,
-    Countries,
-    Countries_Tags,
-    Countries_en,
-    Ingredients_Text,
-    Image_url,
-    Image_Small_url,
-    Image_Ingredients_url,
-    Image_Ingredients_Small_url,
-    Image_Nutrition_url,
-    Image_Nutrition_Small_url):
-    try:
-        db_name = "CFG_Project"
-        db_connection = _connect_to_db(db_name)
-        cur = db_connection.cursor()
-        print("Connected to DB: %s" % db_name)
-        query = """ INSERT INTO wish_list (User_ID,
-         User_Name,
-        productID,
-        code,
-        product_name,
-        quantity,
-         brands, 
-        brands_tags,
-        categories_tags,
-        categories_en,
-        countries,
-        countries_tags,
-        countries_en,
-        ingredients_text,
-        image_url,
-        image_small_url,
-         image_ingredients_url,
-         image_ingredients_small_url,
-        image_nutrition_url,
-        image_nutrition_small_url
+def add_wish_list(ProductID,
+Code_Wish,
+Product_name,
+Ingredients_Text,
+Quantity,
+Brands,
+Brands_tags,
+Categories_Tags,
+Categories_En,
+Countries,
+Countries_Tags,
+Countries_en,
+Image_url,
+Image_Small_url,
+Image_Ingredients_url,
+Image_Ingredients_Small_url,
+Image_Nutrition_url,
+Image_Nutrition_Small_url,
+UserID):
+
+        query = """ INSERT INTO wish_list (productID,
+code,
+product_name,
+ingredients_text,
+quantity,
+brands,
+brands_tags,
+categories_tags,
+categories_en,
+countries,
+countries_tags,
+countries_en,
+image_url,
+image_small_url,
+image_ingredients_url,
+image_ingredients_small_url,
+image_nutrition_url,
+image_nutrition_small_url,
+User_ID
         ) 
-        VALUES ( '{UserID}',
-                       '{UserName}',
-                       '{ProductID}',
-                      '{Code_Wish}',
-                       '{Product_name}',
-                      '{Quantity}',
-                      '{Brands}',
-                      '{Brands_tags}',
-                     '{Categories_Tags}',
-                       '{Categories_En}',
-                       '{Countries}',
-                       '{Countries_Tags}',
-                       '{Countries_en}',
-                       '{Ingredients_Text}',
-                       '{Image_url}',
-                      '{Image_Small_url}',
-                       '{Image_Ingredients_url}',
-                      '{Image_Ingredients_Small_url}', 
-                       '{Image_Nutrition_url}', 
-                       '{Image_Nutrition_Small_url}'
+        VALUES ( '{ProductID}',
+                       '{Code_Wish}',
+                       '{Product_name}',            
+                      '{Ingredients_Text}',         
+                       '{Quantity}',       
+                      '{Brands}',          
+                      '{Brands_tags}',      
+                      '{Categories_Tags}',      
+                     '{Categories_En}',         
+                       '{Countries}',          
+                       '{Countries_Tags}',            
+                       '{Countries_en}',  
+                       '{Image_url}',             
+                       '{Image_Small_url}',        
+                       '{Image_Ingredients_url}',         
+                      '{Image_Ingredients_Small_url}',                  
+                       '{Image_Nutrition_url}',                     
+                      '{Image_Nutrition_Small_url}', 
+                       '{UserID}'
                   )
                   """.format(
             UserID=UserID,
@@ -151,19 +170,17 @@ def add_wish_list(UserID,
             Image_Nutrition_url=Image_Nutrition_url,
             Image_Nutrition_Small_url=Image_Nutrition_Small_url,
    )
-        # the following line is because we need to execute the query on the cursor
-        cur.execute(query)
-        db_connection.commit()
-        #  close the cursor connection
-        cur.close()
-    except Exception:
-        raise DbConnectionError("Failed to read data from DB")
-    finally:
-        if db_connection:
-            # close the database connection
-            # good to close connection as only a limited amount of connections can be supported
-            # long standing connections are computationally expensive
-            db_connection.close()
+
+        error_message = "Failure to insert data into DB"
+        exception_handler(query, error_message)
+
+        display_statement = "Wishist item added for user {user_name} with user ID {user_id}".format(
+            user_name=user_name,
+            user_id=user_id
+        )
+
+        print(display_statement)
+
 
 # return info for a wishlist entry at a time
 # need both user ID and product ID for the specific entry
