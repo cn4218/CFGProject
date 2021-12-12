@@ -5,9 +5,14 @@ use CFG_Project;
 CREATE TABLE if not exists  `User_Info` (
 -- after we get an MVP, can possible implement user/password
 `User_ID` int NOT NULL UNIQUE AUTO_INCREMENT,
-`User_Name` varchar(50) NOT NULL,
+`User_Name` varchar(50) UNIQUE NOT NULL,
 `Name_User` varchar(50) NOT NULL,
 `Email_Address` varchar(100) NOT NULL,
+-- In this statement, you can also use the UNIQUE INDEX instead of the UNIQUE KEY because they are synonyms.
+-- When you create a UNIQUE constraint, MySQL creates a UNIQUE index behind the scenes.
+-- UNIQUE KEY line is to prevent duplicate records, the combination of User_ID, User_Name, Name_User should produce a unique record
+-- unique_user is the name I gave to the key
+UNIQUE KEY unique_user (User_ID, User_Name, Name_User),
 CONSTRAINT PK_User PRIMARY KEY (User_Name, User_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -15,7 +20,9 @@ CONSTRAINT PK_User PRIMARY KEY (User_Name, User_ID)
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_user_info`(UserName varchar(50), NameUser varchar(50), EmailAddress varchar(100))
 BEGIN
-    INSERT INTO User_Info (User_Name, Name_User, Email_Address) VALUES (UserName, NameUser, EmailAddress);
+-- Use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
+-- it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently without generating an error.
+    INSERT IGNORE INTO User_Info (User_Name, Name_User, Email_Address) VALUES (UserName, NameUser, EmailAddress);
 END$$
 DELIMITER ;
 
@@ -72,7 +79,7 @@ Image_Nutrition_url VARCHAR(1000),
 Image_Nutrition_Small_url VARCHAR(1000)
 )
 BEGIN
-    INSERT INTO Wish_List (
+    INSERT IGNORE INTO Wish_List (
     User_ID, 
     User_Name,
     productID, 
