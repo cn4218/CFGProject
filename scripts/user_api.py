@@ -1,7 +1,7 @@
 """MAINLY NIKITAS CODE, JUST MADE AFEW CHANGES SO IT ALL RUNS TOGETHER!!!"""
 from flask import Flask, jsonify, request
-from user_db_utils import add_user, _get_user, delete_user, verify_login
-from wishlist_db_utils import delete_wishlist
+from user_db_utils import add_user, _get_user, delete_user, verify_login, update_user
+from wishlist_db_utilsver import delete_wishlist
 
 app = Flask(__name__)
 
@@ -12,12 +12,19 @@ def get_users(user_id):
     return jsonify(user)
 
 # adding a user
+## added old user name so that they can verify its the write person
+## work in progress func (doesnt work yet)
+@app.route('/profile/change/<int:user_id>/old_user_name>/<new_user_name>')
+def change_user_name(user_id,old_user_name, new_user_name):
+    result = update_user(user_id,old_user_name,new_user_name)
+    return jsonify(result)
+
+
 
 @app.route('/register', methods=['POST'])
 def user_acc():
     user = request.get_json()
     add_user(
-        User_ID=user['User_ID'],
         User_Name=user['User_Name'],
         Name_User=user['Name_User'],
         Email_Address=user['Email_Address'],
@@ -47,3 +54,4 @@ def verify_login_api():
 
 if __name__ == '__main__':
     app.run(port=5003,debug=True)
+
