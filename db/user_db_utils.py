@@ -67,12 +67,8 @@ def _get_user(User_ID):
             print("Database connection is closed")
     return user
 
-# result = _get_user(5)
-# print('res',result)
-# dict = _get_user(6)
-# print('dict',dict)
-    # insert user info into sql table
-def add_user(User_ID, User_Name, Name_User, Email_Address):
+
+def add_user(User_Name, Name_User, Email_Address):
     try:
         db_name = "CFG_Project"
         db_connection = _create_db_connection(db_name)
@@ -80,8 +76,8 @@ def add_user(User_ID, User_Name, Name_User, Email_Address):
         print("Connected to DB: %s" % db_name)
 
         query = """
-            INSERT INTO user_info (User_ID, User_Name, Name_User, Email_Address) VALUES (%s, %s, %s, %s) """
-        record = (User_ID, User_Name, Name_User, Email_Address)
+            INSERT INTO user_info (User_Name, Name_User, Email_Address) VALUES ( %s, %s, %s) """
+        record = (User_Name, Name_User, Email_Address)
         cur.execute(query, record)
         db_connection.commit()
         print("User has been successfully inserted to user_info table")
@@ -132,9 +128,12 @@ def update_user(User_ID, Old_User_Name, New_User_Name):
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
 
-        cur.execute(""" SELECT user_name FROM user_info WHERE user_id=%s""".format(User_ID))
-        if Old_User_Name == cur.fetchone(['User_Name']):
-            cur.execute("""UPDATE user_info SET user_name=%s WHERE user_id=%s""".format(New_User_Name, User_ID))
+        cur.execute("""SELECT user_name FROM user_info WHERE user_id = {}""".format(User_ID))
+        result = cur.fetchall()
+        old_user = cur.fetchone()
+        old_user_check = result[0][0]
+        if Old_User_Name == old_user_check:
+            cur.execute("""UPDATE user_info SET user_name = '{}' WHERE user_id = {}""".format(New_User_Name, User_ID))
             db_connection.commit()
             result = True
         else:
@@ -148,7 +147,7 @@ def update_user(User_ID, Old_User_Name, New_User_Name):
             cur.close()
     return result
 
-
+# result = update_user(1,'fang123','fang12')
 
 def verify_login(user_id,username,name_user, email_address):
     try: 
@@ -186,6 +185,37 @@ def verify_login(user_id,username,name_user, email_address):
         if db_connection:
             db_connection.close()
             print("DB connection is closed")
+
+def get_user_id(username,name,email):
+    try:
+        db_name = "CFG_Project"
+        db_connection = _create_db_connection(db_name)
+        cur = db_connection.cursor()
+        print("Connected to DB: %s" % db_name)
+        # 
+        cur.execute("""SELECT user_id FROM user_info 
+        WHERE user_name = '{}' and name_user = '{}' and email_address = '{}'""".format(username,name,email))
+        result = cur.fetchall()
+        number_users = len(result)
+        if number_users == 1:
+            userid = result[0][0]
+            answer = userid
+        elif number_users == 0:
+            print('There are multiple users with the same user info')
+            answer = False
+        else:
+            print("Issue finding unique user id")
+
+            answer = False
+        cur.close()
+        return answer
+
+    except Exception as err:
+        raise DbConnectionError("Failed to read data from Database", err)
+    finally:
+        if db_connection:
+            db_connection.close()
+            cur.close()
 
 # ans = verify_login(4,'owen123','Owen','owen@gmai1l.com')
 # print(ans)
