@@ -31,7 +31,7 @@ def exception_handler(query, error_message):
                     db  - it is a more general function"""
 
     try:
-        db_name = "CFG_Project"
+        db_name = 'cfg_project'
         db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -58,7 +58,7 @@ def exception_handler_wish(query, error_message):
             db specifically for the wishlist functions"""
 
     try:
-        db_name = "CFG_Project"
+        db_name = 'cfg_project'
         db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -133,7 +133,10 @@ Image_Nutrition_url,
 Image_Nutrition_Small_url,
 UserID):
 
-    query = """ INSERT INTO wish_list (productID,
+# use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
+# it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently without generating an error.
+
+    query = """ INSERT IGNORE INTO wish_list (productID,
     code,
     product_name,
     ingredients_text,
