@@ -149,11 +149,10 @@ User_ID
                        '{UserID}'
                   )
                   """.format(
-            UserID=UserID,
-            UserName=UserName,
             ProductID=ProductID,
             Code_Wish=Code_Wish,
             Product_name=Product_name,
+            Ingredients_Text=Ingredients_Text,
             Quantity=Quantity,
             Brands=Brands,
             Brands_tags=Brands_tags,
@@ -162,21 +161,20 @@ User_ID
             Countries=Countries,
             Countries_Tags=Countries_Tags,
             Countries_en=Countries_en,
-            Ingredients_Text=Ingredients_Text,
             Image_url=Image_url,
             Image_Small_url=Image_Small_url,
             Image_Ingredients_url=Image_Ingredients_url,
             Image_Ingredients_Small_url=Image_Ingredients_Small_url,
             Image_Nutrition_url=Image_Nutrition_url,
             Image_Nutrition_Small_url=Image_Nutrition_Small_url,
+            UserID=UserID
    )
 
         error_message = "Failure to insert data into DB"
         exception_handler(query, error_message)
 
-        display_statement = "Wishist item added for user {user_name} with user ID {user_id}".format(
-            user_name=user_name,
-            user_id=user_id
+        display_statement = "Wishist item added for user with user ID {user_id}".format(
+            user_id=UserID
         )
 
         print(display_statement)
@@ -292,27 +290,26 @@ def delete_wishlist(UserID):
 this function updates the wishlist for a record that has already been entered into the database
 this function updates based on the user ID, username and product ID
 '''
-def update_wish_list(UserID,
-    UserName,
-    ProductID,
-    Code_Wish,
-    Product_name,
-    Quantity,
-    Brands,
-    Brands_tags,
-    Categories_Tags,
-    Categories_En,
-    Countries,
-    Countries_Tags,
-    Countries_en,
-    Ingredients_Text,
-    Image_url,
-    Image_Small_url,
-    Image_Ingredients_url,
-    Image_Ingredients_Small_url,
-    Image_Nutrition_url,
-    Image_Nutrition_Small_url):
-    print('The User ID: {}. The User Name: {}. The Product ID: {}.'.format(UserID, UserName, ProductID))
+def update_wish_list(ProductID,
+Code_Wish,
+Product_name,
+Ingredients_Text,
+Quantity,
+Brands,
+Brands_tags,
+Categories_Tags,
+Categories_En,
+Countries,
+Countries_Tags,
+Countries_en,
+Image_url,
+Image_Small_url,
+Image_Ingredients_url,
+Image_Ingredients_Small_url,
+Image_Nutrition_url,
+Image_Nutrition_Small_url,
+UserID):
+    print('The User ID: {}.  The Product ID: {}.'.format(UserID, UserName, ProductID))
     try:
         db_name = "CFG_Project"
         db_connection = _connect_to_db(db_name)
@@ -321,34 +318,34 @@ def update_wish_list(UserID,
 
         query = """
                   UPDATE  wish_list
-                  SET
-                      `User_ID` = '{UserID}',
-                      `User_Name` = '{UserName}',
-                      `productID` = '{ProductID}',
-                      `code` = '{Code_Wish}',
-                      `product_name` = '{Product_name}',
-                      `quantity` = '{Quantity}',
-                      `brands` = '{Brands}',
-                      `brands_tags` = '{Brands_tags}',
-                      `categories_tags` = '{Categories_Tags}',
-                      `categories_en` = '{Categories_En}',
-                      `countries` = '{Countries}',
-                      `countries_tags` = '{Countries_Tags}',
-                      `countries_en` = '{Countries_en}',
-                      `ingredients_text` = '{Ingredients_Text}',
-                      `image_url` = '{Image_url}',
-                      `image_small_url` = '{Image_Small_url}',
-                      `image_ingredients_url` = '{Image_Ingredients_url}',
-                      `image_ingredients_small_url` = '{Image_Ingredients_Small_url}',
-                      `image_nutrition_url` = '{Image_Nutrition_url}',
-                      `image_nutrition_small_url` = '{Image_Nutrition_Small_url}'
-                  WHERE `User_ID` = '{UserID}' AND  `User_Name = '{UserName}' AND  `productID = '{ProductID}'
+                  SET              
+                  
+                  `productID` = '{ProductID}',
+                  `code` = '{Code_Wish}',
+                  `product_name` = '{Product_name}',
+                  `ingredients_text` = '{Ingredients_Text}',
+                  `quantity` = '{Quantity}',
+                   `brands` = '{Brands}',
+                   `brands_tags` = '{Brands_tags}',
+                   `categories_tags` = '{Categories_Tags}',
+                   `categories_en` = '{Categories_En}',
+                   `countries` = '{Countries}',
+                   `countries_tags` = '{Countries_Tags}',
+                   `countries_en` = '{Countries_en}',
+                    `image_url` = '{Image_url}',
+                    `image_small_url` = '{Image_Small_url}',
+                    `image_ingredients_url` = '{Image_Ingredients_url}',
+                     `image_ingredients_small_url` = '{Image_Ingredients_Small_url}',
+                     `image_nutrition_url` = '{Image_Nutrition_url}',
+                     `image_nutrition_small_url` = '{Image_Nutrition_Small_url}',
+                     `User_ID` = '{UserID}'
+
+                  WHERE `User_ID` = '{UserID}' AND  `productID = '{ProductID}'
                   """.format(
-            UserID=UserID,
-            UserName=UserName,
             ProductID=ProductID,
             Code_Wish=Code_Wish,
             Product_name=Product_name,
+            Ingredients_Text=Ingredients_Text,
             Quantity=Quantity,
             Brands=Brands,
             Brands_tags=Brands_tags,
@@ -357,13 +354,13 @@ def update_wish_list(UserID,
             Countries=Countries,
             Countries_Tags=Countries_Tags,
             Countries_en=Countries_en,
-            Ingredients_Text=Ingredients_Text,
             Image_url=Image_url,
             Image_Small_url=Image_Small_url,
             Image_Ingredients_url=Image_Ingredients_url,
             Image_Ingredients_Small_url=Image_Ingredients_Small_url,
             Image_Nutrition_url=Image_Nutrition_url,
             Image_Nutrition_Small_url=Image_Nutrition_Small_url,
+            UserID=UserID
         )
 
         cur.execute(query)
