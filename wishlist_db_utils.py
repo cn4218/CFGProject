@@ -1,9 +1,6 @@
 import mysql.connector
 from config import USER, PASSWORD, HOST
 
-# delete the username [not add wish list]
-
-
 class DbConnectionError(Exception):
     pass
 
@@ -26,6 +23,60 @@ def _connect_to_db(db_name):
         print("Error:"), e  # errno, sqlstate, msg values
         s = str(e)
         print("Error:"), s  # errno, sqlstate, msg values
+
+
+
+def exception_handler(query, error_message):
+    """This function is the exception handler for exceptions that may arise when connecting to the
+                    db  - it is a more general function"""
+
+    try:
+        db_name = "CFG_Project"
+        db_connection = _connect_to_db(db_name)
+        cur = db_connection.cursor()
+        print("Connected to DB: %s" % db_name)
+
+        cur.execute(query)
+        db_connection.commit()
+        cur.close()
+
+    except Exception:
+        raise DbConnectionError(error_message)
+    # you pass whatever error message depending on the function that exception_handler is called within
+    # eg of error messages could be "failure to insert data" , "failure to delete data"
+
+    finally:
+        if db_connection:
+            db_connection.close()
+            print("DB connection is closed")
+    return
+
+
+
+def exception_handler_wish(query, error_message):
+    """This function is the exception handler for exceptions that may arise when connecting to the
+            db specifically for the wishlist functions"""
+
+    try:
+        db_name = "CFG_Project"
+        db_connection = _connect_to_db(db_name)
+        cur = db_connection.cursor()
+        print("Connected to DB: %s" % db_name)
+
+        cur.execute(query)
+
+        result = (cur.fetchall())
+        wish = _map_values(result)
+        cur.close()
+
+    except Exception:
+        raise DbConnectionError(error_message)
+
+    finally:
+        if db_connection:
+            db_connection.close()
+            print("DB connection is closed")
+    return wish
 
 
 def _map_values(result):
@@ -56,32 +107,6 @@ def _map_values(result):
         )
     return mapped
 
-#I included this functon to reduce the repetition of the try, except and finall blocks in other functions
-# Having these within its own function will also make testing easier and I believe the code would be more readable
-def exception_handler(query,error_message):
-    """This function is the exception handler for exceptions that may arise when connecting to the
-    db """
-    try:
-        db_name = "CFG_Project"
-        db_connection = _connect_to_db( db_name )
-        cur = db_connection.cursor()
-        print( "Connected to DB: %s" % db_name )
-
-        cur.execute(query)
-        db_connection.commit()
-        cur.close()
-
-    except Exception:
-        raise DbConnectionError(error_message)
-    #you pass whatever error message depending on the function that exception_handler is called within
-    #eg of error messages could be "failure to insert data" , "failure to delete data"
-
-    finally:
-        if db_connection:
-            db_connection.close()
-            print( "DB connection is closed" )
-    return
-
 
 '''
 It's really annoying to have all the parameters being passed as an argument but this is the only way to do it
@@ -108,102 +133,77 @@ Image_Nutrition_url,
 Image_Nutrition_Small_url,
 UserID):
 
-        query = """ INSERT INTO wish_list (productID,
-code,
-product_name,
-ingredients_text,
-quantity,
-brands,
-brands_tags,
-categories_tags,
-categories_en,
-countries,
-countries_tags,
-countries_en,
-image_url,
-image_small_url,
-image_ingredients_url,
-image_ingredients_small_url,
-image_nutrition_url,
-image_nutrition_small_url,
-User_ID
-        ) 
-        VALUES ( '{ProductID}',
-                       '{Code_Wish}',
-                       '{Product_name}',            
-                      '{Ingredients_Text}',         
-                       '{Quantity}',       
-                      '{Brands}',          
-                      '{Brands_tags}',      
-                      '{Categories_Tags}',      
-                     '{Categories_En}',         
-                       '{Countries}',          
-                       '{Countries_Tags}',            
-                       '{Countries_en}',  
-                       '{Image_url}',             
-                       '{Image_Small_url}',        
-                       '{Image_Ingredients_url}',         
-                      '{Image_Ingredients_Small_url}',                  
-                       '{Image_Nutrition_url}',                     
-                      '{Image_Nutrition_Small_url}', 
-                       '{UserID}'
-                  )
-                  """.format(
-            ProductID=ProductID,
-            Code_Wish=Code_Wish,
-            Product_name=Product_name,
-            Ingredients_Text=Ingredients_Text,
-            Quantity=Quantity,
-            Brands=Brands,
-            Brands_tags=Brands_tags,
-            Categories_Tags=Categories_Tags,
-            Categories_En=Categories_En,
-            Countries=Countries,
-            Countries_Tags=Countries_Tags,
-            Countries_en=Countries_en,
-            Image_url=Image_url,
-            Image_Small_url=Image_Small_url,
-            Image_Ingredients_url=Image_Ingredients_url,
-            Image_Ingredients_Small_url=Image_Ingredients_Small_url,
-            Image_Nutrition_url=Image_Nutrition_url,
-            Image_Nutrition_Small_url=Image_Nutrition_Small_url,
-            UserID=UserID
-   )
+    query = """ INSERT INTO wish_list (productID,
+    code,
+    product_name,
+    ingredients_text,
+    quantity,
+    brands,
+    brands_tags,
+    categories_tags,
+    categories_en,
+    countries,
+    countries_tags,
+    countries_en,
+    image_url,
+    image_small_url,
+    image_ingredients_url,
+    image_ingredients_small_url,
+    image_nutrition_url,
+    image_nutrition_small_url,
+    User_ID
+            ) 
+            VALUES ( '{ProductID}',
+                           '{Code_Wish}',
+                           '{Product_name}',            
+                          '{Ingredients_Text}',         
+                           '{Quantity}',       
+                          '{Brands}',          
+                          '{Brands_tags}',      
+                          '{Categories_Tags}',      
+                         '{Categories_En}',         
+                           '{Countries}',          
+                           '{Countries_Tags}',            
+                           '{Countries_en}',  
+                           '{Image_url}',             
+                           '{Image_Small_url}',        
+                           '{Image_Ingredients_url}',         
+                          '{Image_Ingredients_Small_url}',                  
+                           '{Image_Nutrition_url}',                     
+                          '{Image_Nutrition_Small_url}', 
+                           '{UserID}'
+                      )
+                      """.format(
+        ProductID=ProductID,
+        Code_Wish=Code_Wish,
+        Product_name=Product_name,
+        Ingredients_Text=Ingredients_Text,
+        Quantity=Quantity,
+        Brands=Brands,
+        Brands_tags=Brands_tags,
+        Categories_Tags=Categories_Tags,
+        Categories_En=Categories_En,
+        Countries=Countries,
+        Countries_Tags=Countries_Tags,
+        Countries_en=Countries_en,
+        Image_url=Image_url,
+        Image_Small_url=Image_Small_url,
+        Image_Ingredients_url=Image_Ingredients_url,
+        Image_Ingredients_Small_url=Image_Ingredients_Small_url,
+        Image_Nutrition_url=Image_Nutrition_url,
+        Image_Nutrition_Small_url=Image_Nutrition_Small_url,
+        UserID=UserID
+    )
 
-        error_message = "Failure to insert data into DB"
-        exception_handler(query, error_message)
+    error_message = "Failure to insert data into DB"
 
-        display_statement = "Wishist item added for user with user ID {user_id}".format(
-            user_id=UserID
-        )
+    exception_handler(query, error_message)
 
-        print(display_statement)
+    display_statement = "Wishist item added for user with user ID {user_id}".format(
+        user_id=UserID
+    )
 
-def exception_handler_wish(query,error_message):
-    """This function is the exception handler for exceptions that may arise when connecting to the
-    db """
-    try:
-        db_name = "CFG_Project"
-        db_connection = _connect_to_db( db_name )
-        cur = db_connection.cursor()
-        print( "Connected to DB: %s" % db_name )
-
-        cur.execute(query)
-
-        result = (cur.fetchall())
-        wish = _map_values(result)
-        cur.close()
-
-    except Exception:
-        raise DbConnectionError(error_message)
-    #you pass whatever error message depending on the function that exception_handler is called within
-    #eg of error messages could be "failure to insert data" , "failure to delete data"
-
-    finally:
-        if db_connection:
-            db_connection.close()
-            print( "DB connection is closed" )
-    return wish
+    print(display_statement)
 
 
 # return info for a wishlist entry at a time
@@ -212,7 +212,7 @@ def _get_wish_list_individual(UserID, ProductID):
     print('The User ID: {}. The Product ID: {}.'.format(UserID, ProductID))
 
     query = """ SELECT * FROM wish_list 
-             WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
+                 WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
 
     error_message = "Failed to read data from DB"
 
@@ -223,12 +223,11 @@ def _get_wish_list_all(UserID):
     print('The User ID: {}.'.format(UserID))
 
     query = """ SELECT * FROM wish_list 
-             WHERE User_ID = '{}' """.format(UserID)
+                 WHERE User_ID = '{}' """.format(UserID)
 
     error_message = "Failed to read data from DB"
 
     exception_handler_wish(query, error_message)
-
 
 
 '''
@@ -239,10 +238,10 @@ def delete_wishlist_item(UserID, ProductID):
     print('The User ID: {}. The Product ID: {}. to be deleted'.format(UserID, ProductID))
 
     query = """
-            DELETE FROM Wish_List 
-            WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
+                DELETE FROM Wish_List 
+                WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
 
-    error_message = "Failed to read data from DB"
+    error_message = "Failed to read and subsequently delete data from DB"
     exception_handler(query, error_message)
 
     display_statement = (
@@ -259,11 +258,11 @@ def delete_wishlist(UserID):
     print('The User ID: {}, to be deleted'.format(UserID))
 
     query = """
-            DELETE FROM Wish_List 
-            WHERE User_ID = '{}' 
-            """.format(UserID)
+                DELETE FROM Wish_List 
+                WHERE User_ID = '{}' 
+                """.format(UserID)
 
-    error_message = "Failed to read data from DB"
+    error_message = "Failed to read and subsequently delete data from DB"
     exception_handler(query, error_message)
 
     display_statement = (
@@ -295,54 +294,55 @@ Image_Ingredients_Small_url,
 Image_Nutrition_url,
 Image_Nutrition_Small_url,
 UserID):
+
     print('The User ID: {}.  The Product ID: {}.'.format(UserID, ProductID))
     query = """
-                  UPDATE  wish_list
-                  SET              
-                  
-                  `productID` = '{ProductID}',
-                  `code` = '{Code_Wish}',
-                  `product_name` = '{Product_name}',
-                  `ingredients_text` = '{Ingredients_Text}',
-                  `quantity` = '{Quantity}',
-                   `brands` = '{Brands}',
-                   `brands_tags` = '{Brands_tags}',
-                   `categories_tags` = '{Categories_Tags}',
-                   `categories_en` = '{Categories_En}',
-                   `countries` = '{Countries}',
-                   `countries_tags` = '{Countries_Tags}',
-                   `countries_en` = '{Countries_en}',
-                    `image_url` = '{Image_url}',
-                    `image_small_url` = '{Image_Small_url}',
-                    `image_ingredients_url` = '{Image_Ingredients_url}',
-                     `image_ingredients_small_url` = '{Image_Ingredients_Small_url}',
-                     `image_nutrition_url` = '{Image_Nutrition_url}',
-                     `image_nutrition_small_url` = '{Image_Nutrition_Small_url}',
-                     `User_ID` = '{UserID}'
+                      UPDATE  wish_list
+                      SET              
 
-                  WHERE `User_ID` = '{UserID}' AND  `productID = '{ProductID}'
-                  """.format(
-            ProductID=ProductID,
-            Code_Wish=Code_Wish,
-            Product_name=Product_name,
-            Ingredients_Text=Ingredients_Text,
-            Quantity=Quantity,
-            Brands=Brands,
-            Brands_tags=Brands_tags,
-            Categories_Tags=Categories_Tags,
-            Categories_En=Categories_En,
-            Countries=Countries,
-            Countries_Tags=Countries_Tags,
-            Countries_en=Countries_en,
-            Image_url=Image_url,
-            Image_Small_url=Image_Small_url,
-            Image_Ingredients_url=Image_Ingredients_url,
-            Image_Ingredients_Small_url=Image_Ingredients_Small_url,
-            Image_Nutrition_url=Image_Nutrition_url,
-            Image_Nutrition_Small_url=Image_Nutrition_Small_url,
-            UserID=UserID
-        )
+                      `productID` = '{ProductID}',
+                      `code` = '{Code_Wish}',
+                      `product_name` = '{Product_name}',
+                      `ingredients_text` = '{Ingredients_Text}',
+                      `quantity` = '{Quantity}',
+                       `brands` = '{Brands}',
+                       `brands_tags` = '{Brands_tags}',
+                       `categories_tags` = '{Categories_Tags}',
+                       `categories_en` = '{Categories_En}',
+                       `countries` = '{Countries}',
+                       `countries_tags` = '{Countries_Tags}',
+                       `countries_en` = '{Countries_en}',
+                        `image_url` = '{Image_url}',
+                        `image_small_url` = '{Image_Small_url}',
+                        `image_ingredients_url` = '{Image_Ingredients_url}',
+                         `image_ingredients_small_url` = '{Image_Ingredients_Small_url}',
+                         `image_nutrition_url` = '{Image_Nutrition_url}',
+                         `image_nutrition_small_url` = '{Image_Nutrition_Small_url}',
+                         `User_ID` = '{UserID}'
 
-    error_message = "Failed to read data from DB"
+                      WHERE `User_ID` = '{UserID}' AND  `productID = '{ProductID}'
+                      """.format(
+        ProductID=ProductID,
+        Code_Wish=Code_Wish,
+        Product_name=Product_name,
+        Ingredients_Text=Ingredients_Text,
+        Quantity=Quantity,
+        Brands=Brands,
+        Brands_tags=Brands_tags,
+        Categories_Tags=Categories_Tags,
+        Categories_En=Categories_En,
+        Countries=Countries,
+        Countries_Tags=Countries_Tags,
+        Countries_en=Countries_en,
+        Image_url=Image_url,
+        Image_Small_url=Image_Small_url,
+        Image_Ingredients_url=Image_Ingredients_url,
+        Image_Ingredients_Small_url=Image_Ingredients_Small_url,
+        Image_Nutrition_url=Image_Nutrition_url,
+        Image_Nutrition_Small_url=Image_Nutrition_Small_url,
+        UserID=UserID
+    )
+
+    error_message = "Failed to red data and subsequently update records from DB"
     exception_handler(query, error_message)
 
