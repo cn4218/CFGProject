@@ -16,6 +16,7 @@ def add_new_wishlist():
                         'Quantity': '100 ml',
                         'Brands': 'Weleda',
                         'Brands_tags': 'weleda',
+                        'Categories': 'Skincare',
                         'Categories_Tags': r'en:body,en:body-oils,fr:huile-de-massage',
                         'categories_en': r'Body,Body-oils,fr:huile-de-massage',
                         'countries': 'France',
