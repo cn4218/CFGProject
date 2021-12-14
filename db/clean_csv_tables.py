@@ -149,7 +149,7 @@ words_for_aqua = [',aqua (water),', ',water (aqua),', ',water,', ',eau,', ',aqua
 for word in words_for_aqua:
     products_table['ingredients_text'] = products_table['ingredients_text'].str.replace(word, ',aqua,')
 
-
+# ### TO DO  (although I already cleaned that in the cosmo_tables.sql DB file)
 # products_table['ingredients_text'] = SPLIT STRING AFTER 'ingredients: ' AND KEEP LEFT PART
 
 

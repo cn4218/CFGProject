@@ -1,3 +1,3 @@
-HOST = "localhost:3306"
+HOST = "localhost"  # "localhost:3306"
 USER = "root"
-PASSWORD = "xxxxxxxxxxxxxxx"
+PASSWORD = "Pikachu"

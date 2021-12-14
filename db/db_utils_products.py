@@ -4,8 +4,8 @@ import mysql.connector
 from config import USER, PASSWORD, HOST
 
 
-# class DbConnectionError(Exception):
-#     pass
+class DbConnectionError(Exception):
+    pass
 
 
 def _connect_to_db(db_name):
@@ -13,7 +13,7 @@ def _connect_to_db(db_name):
         host=HOST,
         user=USER,
         password=PASSWORD,
-        # auth_plugin="mysql_native_password",  # Do we need that? Could't make mock DB and check
+        auth_plugin="mysql_native_password",  # Do we need that? Couldn't make mock DB and check
         database=db_name,
     )
     return cnx
@@ -58,7 +58,7 @@ def _map_values(result):
 
 
 def get_all_products():
-    """ Returns a list of dictionaries for all products in th products_table table"""
+    """ Returns a list of dictionaries for all products in the products_table table"""
     list_products = []  # local value not used... or is it?
     try:
         db_name = "Products"
@@ -99,7 +99,7 @@ def get_products_containing(ingredient):
         query = f"""
             SELECT * 
             FROM products_table 
-            WHERE ingredients_list LIKE '%{ingredient}%'
+            WHERE ingredients_text LIKE '%{ingredient}%'
             """
 
         cur.execute(query)
@@ -134,7 +134,7 @@ def get_products_not_containing(ingredient):
         query = f"""
             SELECT *
             FROM products_table 
-            WHERE ingredients_list NOT LIKE '%{ingredient}%'
+            WHERE ingredients_text NOT LIKE '%{ingredient}%'
             """
 
         cur.execute( query )
@@ -339,9 +339,10 @@ user_input = {
              '5': ['', True]
              }
 }
-print(user_input)
-print(format_input(user_input['data']))
+# print(user_input)
+# print(format_input(user_input['data']))
 
 
-# if __name__ == "__main__":
-#     get_products_containing('glycerin')
+if __name__ == "__main__":
+    # print(get_products_containing('glycerin'))
+    get_proper_ingredients_list(user_input)
