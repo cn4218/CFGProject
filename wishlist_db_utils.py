@@ -1,6 +1,71 @@
 import mysql.connector
 from config import USER, PASSWORD, HOST
 
+'''
+Functions contained in this file:
+_connect_to_db(db_name)
+exception_handler(query)
+exception_handler_wish(query)
+_map_values(result)
+
+add_wish_list(
+ProductID,
+Code_Wish,
+Product_name,
+Ingredients_Text,
+Quantity,
+Brands,
+Brands_tags,
+Categories,
+Categories_Tags,
+Categories_En,
+Countries,
+Countries_Tags,
+Countries_en,
+Image_url,
+Image_Small_url,
+Image_Ingredients_url,
+Image_Ingredients_Small_url,
+Image_Nutrition_url,
+Image_Nutrition_Small_url,
+UserID
+)
+
+_get_wish_list_individual(UserID, ProductID)
+_get_wish_list_all(UserID)
+delete_wishlist_item(UserID, ProductID)
+delete_wishlist(UserID)
+
+update_wish_list(
+        ProductID,
+        Code_Wish,
+        Product_name,
+        Ingredients_Text,
+        Quantity,
+        Brands,
+        Brands_tags,
+        Categories,
+        Categories_Tags,
+        Categories_En,
+        Countries,
+        Countries_Tags,
+        Countries_en,
+        Image_url,
+        Image_Small_url,
+        Image_Ingredients_url,
+        Image_Ingredients_Small_url,
+        Image_Nutrition_url,
+        Image_Nutrition_Small_url,
+        UserID
+)
+'''
+
+"""
+For Chizu:
+I commented out my error messages because I've been struggling to connect to MySQL databases so I wanted to see the 
+errors thrown without my printed error message
+"""
+
 class DbConnectionError(Exception):
     pass
 
@@ -25,8 +90,8 @@ def _connect_to_db(db_name):
         print("Error:"), s  # errno, sqlstate, msg values
 
 
-
-def exception_handler(query, error_message):
+# (query, error_message)
+def exception_handler(query):
     """This function is the exception handler for exceptions that may arise when connecting to the
                     db  - it is a more general function"""
 
@@ -40,8 +105,16 @@ def exception_handler(query, error_message):
         db_connection.commit()
         cur.close()
 
-    except Exception:
-        raise DbConnectionError(error_message)
+    except mysql.connector.Error as e:
+        print("Error code:"), e.errno  # error number
+        print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
+        print("Error message:"), e.msg  # error message
+        print("Error:"), e  # errno, sqlstate, msg values
+        s = str(e)
+        print("Error:"), s  # errno, sqlstate, msg values
+
+    # except Exception:
+    #     raise DbConnectionError(error_message)
     # you pass whatever error message depending on the function that exception_handler is called within
     # eg of error messages could be "failure to insert data" , "failure to delete data"
 
@@ -52,8 +125,8 @@ def exception_handler(query, error_message):
     return
 
 
-
-def exception_handler_wish(query, error_message):
+# (query, error_message)
+def exception_handler_wish(query):
     """This function is the exception handler for exceptions that may arise when connecting to the
             db specifically for the wishlist functions"""
 
@@ -69,8 +142,16 @@ def exception_handler_wish(query, error_message):
         wish = _map_values(result)
         cur.close()
 
-    except Exception:
-        raise DbConnectionError(error_message)
+    except mysql.connector.Error as e:
+        print("Error code:"), e.errno  # error number
+        print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
+        print("Error message:"), e.msg  # error message
+        print("Error:"), e  # errno, sqlstate, msg values
+        s = str(e)
+        print("Error:"), s  # errno, sqlstate, msg values
+
+    # except Exception:
+    #     raise DbConnectionError(error_message)
 
     finally:
         if db_connection:
@@ -88,21 +169,22 @@ def _map_values(result):
                 "code": item[1],
                 "product_name": item[2],
                 "ingredients_text": item[3],
-                "quantity": item[4],
-                "brands": item[5],
-                "brands_tags": item[6],
-                "categories_tags": item[7],
-                "categories_en": item[8],
-                "countries": item[9],
-                "countries_tags": item[10],
-                "countries_en": item[11],
-                "image_url": item[12],
-                "image_small_url": item[13],
-                "image_ingredients_url": item[14],
-                "image_ingredients_small_url": item[15],
-                "image_nutrition_url": item[16],
-                "image_nutrition_small_url": item[17],
-                "User_ID": item[18],
+                 "quantity": item[4],
+                 "brands": item[5],
+                 "brands_tags": item[6],
+                 "categories": item[7],
+                 "categories_tags": item[8],
+                 "categories_en": item[9],
+                  "countries": item[10],
+                 "countries_tags": item[11],
+                  "countries_en": item[12],
+                  "image_url": item[13],
+                  "image_small_url": item[14],
+                  "image_ingredients_url": item[15],
+                  "image_ingredients_small_url": item[16],
+                  "image_nutrition_url": item[17],
+                  "image_nutrition_small_url": item[18],
+                  "User_ID": item[19],
             }
         )
     return mapped
@@ -113,13 +195,15 @@ It's really annoying to have all the parameters being passed as an argument but 
 You cannot pass another function or such into the argument for the add_wish_list function as it outside of the localised scope
 '''
 
-def add_wish_list(ProductID,
+def add_wish_list(
+ProductID,
 Code_Wish,
 Product_name,
 Ingredients_Text,
 Quantity,
 Brands,
 Brands_tags,
+Categories,
 Categories_Tags,
 Categories_En,
 Countries,
@@ -131,47 +215,50 @@ Image_Ingredients_url,
 Image_Ingredients_Small_url,
 Image_Nutrition_url,
 Image_Nutrition_Small_url,
-UserID):
+UserID
+):
 
 # use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
 # it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently without generating an error.
 
     query = """ INSERT IGNORE INTO wish_list (productID,
-    code,
-    product_name,
-    ingredients_text,
-    quantity,
-    brands,
-    brands_tags,
-    categories_tags,
-    categories_en,
-    countries,
-    countries_tags,
-    countries_en,
-    image_url,
-    image_small_url,
-    image_ingredients_url,
-    image_ingredients_small_url,
-    image_nutrition_url,
-    image_nutrition_small_url,
-    User_ID
+code,
+product_name,
+ingredients_text,
+quantity,
+brands,
+brands_tags,
+categories,
+categories_tags,
+categories_en,
+countries,
+countries_tags,
+countries_en,
+image_url,
+image_small_url,
+image_ingredients_url,
+image_ingredients_small_url,
+image_nutrition_url,
+image_nutrition_small_url,
+User_ID
             ) 
             VALUES ( '{ProductID}',
                            '{Code_Wish}',
-                           '{Product_name}',            
-                          '{Ingredients_Text}',         
-                           '{Quantity}',       
-                          '{Brands}',          
-                          '{Brands_tags}',      
-                          '{Categories_Tags}',      
-                         '{Categories_En}',         
-                           '{Countries}',          
-                           '{Countries_Tags}',            
-                           '{Countries_en}',  
-                           '{Image_url}',             
-                           '{Image_Small_url}',        
-                           '{Image_Ingredients_url}',         
-                          '{Image_Ingredients_Small_url}',                  
+                           '{Product_name}',   
+                          '{Ingredients_Text}',  
+                           '{Quantity}',   
+                          '{Brands}',    
+                          '{Brands_tags}', 
+                          '{Categories}',
+                          '{Categories_Tags}',   
+                         '{Categories_En}', 
+                           '{Countries}',    
+                           '{Countries_Tags}',     
+                           '{Countries_en}', 
+                           '{Image_url}',      
+                           '{Image_Small_url}',     
+                           '{Image_Ingredients_url}',
+                          '{Image_Ingredients_Small_url}',  
                            '{Image_Nutrition_url}',                     
                           '{Image_Nutrition_Small_url}', 
                            '{UserID}'
@@ -184,6 +271,7 @@ UserID):
         Quantity=Quantity,
         Brands=Brands,
         Brands_tags=Brands_tags,
+        Categories = Categories,
         Categories_Tags=Categories_Tags,
         Categories_En=Categories_En,
         Countries=Countries,
@@ -200,7 +288,7 @@ UserID):
 
     error_message = "Failure to insert data into DB"
 
-    exception_handler(query, error_message)
+    exception_handler(query)
 
     display_statement = "Wishist item added for user with user ID {user_id}".format(
         user_id=UserID
@@ -219,7 +307,7 @@ def _get_wish_list_individual(UserID, ProductID):
 
     error_message = "Failed to read data from DB"
 
-    exception_handler_wish(query, error_message)
+    exception_handler_wish(query)
 
 
 def _get_wish_list_all(UserID):
@@ -230,7 +318,7 @@ def _get_wish_list_all(UserID):
 
     error_message = "Failed to read data from DB"
 
-    exception_handler_wish(query, error_message)
+    exception_handler_wish(query)
 
 
 '''
@@ -245,7 +333,7 @@ def delete_wishlist_item(UserID, ProductID):
                 WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
 
     error_message = "Failed to read and subsequently delete data from DB"
-    exception_handler(query, error_message)
+    exception_handler(query)
 
     display_statement = (
         'The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}'.format(
@@ -266,7 +354,7 @@ def delete_wishlist(UserID):
                 """.format(UserID)
 
     error_message = "Failed to read and subsequently delete data from DB"
-    exception_handler(query, error_message)
+    exception_handler(query)
 
     display_statement = (
         'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
@@ -278,25 +366,28 @@ def delete_wishlist(UserID):
 this function updates the wishlist for a record that has already been entered into the database
 this function updates based on the user ID, username and product ID
 '''
-def update_wish_list(ProductID,
-Code_Wish,
-Product_name,
-Ingredients_Text,
-Quantity,
-Brands,
-Brands_tags,
-Categories_Tags,
-Categories_En,
-Countries,
-Countries_Tags,
-Countries_en,
-Image_url,
-Image_Small_url,
-Image_Ingredients_url,
-Image_Ingredients_Small_url,
-Image_Nutrition_url,
-Image_Nutrition_Small_url,
-UserID):
+def update_wish_list(
+        ProductID,
+        Code_Wish,
+        Product_name,
+        Ingredients_Text,
+        Quantity,
+        Brands,
+        Brands_tags,
+        Categories,
+        Categories_Tags,
+        Categories_En,
+        Countries,
+        Countries_Tags,
+        Countries_en,
+        Image_url,
+        Image_Small_url,
+        Image_Ingredients_url,
+        Image_Ingredients_Small_url,
+        Image_Nutrition_url,
+        Image_Nutrition_Small_url,
+        UserID
+):
 
     print('The User ID: {}.  The Product ID: {}.'.format(UserID, ProductID))
     query = """
@@ -310,6 +401,7 @@ UserID):
                       `quantity` = '{Quantity}',
                        `brands` = '{Brands}',
                        `brands_tags` = '{Brands_tags}',
+                       'categories' = '{Categories}'
                        `categories_tags` = '{Categories_Tags}',
                        `categories_en` = '{Categories_En}',
                        `countries` = '{Countries}',
@@ -332,6 +424,7 @@ UserID):
         Quantity=Quantity,
         Brands=Brands,
         Brands_tags=Brands_tags,
+        Categories = Categories,
         Categories_Tags=Categories_Tags,
         Categories_En=Categories_En,
         Countries=Countries,
@@ -347,5 +440,5 @@ UserID):
     )
 
     error_message = "Failed to red data and subsequently update records from DB"
-    exception_handler(query, error_message)
+    exception_handler(query)
 
