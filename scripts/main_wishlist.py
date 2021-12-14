@@ -27,8 +27,8 @@ def add_new_booking():
                 'Image_Nutrition_Small_url': ''
             }}
 
-    result = requests.put(
-        "http://127.0.0.1:5003/wishlist/add",
+    result = requests.post(
+        "http://127.0.0.1:5001/wishlist/add",
 
         headers={"content-type": "application/json"},
         data=json.dumps(wishlistdict),
