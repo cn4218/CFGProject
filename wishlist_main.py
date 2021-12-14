@@ -54,5 +54,19 @@ def _get_wish_list_all(User_ID):
     )
     return result.json()
 
+def delete_wishlist_item(User_ID, productID):
+    result = requests.get(
+        "http://127.0.0.1:500/delete/{}/{}".format(User_ID, productID),
+        headers={"content-type": "application/json"},
+    )
+    return result.json()
+
+def delete_wishlist(User_ID):
+    result = requests.get(
+        "http://127.0.0.1:500/delete/{}/".format(User_ID),
+        headers={"content-type": "application/json"},
+    )
+    return result.json()
+
 # if __name__ == '__main__':
 #     add_new_wishlist()
