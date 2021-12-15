@@ -313,13 +313,16 @@ def delete_wishlist_item(UserID, ProductID):
                 WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
 
     error_message = "Failed to read and subsequently delete data from DB"
+
     exception_handler(query, error_message)
 
     display_statement = (
         'The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}'.format(
             UserID, ProductID, {}))
 
-    print(display_statement)
+    return display_statement
+
+
 
 '''
 This function deletes an entire wishlist associated with a user
@@ -334,13 +337,15 @@ def delete_wishlist(UserID):
                 """.format(UserID)
 
     error_message = "Failed to read and subsequently delete data from DB"
+
     exception_handler(query, error_message)
 
     display_statement = (
         'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
             UserID, {}))
 
-    print(display_statement)
+    return display_statement
+
 
 '''
 this function updates the wishlist for a record that has already been entered into the database
