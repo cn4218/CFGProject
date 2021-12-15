@@ -287,7 +287,7 @@ def _get_wish_list_individual(UserID, ProductID):
 
     error_message = "Failed to read data from DB"
 
-    exception_handler_wish(query, error_message)
+    return exception_handler_wish(query, error_message)
 
 
 def _get_wish_list_all(UserID):
@@ -298,7 +298,7 @@ def _get_wish_list_all(UserID):
 
     error_message = "Failed to read data from DB"
 
-    exception_handler_wish(query, error_message)
+    return exception_handler_wish(query, error_message)
 
 
 '''

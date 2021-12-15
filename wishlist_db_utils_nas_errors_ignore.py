@@ -81,13 +81,16 @@ def _connect_to_db(db_name):
         )
         print("MySQL Database Connection is Successful")
         return cnx
-    except mysql.connector.Error as e:
-        print("Error code:"), e.errno  # error number
-        print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
-        print("Error message:"), e.msg  # error message
-        print("Error:"), e  # errno, sqlstate, msg values
-        s = str(e)
-        print("Error:"), s  # errno, sqlstate, msg values
+    # except mysql.connector.Error as e:
+    #     print("Error code:"), e.errno  # error number
+    #     print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
+    #     print("Error message:"), e.msg  # error message
+    #     print("Error:"), e  # errno, sqlstate, msg values
+    #     s = str(e)
+    #     print("Error:"), s  # errno, sqlstate, msg values
+
+    except Exception:
+        raise DbConnectionError("Error here, error here")
 
 
 # (query, error_message)
@@ -105,16 +108,16 @@ def exception_handler(query):
         db_connection.commit()
         cur.close()
 
-    except mysql.connector.Error as e:
-        print("Error code:"), e.errno  # error number
-        print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
-        print("Error message:"), e.msg  # error message
-        print("Error:"), e  # errno, sqlstate, msg values
-        s = str(e)
-        print("Error:"), s  # errno, sqlstate, msg values
+    # except mysql.connector.Error as e:
+    #     print("Error code:"), e.errno  # error number
+    #     print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
+    #     print("Error message:"), e.msg  # error message
+    #     print("Error:"), e  # errno, sqlstate, msg values
+    #     s = str(e)
+    #     print("Error:"), s  # errno, sqlstate, msg values
 
-    # except Exception:
-    #     raise DbConnectionError(error_message)
+    except Exception:
+        raise DbConnectionError("Error here, error here")
     # you pass whatever error message depending on the function that exception_handler is called within
     # eg of error messages could be "failure to insert data" , "failure to delete data"
 
@@ -142,13 +145,15 @@ def exception_handler_wish(query):
         wish = _map_values(result)
         cur.close()
 
-    except mysql.connector.Error as e:
-        print("Error code:"), e.errno  # error number
-        print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
-        print("Error message:"), e.msg  # error message
-        print("Error:"), e  # errno, sqlstate, msg values
-        s = str(e)
-        print("Error:"), s  # errno, sqlstate, msg values
+    # except mysql.connector.Error as e:
+    #     print("Error code:"), e.errno  # error number
+    #     print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
+    #     print("Error message:"), e.msg  # error message
+    #     print("Error:"), e  # errno, sqlstate, msg values
+    #     s = str(e)
+    #     print("Error:"), s  # errno, sqlstate, msg values
+    except Exception:
+        raise DbConnectionError("Error here, error here")
 
     # except Exception:
     #     raise DbConnectionError(error_message)
@@ -169,22 +174,22 @@ def _map_values(result):
                 "code": item[1],
                 "product_name": item[2],
                 "ingredients_text": item[3],
-                 "quantity": item[4],
-                 "brands": item[5],
-                 "brands_tags": item[6],
-                 "categories": item[7],
-                 "categories_tags": item[8],
-                 "categories_en": item[9],
-                  "countries": item[10],
-                 "countries_tags": item[11],
-                  "countries_en": item[12],
-                  "image_url": item[13],
-                  "image_small_url": item[14],
-                  "image_ingredients_url": item[15],
-                  "image_ingredients_small_url": item[16],
-                  "image_nutrition_url": item[17],
-                  "image_nutrition_small_url": item[18],
-                  "User_ID": item[19],
+                "quantity": item[4],
+                "brands": item[5],
+                "brands_tags": item[6],
+                "categories": item[7],
+                "categories_tags": item[8],
+                "categories_en": item[9],
+                "countries": item[10],
+                "countries_tags": item[11],
+                "countries_en": item[12],
+                "image_url": item[13],
+                "image_small_url": item[14],
+                "image_ingredients_url": item[15],
+                "image_ingredients_small_url": item[16],
+                "image_nutrition_url": item[17],
+                "image_nutrition_small_url": item[18],
+                "User_ID": item[19],
             }
         )
     return mapped
@@ -307,7 +312,7 @@ def _get_wish_list_individual(UserID, ProductID):
 
     error_message = "Failed to read data from DB"
 
-    exception_handler_wish(query)
+    return exception_handler_wish(query)
 
 
 def _get_wish_list_all(UserID):
@@ -318,7 +323,7 @@ def _get_wish_list_all(UserID):
 
     error_message = "Failed to read data from DB"
 
-    exception_handler_wish(query)
+    return exception_handler_wish(query)
 
 
 '''
