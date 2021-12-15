@@ -60,6 +60,11 @@ update_wish_list(
 )
 '''
 
+"""
+For Chizu:
+I commented out my error messages because I've been struggling to connect to MySQL databases so I wanted to see the 
+errors thrown without my printed error message
+"""
 
 class DbConnectionError(Exception):
     pass
@@ -85,8 +90,8 @@ def _connect_to_db(db_name):
         print("Error:"), s  # errno, sqlstate, msg values
 
 
-
-def exception_handler(query, error_message):
+# (query, error_message)
+def exception_handler(query):
     """This function is the exception handler for exceptions that may arise when connecting to the
                     db  - it is a more general function"""
 
@@ -100,9 +105,16 @@ def exception_handler(query, error_message):
         db_connection.commit()
         cur.close()
 
+    except mysql.connector.Error as e:
+        print("Error code:"), e.errno  # error number
+        print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
+        print("Error message:"), e.msg  # error message
+        print("Error:"), e  # errno, sqlstate, msg values
+        s = str(e)
+        print("Error:"), s  # errno, sqlstate, msg values
 
-    except Exception:
-        raise DbConnectionError(error_message)
+    # except Exception:
+    #     raise DbConnectionError(error_message)
     # you pass whatever error message depending on the function that exception_handler is called within
     # eg of error messages could be "failure to insert data" , "failure to delete data"
 
@@ -113,8 +125,8 @@ def exception_handler(query, error_message):
     return
 
 
-
-def exception_handler_wish(query, error_message):
+# (query, error_message)
+def exception_handler_wish(query):
     """This function is the exception handler for exceptions that may arise when connecting to the
             db specifically for the wishlist functions"""
 
@@ -130,8 +142,16 @@ def exception_handler_wish(query, error_message):
         wish = _map_values(result)
         cur.close()
 
-    except Exception:
-        raise DbConnectionError(error_message)
+    except mysql.connector.Error as e:
+        print("Error code:"), e.errno  # error number
+        print("SQLSTATE value:"), e.sqlstate  # SQLSTATE value
+        print("Error message:"), e.msg  # error message
+        print("Error:"), e  # errno, sqlstate, msg values
+        s = str(e)
+        print("Error:"), s  # errno, sqlstate, msg values
+
+    # except Exception:
+    #     raise DbConnectionError(error_message)
 
     finally:
         if db_connection:
@@ -268,7 +288,7 @@ User_ID
 
     error_message = "Failure to insert data into DB"
 
-    exception_handler(query, error_message)
+    exception_handler(query)
 
     display_statement = "Wishist item added for user with user ID {user_id}".format(
         user_id=UserID
@@ -287,7 +307,7 @@ def _get_wish_list_individual(UserID, ProductID):
 
     error_message = "Failed to read data from DB"
 
-    exception_handler_wish(query, error_message)
+    exception_handler_wish(query)
 
 
 def _get_wish_list_all(UserID):
@@ -298,7 +318,7 @@ def _get_wish_list_all(UserID):
 
     error_message = "Failed to read data from DB"
 
-    exception_handler_wish(query, error_message)
+    exception_handler_wish(query)
 
 
 '''
@@ -313,7 +333,7 @@ def delete_wishlist_item(UserID, ProductID):
                 WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
 
     error_message = "Failed to read and subsequently delete data from DB"
-    exception_handler(query, error_message)
+    exception_handler(query)
 
     display_statement = (
         'The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}'.format(
@@ -334,7 +354,7 @@ def delete_wishlist(UserID):
                 """.format(UserID)
 
     error_message = "Failed to read and subsequently delete data from DB"
-    exception_handler(query, error_message)
+    exception_handler(query)
 
     display_statement = (
         'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
@@ -420,5 +440,5 @@ def update_wish_list(
     )
 
     error_message = "Failed to red data and subsequently update records from DB"
-    exception_handler(query, error_message)
+    exception_handler(query)
 
