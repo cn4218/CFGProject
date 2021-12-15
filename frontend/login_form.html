@@ -85,7 +85,7 @@
             fetch('http://localhost.127.0.0.1/CreateAccount', user_info_to_post_for_verification)
             .then(function(response) { 
                 // extract response data from Sophie
-                var attemmpt = 1; // user gets one attempt to login
+                var attempt = 1; // user gets one attempt to login
                 // the login process
                 function validate() {
                     var username = document.getElementById("username").value;
