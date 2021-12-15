@@ -78,27 +78,27 @@ class MockFrontEnd:
         print()
 
     def verify_wish_list_item(self):
-        self.User_ID = input('What is your User ID')
-        self.productID = input('What is your product ID?')
+        self.User_ID = input('What is your User ID ')
+        self.productID = input('What is your product ID? ')
         verify_wishlist_item = _get_wish_list_individual(self.User_ID, self.productID)
         return verify_wishlist_item
 
     def verify_wish_list(self):
-        self.User_ID = input('What is your User ID')
+        self.User_ID = input('What is your User ID ')
         verify_wishlist = _get_wish_list_all(self.User_ID)
         return verify_wishlist
 
 
     def deleting_wishlist_item(self):
         self.User_ID = input('What is your User ID')
-        self.productID = input('What is your product ID?')
+        self.productID = input('What is your product ID? ')
         dict = delete_wishlist_item(self.User_ID, self.productID)
         if dict == {}:
             print('Wishlist item successfully deleted')
         return dict
 
     def deleting_wishlist(self):
-        self.User_ID = input('What is your User ID')
+        self.User_ID = input('What is your User ID ')
         dict = delete_wishlist(self.User_ID)
         if dict == {}:
             print('Wishlist item successfully deleted')
@@ -109,27 +109,25 @@ def run():
     mock = MockFrontEnd()
     mock.welcome_message()
     while True:
-        answer_wishlist_add = input('Do you want to add to the wishlist? y/n')
+        answer_wishlist_add = input('Do you want to add to the wishlist? y/n ')
         if answer_wishlist_add == 'y':
             add_new_wishlist()
-            continue
-        answer_wishlist_item = input('Do you wish to get a wishlist item? y/n')
+        answer_wishlist_item = input('Do you wish to get a wishlist item? y/n ')
         if answer_wishlist_item == 'y':
             mock.verify_wish_list_item()
-            continue
-        answer_wishlist = input('Do you wish to retrieve the wishlist? y/n')
+        answer_wishlist = input('Do you wish to retrieve the wishlist? y/n ')
         if answer_wishlist == 'y':
             mock.verify_wish_list()
-            continue
-        answer_delete_wishlist_item = input('Do you wish to delete a wishlist item? y/n')
+        answer_delete_wishlist_item = input('Do you wish to delete a wishlist item? y/n' )
         if answer_delete_wishlist_item == 'y':
             mock.deleting_wishlist_item()
-            continue
-        answer_delete_wishlist = input('Do you wish to delete the entire wishlist? y/n')
+        answer_delete_wishlist = input('Do you wish to delete the entire wishlist? y/n ')
         if answer_delete_wishlist == 'y':
             mock.deleting_wishlist()
             break
         break
 
 if __name__ == '__main__':
-    run()
+    add_new_wishlist()
+    # run()
+
