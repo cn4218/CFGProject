@@ -200,7 +200,7 @@ UserID
 
 # use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
 # it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently without generating an error.
-
+# took the '' outside of the integer
     query = """ INSERT IGNORE INTO wish_list (productID,
 code,
 product_name,
@@ -222,8 +222,8 @@ image_nutrition_url,
 image_nutrition_small_url,
 User_ID
             ) 
-            VALUES ( '{ProductID}',
-                           '{Code_Wish}',
+            VALUES ( {ProductID},
+                           {Code_Wish},
                            '{Product_name}',   
                           '{Ingredients_Text}',  
                            '{Quantity}',   
@@ -241,7 +241,7 @@ User_ID
                           '{Image_Ingredients_Small_url}',  
                            '{Image_Nutrition_url}',                     
                           '{Image_Nutrition_Small_url}', 
-                           '{UserID}'
+                           {UserID}
                       )
                       """.format(
         ProductID=ProductID,
@@ -374,8 +374,8 @@ def update_wish_list(
                       UPDATE  wish_list
                       SET              
 
-                      `productID` = '{ProductID}',
-                      `code` = '{Code_Wish}',
+                      `productID` = {ProductID},
+                      `code` = {Code_Wish},
                       `product_name` = '{Product_name}',
                       `ingredients_text` = '{Ingredients_Text}',
                       `quantity` = '{Quantity}',
@@ -393,9 +393,9 @@ def update_wish_list(
                          `image_ingredients_small_url` = '{Image_Ingredients_Small_url}',
                          `image_nutrition_url` = '{Image_Nutrition_url}',
                          `image_nutrition_small_url` = '{Image_Nutrition_Small_url}',
-                         `User_ID` = '{UserID}'
+                         `User_ID` = {UserID}
 
-                      WHERE `User_ID` = '{UserID}' AND  `productID = '{ProductID}'
+                      WHERE `User_ID` = {UserID} AND  `productID = {ProductID}
                       """.format(
         ProductID=ProductID,
         Code_Wish=Code_Wish,
