@@ -106,11 +106,13 @@ class MockFrontEnd:
 
 
 def run():
-    add_new_wishlist()
-
     mock = MockFrontEnd()
     mock.welcome_message()
     while True:
+        answer_wishlist_add = input('Do you want to add to the wishlist? y/n')
+        if answer_wishlist_add == 'y':
+            add_new_wishlist()
+            continue
         answer_wishlist_item = input('Do you wish to get a wishlist item? y/n')
         if answer_wishlist_item == 'y':
             mock.verify_wish_list_item()
@@ -130,5 +132,4 @@ def run():
         break
 
 if __name__ == '__main__':
-
-    # run()
+    run()
