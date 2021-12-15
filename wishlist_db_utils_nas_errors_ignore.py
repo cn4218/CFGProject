@@ -242,8 +242,8 @@ image_nutrition_url,
 image_nutrition_small_url,
 User_ID
             ) 
-            VALUES ( '{ProductID}',
-                           '{Code_Wish}',
+            VALUES ( {ProductID},
+                           {Code_Wish},
                            '{Product_name}',   
                           '{Ingredients_Text}',  
                            '{Quantity}',   
@@ -261,7 +261,7 @@ User_ID
                           '{Image_Ingredients_Small_url}',  
                            '{Image_Nutrition_url}',                     
                           '{Image_Nutrition_Small_url}', 
-                           '{UserID}'
+                           {UserID}
                       )
                       """.format(
         ProductID=ProductID,
@@ -303,7 +303,7 @@ def _get_wish_list_individual(UserID, ProductID):
     print('The User ID: {}. The Product ID: {}.'.format(UserID, ProductID))
 
     query = """ SELECT * FROM wish_list 
-                 WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
+                 WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
 
     error_message = "Failed to read data from DB"
 
@@ -314,7 +314,7 @@ def _get_wish_list_all(UserID):
     print('The User ID: {}.'.format(UserID))
 
     query = """ SELECT * FROM wish_list 
-                 WHERE User_ID = '{}' """.format(UserID)
+                 WHERE User_ID = {} """.format(UserID)
 
     error_message = "Failed to read data from DB"
 
@@ -330,7 +330,7 @@ def delete_wishlist_item(UserID, ProductID):
 
     query = """
                 DELETE FROM Wish_List 
-                WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
+                WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
 
     error_message = "Failed to read and subsequently delete data from DB"
     exception_handler(query)
@@ -350,7 +350,7 @@ def delete_wishlist(UserID):
 
     query = """
                 DELETE FROM Wish_List 
-                WHERE User_ID = '{}' 
+                WHERE User_ID = {} 
                 """.format(UserID)
 
     error_message = "Failed to read and subsequently delete data from DB"
@@ -394,8 +394,8 @@ def update_wish_list(
                       UPDATE  wish_list
                       SET              
 
-                      `productID` = '{ProductID}',
-                      `code` = '{Code_Wish}',
+                      `productID` = {ProductID},
+                      `code` = {Code_Wish},
                       `product_name` = '{Product_name}',
                       `ingredients_text` = '{Ingredients_Text}',
                       `quantity` = '{Quantity}',
@@ -413,9 +413,9 @@ def update_wish_list(
                          `image_ingredients_small_url` = '{Image_Ingredients_Small_url}',
                          `image_nutrition_url` = '{Image_Nutrition_url}',
                          `image_nutrition_small_url` = '{Image_Nutrition_Small_url}',
-                         `User_ID` = '{UserID}'
+                         `User_ID` = {UserID}
 
-                      WHERE `User_ID` = '{UserID}' AND  `productID = '{ProductID}'
+                      WHERE `User_ID` = {UserID} AND  `productID` = {ProductID}
                       """.format(
         ProductID=ProductID,
         Code_Wish=Code_Wish,

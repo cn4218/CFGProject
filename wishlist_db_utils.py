@@ -395,7 +395,7 @@ def update_wish_list(
                          `image_nutrition_small_url` = '{Image_Nutrition_Small_url}',
                          `User_ID` = {UserID}
 
-                      WHERE `User_ID` = {UserID} AND  `productID = {ProductID}
+                      WHERE `User_ID` = {UserID} AND  `productID` = {ProductID}
                       """.format(
         ProductID=ProductID,
         Code_Wish=Code_Wish,
