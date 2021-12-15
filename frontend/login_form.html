@@ -1,3 +1,4 @@
+login.html
 <!DOCTYPE html>
 <!-- Set language to English -->
 <html lang="en">
@@ -81,39 +82,28 @@
     </form>
 
         <script>
-            // dummy endpoint
-            const url = 'https://hookb.in/PxYQVpjPdqhpKPrrKYP3';
-            const login = document.querySelector("form");
-            // use a sync because the server's time to response varies
-            login.addEventListener("submit", async (e) => {
-                e.preventDefault();
-                // store data in new data object
-                const formData = new FormData(login);
-                // new constant which creates an object from form data
-                const theformData = Object.fromEntries(formData);
-                const jsonObject = {
-                ...theformData
-                };
-                try {
-                    // fetch data stored in form through an API
-                const response = await fetch(url, {
-                    method: "POST",
-                    // turn the data into a JSON
-                    body: JSON.stringify(jsonObject),
-                    headers: {
-                        // tell the server that the data it receives is a JSON
-                    "Content-Type": "application/json",
-                    },
-                });
-                const json = await response.json();
-                // log the json response in the console
-                console.log(json);
-                // if something goes wrong, catch it and generate an error
-                } catch (e) {
-                console.error(e);
-                alert("Error!");
+            fetch('http://localhost.127.0.0.1/CreateAccount', user_info_to_post_for_verification)
+            .then(function(response) { 
+                // extract response data from Sophie
+                var attemmpt = 1; // user gets one attempt to login
+                // the login process
+                function validate() {
+                    var username = document.getElementById("username").value;
+                    var password = document.getElementById("password").value;
+                    if ( username == "test" && password == "test"){ alert ("Login successful");
+                                                                   window.location = "http://localhost.127.0.0.1/home.html"; // Redirect to homepage
+                return false;
+                                                                  }
+                    else{
+                        attempt --;
+                        alert("Your login information is incorrect, please reload and try again")
+               document.getElementById("username").disabled = true;
+               document.getElementById("password").disabled = true;
+                
+                return false;
+                    }
                 }
-            });
+            })
         </script>
     </body>
   </html>
