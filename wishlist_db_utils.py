@@ -4,8 +4,8 @@ from config import USER, PASSWORD, HOST
 '''
 Functions contained in this file:
 _connect_to_db(db_name)
-exception_handler(query)
-exception_handler_wish(query)
+exception_handler(query, error_message)
+exception_handler_wish(query, error_message)
 _map_values(result)
 
 add_wish_list(
