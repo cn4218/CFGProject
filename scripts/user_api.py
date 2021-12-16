@@ -13,8 +13,7 @@ def get_users(user_id):
 
 # adding a user
 ## added old user name so that they can verify its the write person
-## work in progress func (doesnt work yet)
-@app.route('/profile/change/<int:user_id>/old_user_name>/<new_user_name>')
+@app.route('/profile/change/<int:user_id>/<old_user_name>/<new_user_name>')
 def change_user_name(user_id,old_user_name, new_user_name):
     result = update_user(user_id,old_user_name,new_user_name)
     return jsonify(result)
@@ -53,5 +52,4 @@ def verify_login_api():
     return jsonify(answer)
 
 if __name__ == '__main__':
-    app.run(port=5003,debug=True)
-
+    app.run(port=5004,debug=True)
