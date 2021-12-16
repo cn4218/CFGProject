@@ -24,7 +24,8 @@ def _create_db_connection(db_name):
         print(f"Error: '{er}'")
     return connection
 
-
+result = _create_db_connection("CFG_Project")
+print(result)
     # should add the values a user enters into our db
 def _add_values(user_account):
     mapped = []
@@ -39,16 +40,17 @@ def _add_values(user_account):
 
 
     # return info for one user using their name  - can change to user ID if better?
-def _get_user(user_name, User_ID):
+def _get_user(User_ID):
     user = {}
     try:
-        db_name = "user_info"
+        db_name = "CFG_Project"
         db_connection = _create_db_connection(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
 
-        query = """ SELECT * FROM user_info 
-         WHERE name_user = '{}' AND User_ID = '{}' """.format(user_name, User_ID)
+        query = """ 
+        SELECT * FROM user_info 
+        WHERE User_ID = '{}' """.format(User_ID)
 
         cur.execute(query)
 
@@ -56,6 +58,7 @@ def _get_user(user_name, User_ID):
         user = _add_values(result)
         cur.close()
     except Exception as err:
+        print(err)
         raise Error("Failed to get data from Database", err)
     finally:
         if db_connection:
@@ -67,7 +70,7 @@ def _get_user(user_name, User_ID):
     # insert user info into sql table
 def add_user(User_ID, User_Name, Name_User, Email_Address):
     try:
-        db_name = "user_info"
+        db_name = "CFG_Project"
         db_connection = _create_db_connection(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -79,7 +82,7 @@ def add_user(User_ID, User_Name, Name_User, Email_Address):
         db_connection.commit()
         print("User has been successfully inserted to user_info table")
 
-    except db_connection.Error as err:
+    except mysql.connector.Error as err:
         print("Failed to insert data into MySQL table {}".format(err))
 
     finally:
@@ -92,10 +95,10 @@ def add_user(User_ID, User_Name, Name_User, Email_Address):
 
 #  not sure if this is needed but adding here just in case?
 #
-def delete_user(User_ID, User_Name):
+def delete_user(User_ID):
     try:
         users = {}
-        db_name = "user_info"
+        db_name = "CFG_Project"
         db_connection = _create_db_connection(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -119,13 +122,16 @@ def delete_user(User_ID, User_Name):
 def update_user(User_ID, Old_User_Name, New_User_Name):
     result = False
     try:
-        db_name = "user_info"
+        db_name = "CFG_Project"
         db_connection = _create_db_connection(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
 
         cur.execute(""" SELECT user_name FROM user_info WHERE user_id=%s""".format(User_ID))
-        if Old_User_Name == cur.fetchone(['User_Name']):
+        result = cur.fetchall()
+        old_user = cur.fetchone()
+        old_user_check = result[0][0]
+        if Old_User_Name == old_user_check:
             cur.execute("""UPDATE user_info SET user_name=%s WHERE user_id=%s""".format(New_User_Name, User_ID))
             db_connection.commit()
             result = True
@@ -139,4 +145,3 @@ def update_user(User_ID, Old_User_Name, New_User_Name):
             db_connection.close()
             cur.close()
     return result
-
