@@ -222,4 +222,3 @@ def get_user_id(username,name,email):
         if db_connection:
             db_connection.close()
             cur.close()
-
