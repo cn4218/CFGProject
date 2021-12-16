@@ -175,6 +175,19 @@ It's really annoying to have all the parameters being passed as an argument but 
 You cannot pass another function or such into the argument for the add_wish_list function as it outside of the localised scope
 '''
 
+'''
+ use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
+ it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently without generating an error.
+ took the '' outside of the integer
+'''
+
+'''
+Consider altering the code:
+Failed insert will throw MySQLdb.IntegrityError, so you should be ready to catch it.
+'''
+
+
+
 def add_wish_list(
 ProductID,
 Code_Wish,
@@ -197,58 +210,49 @@ Image_Nutrition_url,
 Image_Nutrition_Small_url,
 UserID
 ):
-
-# use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
-# it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently without generating an error.
-# took the '' outside of the integer
-
-'''
-Consider altering the code:
-Failed insert will throw MySQLdb.IntegrityError, so you should be ready to catch it.
-'''
     query = """ INSERT IGNORE INTO wish_list (productID,
-code,
-product_name,
-ingredients_text,
-quantity,
-brands,
-brands_tags,
-categories,
-categories_tags,
-categories_en,
-countries,
-countries_tags,
-countries_en,
-image_url,
-image_small_url,
-image_ingredients_url,
-image_ingredients_small_url,
-image_nutrition_url,
-image_nutrition_small_url,
-User_ID
-            ) 
-            VALUES ( {ProductID},
-                           {Code_Wish},
-                           "{Product_name}",   
-                          "{Ingredients_Text}",  
-                           "{Quantity}",   
-                          "{Brands}",    
-                          "{Brands_tags}", 
-                          "{Categories}",
-                          "{Categories_Tags}",   
-                         "{Categories_En}", 
-                           "{Countries}",    
-                           "{Countries_Tags}",     
-                           "{Countries_en}", 
-                           "{Image_url}",      
-                           "{Image_Small_url}",     
-                           "{Image_Ingredients_url}",
-                          "{Image_Ingredients_Small_url}",  
-                           "{Image_Nutrition_url}",                     
-                          "{Image_Nutrition_Small_url}", 
-                           {UserID}
-                      )
-                      """.format(
+    code,
+    product_name,
+    ingredients_text,
+    quantity,
+    brands,
+    brands_tags,
+    categories,
+    categories_tags,
+    categories_en,
+    countries,
+    countries_tags,
+    countries_en,
+    image_url,
+    image_small_url,
+    image_ingredients_url,
+    image_ingredients_small_url,
+    image_nutrition_url,
+    image_nutrition_small_url,
+    User_ID
+                ) 
+                VALUES ( {ProductID},
+                               {Code_Wish},
+                               "{Product_name}",   
+                              "{Ingredients_Text}",  
+                               "{Quantity}",   
+                              "{Brands}",    
+                              "{Brands_tags}", 
+                              "{Categories}",
+                              "{Categories_Tags}",   
+                             "{Categories_En}", 
+                               "{Countries}",    
+                               "{Countries_Tags}",     
+                               "{Countries_en}", 
+                               "{Image_url}",      
+                               "{Image_Small_url}",     
+                               "{Image_Ingredients_url}",
+                              "{Image_Ingredients_Small_url}",  
+                               "{Image_Nutrition_url}",                     
+                              "{Image_Nutrition_Small_url}", 
+                               {UserID}
+                          )
+                          """.format(
         ProductID=ProductID,
         Code_Wish=Code_Wish,
         Product_name=Product_name,
@@ -256,7 +260,7 @@ User_ID
         Quantity=Quantity,
         Brands=Brands,
         Brands_tags=Brands_tags,
-        Categories = Categories,
+        Categories=Categories,
         Categories_Tags=Categories_Tags,
         Categories_En=Categories_En,
         Countries=Countries,
@@ -280,6 +284,8 @@ User_ID
     )
 
     print(display_statement)
+
+
 
 
 # return info for a wishlist entry at a time
