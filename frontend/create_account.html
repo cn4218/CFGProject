@@ -1,4 +1,3 @@
-<!-- Create Account Page -->
 <!DOCTYPE html>
 <!-- Set language to English -->
 <html lang="en">
@@ -6,7 +5,6 @@
     <!-- set characters to utf-8 which means code can be read by a computer
     (turns it into a binary)-->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Create an Account</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
@@ -67,6 +65,7 @@
                     type="text"
                     autofocus placeholder="Insert first and last name"
                     id="nameField"
+                    class = "form-control"
                 />
                 <label for="emailField">Email Address</label>
                 <input
@@ -74,6 +73,7 @@
                     type="text"
                     autofocus placeholder="Insert email address"
                     id="emailField"
+                    class = "form-control"
                 />
                 <label for="passwordField">Password</label>
                 <input
@@ -81,49 +81,13 @@
                     autofocus placeholder="Create a password"
                     type="text"
                     id="passwordField"
+                    class = "form-control"
                 />
-                <input class="button-primary" type="submit" value="Signup" />
+                <input class="button-primary" type="submit" value="Signup"/>
             </form>
             </div>
         </div>
     </div>
     </form>
-
-        <script>
-             // localhost endpoint - replace the hookbin link
-            // Push information to SQL database under users 
-            const url = 'http://localhost.127.0.0.1/CreateAccount';
-            const signup = document.querySelector("form");
-            // use a sync because the server's time to response varies
-            signup.addEventListener("submit", async (e) => {
-                e.preventDefault();
-                // store data in new data object
-                const formData = new FormData(signup);
-                // new constant which creates an object from form data
-                const theformData = Object.fromEntries(formData);
-                const jsonObject = {
-                ...theformData
-                };
-                try {
-                    // fetch data stored in form through an API
-                const response = await fetch(url, {
-                    method: "POST",
-                    // turn the data into a JSON
-                    body: JSON.stringify(jsonObject),
-                    headers: {
-                        // tell the server that the data it receives is a JSON
-                    "Content-Type": "application/json",
-                    },
-                });
-                const json = await response.json();
-                // log the json response in the console
-                console.log(json);
-                // if something goes wrong, catch it and generate an error
-                } catch (e) {
-                console.error(e);
-                alert("Error!");
-                }
-            });
-        </script>
     </body>
   </html>
