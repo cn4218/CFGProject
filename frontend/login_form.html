@@ -84,20 +84,21 @@
         <script>
             fetch('http://localhost.127.0.0.1/CreateAccount', user_info_to_post_for_verification)
             .then(function(response) { 
-                // extract response data from Sophie
                 var attempt = 1; // user gets one attempt to login
                 // the login process
                 function validate() {
-                    var username = document.getElementById("username").value;
+                    // look for the email and password in the db (in this case if they are test and test, return successful login
+                    var email = document.getElementById("email").value;
                     var password = document.getElementById("password").value;
                     if ( username == "test" && password == "test"){ alert ("Login successful");
                                                                    window.location = "http://localhost.127.0.0.1/home.html"; // Redirect to homepage
                 return false;
                                                                   }
+                   // else return an error message
                     else{
                         attempt --;
                         alert("Your login information is incorrect, please reload and try again")
-               document.getElementById("username").disabled = true;
+               document.getElementById("email").disabled = true;
                document.getElementById("password").disabled = true;
                 
                 return false;
