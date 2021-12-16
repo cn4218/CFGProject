@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!-- Set language to English -->
+<html lang="en">
+    <head>
+    <!-- set characters to utf-8 which means code can be read by a computer
+    (turns it into a binary)-->
+    <meta charset="utf-8">
+    <title>Login Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+        html, body {
+            display: flex;
+            justify-content: center;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 15px;
+        }
+        form {
+            border: 5px solid #f1f1f1;
+        }
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 16px 8px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: seagreen;
+            color: white;
+            padding: 14px 0;
+            margin: 10px 0;
+            border: none;
+            cursor: grabbing;
+            width:  100%
+        }
+        h1 {
+            text-align: center;
+            font-size: 20px
+        }
+        .formcontainer {
+            text-align: left;
+            margin: 25px 50px 12px;
+        }
+        .container {
+            padding: 16px 0;
+            text-align: left;
+        }
+    </style>
+    </head>
+    <body>
+        <form>
+        <div class="container">
+            <div class="row">
+              <div class="column">
+                <h1>Login Form</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column">
+                <form>
+                <label for="emailField">Email Address</label>
+                <input
+                    name="email"
+                    type="text"
+                    autofocus placeholder="Insert email address"
+                    id="emailField"
+                />
+                <label for="passwordField">Password</label>
+                <input
+                    name="password"
+                    autofocus placeholder="Insert password"
+                    type="text"
+                    id="passwordField"
+                />
+                <input class="button-primary" type="submit" value="Login" />
+            </form>
+            </div>
+        </div>
+    </div>
+    </form>
+
+        <script>
+            fetch('http://localhost.127.0.0.1/CreateAccount', user_info_to_post_for_verification)
+            .then(function(response) { 
+                // extract response data from Sophie
+                var attempt = 1; // user gets one attempt to login
+                // the login process
+                function validate() {
+                    var username = document.getElementById("username").value;
+                    var password = document.getElementById("password").value;
+                    if ( username == "test" && password == "test"){ alert ("Login successful");
+                                                                   window.location = "http://localhost.127.0.0.1/home.html"; // Redirect to homepage
+                return false;
+                                                                  }
+                    else{
+                        attempt --;
+                        alert("Your login information is incorrect, please reload and try again")
+               document.getElementById("username").disabled = true;
+               document.getElementById("password").disabled = true;
+                
+                return false;
+                    }
+                }
+            })
+        </script>
+    </body>
+  </html>
