@@ -1,50 +1,85 @@
-import unittest
+
 from unittest.mock import patch
 from unittest import TestCase, main
-from user_main import get_profile_by_id, add_new_user, delete_user_func, user_login
-from user_db_utils import _get_user
+from user_main import MockFrontEnd
+
+from user_db_utils import _get_user, get_user_id
 
 
-class TestUserApiDb(unittest.TestCase):
+class TestUserApiDb(TestCase):
+    def setUp(self):
+        self.mock = MockFrontEnd()
+
     def test_new_user(self):
-        expected = {'Email_Address': 'owen@gmail.com', 'Name_User': 'Owen', 'User_ID': 4, 'User_Name': 'owen123'}
-        result = add_new_user(4,'owen123','Owen','owen@gmail.com')
+        expected = {'Email_Address': 'zita@gmail.com', 'Name_User': 'zita', 'User_Name': 'zita123'}
+        result = self.mock.add_new_user('zita123','zita','zita@gmail.com')
         self.assertEqual(expected,result)
 
     def test_new_user_2(self):
-        expected = {'Email_Address': 'fang@gmail.com', 'Name_User': 'Fang', 'User_ID': 1, 'User_Name': 'fang123'}
-        result = add_new_user(1,'fang123','Fang','fang@gmail.com')
+        expected = {'Email_Address': 'fang@gmail.com', 'Name_User': 'Fang','User_Name': 'fang123'}
+        result = self.mock.add_new_user('fang123','Fang','fang@gmail.com')
         self.assertEqual(expected,result)
-        expected = [{'Email_Address': 'fang@gmail.com', 'Name_User': 'Fang', 'User_ID': 1, 'User_Name': 'fang123'}]
-        result = get_profile_by_id(1)
+        self.user_id_fang = get_user_id('fang123','Fang','fang@gmail.com')
+        expected = [{'Email_Address': 'fang@gmail.com', 'Name_User': 'Fang', 'User_ID': self.user_id_fang, 'User_Name': 'fang123'}]
+        result = self.mock.get_profile_by_id(self.user_id_fang)
         self.assertEqual(expected,result)
 
 
     def test_new_user_has_been_added(self):
-        add_to_db = add_new_user(5,'Holly123','Holly','holly@gmail.com')
-        expected = [{'User_ID': 5, 'User_Name': 'Holly123', 'Name_User': 'Holly', 'Email_Address': 'holly@gmail.com'}]
-        result = _get_user(5)  ##calls new input from database
+        add_to_db = self.mock.add_new_user('Holly123','Holly','holly@gmail.com')
+        self.user_id_holly = get_user_id('Holly123','Holly','holly@gmail.com')
+        expected = [{'User_ID': self.user_id_holly, 'User_Name': 'Holly123', 'Name_User': 'Holly', 'Email_Address': 'holly@gmail.com'}]
+        result = _get_user(self.user_id_holly)  ##calls new input from database
         self.assertEqual(expected,result)
 
+
     def test_deleting_user(self):
-        result = delete_user_func(4)
+        self.user_id_holly = get_user_id('Holly123','Holly','holly@gmail.com')
+        result =  self.mock.delete_user_func(self.user_id_holly)
         expected = {}
         self.assertEqual(expected,result)
         expected = []
-        result = get_profile_by_id(4)
+        result =  self.mock.get_profile_by_id(self.user_id_holly)
         self.assertEqual(expected,result)
-    
+
 
     def test_user_login(self):
-        result = user_login(1,'fang123','Fang','fang@gmail.com')
+        result =  self.mock.user_login('fang123','Fang','fang@gmail.com')
         expected = True
         self.assertEqual(expected,result)
 
     def test_user_login_false(self):
-        result = user_login(1,'wronguser','Fang','fang@gmail.com')
+        result =  self.mock.user_login('wronguser','Fang','fang@gmail.com')
         expected = False
         self.assertEqual(expected,result)
+    
+class TestMockFrontEnd(TestCase):
+    def setUp(self):
+        self.mock = MockFrontEnd()
+
+    input_string = 'y'
+    # @patch('user_main.MockFrontEnd.welcomemessage')
+    @patch('builtins.input', return_value = input_string)
+    def test_positive_input(self, mock_input):
+        result = self.mock.welcome_message()
+        self.assertEqual(result,'y')
+
+    @patch('builtins.input', return_value = 'n')
+    def test_positive_input(self, mock_input):
+        result = self.mock.welcome_message()
+        self.assertEqual(result,'n')
+
+    @patch('builtins.input',side_effect=[6,7,8])
+    def test_wrong_input(self, mock_inputs):
+        result = self.mock.welcome_message()
+        self.assertEqual(result,'Too many tries inputting the incorrect format') 
+
+    @patch('builtins.input', side_effect = ['sophie1998','Sophie','sophie@hotmail.com'])
+    def test_adding_user(self,mock_inputs):
+        result = self.mock.enter_details()
+        self.assertEqual(result, {'Email_Address': 'sophie@hotmail.com', 'Name_User': 'Sophie', 'User_Name': 'sophie1998'})
+
+    #@patch
 
 if __name__ == "__main__":
     main()
-
