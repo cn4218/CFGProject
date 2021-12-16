@@ -102,6 +102,8 @@ def delete_user(User_ID):
         db_name = "CFG_Project"
         db_connection = _create_db_connection(db_name)
         cur = db_connection.cursor()
+        dict = _get_user(User_ID)
+        user_name = dict[0]['User_Name']
         print("Connected to DB: %s" % db_name)
 
         query = """
@@ -109,13 +111,16 @@ def delete_user(User_ID):
 
         cur.execute(query)
         db_connection.commit()
+
+        answer = "Account successfully deleted for username {}".format(user_name)
         cur.close()
     except Exception as err:
+        answer = "Unsuccessful deleting account for username {}".format(user_name)
         raise DbConnectionError("Failed to read data from Database", err)
     finally:
         if db_connection:
             db_connection.close()
-    return users
+    return answer
 
 
 # in case a user wants to update their user_name - not sure this works or if it's right, will need to fix!
@@ -149,7 +154,7 @@ def update_user(User_ID, Old_User_Name, New_User_Name):
 
 # result = update_user(1,'fang123','fang12')
 
-def verify_login(user_id,username,name_user, email_address):
+def verify_login(username,name_user, email_address):
     try: 
         db_name = 'CFG_Project'
         db_connection = _create_db_connection(db_name)
@@ -159,8 +164,8 @@ def verify_login(user_id,username,name_user, email_address):
         query = """
             SELECT *
             FROM User_Info
-            WHERE User_ID = '{}' and User_Name = '{}'
-            and Name_User = '{}' and Email_Address = '{}'""".format(user_id,username,name_user,email_address)
+            WHERE User_Name = '{}'
+            and Name_User = '{}' and Email_Address = '{}'""".format(username,name_user,email_address)
 
         cur.execute(query)
 
@@ -172,8 +177,10 @@ def verify_login(user_id,username,name_user, email_address):
 
         if rowcount == 0:
             answer = False
-        else:
+        elif rowcount == 1:
             answer = True
+        elif rowcount>1:
+            answer = 'Duplicate users'
 
         cur.close()
         return answer
@@ -201,11 +208,10 @@ def get_user_id(username,name,email):
             userid = result[0][0]
             answer = userid
         elif number_users == 0:
-            print('There are multiple users with the same user info')
+            print('User not found')
             answer = False
         else:
             print("Issue finding unique user id")
-
             answer = False
         cur.close()
         return answer
@@ -217,5 +223,3 @@ def get_user_id(username,name,email):
             db_connection.close()
             cur.close()
 
-# ans = verify_login(4,'owen123','Owen','owen@gmai1l.com')
-# print(ans)
