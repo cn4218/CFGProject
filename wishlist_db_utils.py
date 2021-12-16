@@ -289,7 +289,9 @@ def _get_wish_list_individual(UserID, ProductID):
 
     return exception_handler_wish(query, error_message)
 
+'''
 
+'''
 def _get_wish_list_all(UserID):
     print('The User ID: {}.'.format(UserID))
 
@@ -314,14 +316,19 @@ def delete_wishlist_item(UserID, ProductID):
 
     error_message = "Failed to read and subsequently delete data from DB"
 
-    exception_handler(query, error_message)
+    exception = True
+    while exception:
+        exception_handler(query, error_message)
+        exception = False
 
-    display_statement = (
-        'The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}'.format(
-            UserID, ProductID, {}))
+    if exception:
+        display_statement = ('Wishlist item for this User_ID and productID  does not exist')
+    else:
+        display_statement = (
+            'The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}'.format(
+                UserID, ProductID, {}))
 
     return display_statement
-
 
 
 '''
@@ -338,11 +345,17 @@ def delete_wishlist(UserID):
 
     error_message = "Failed to read and subsequently delete data from DB"
 
-    exception_handler(query, error_message)
+    exception = True
+    while exception:
+        exception_handler(query, error_message)
+        exception = False
 
-    display_statement = (
-        'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
-            UserID, {}))
+    if exception:
+        display_statement = ('Wishlist item for this User_ID does not exist')
+    else:
+        display_statement = (
+            'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
+                UserID, {}))
 
     return display_statement
 
