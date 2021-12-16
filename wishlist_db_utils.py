@@ -201,6 +201,11 @@ UserID
 # use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
 # it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently without generating an error.
 # took the '' outside of the integer
+
+'''
+Consider altering the code:
+Failed insert will throw MySQLdb.IntegrityError, so you should be ready to catch it.
+'''
     query = """ INSERT IGNORE INTO wish_list (productID,
 code,
 product_name,
@@ -316,12 +321,9 @@ def delete_wishlist_item(UserID, ProductID):
 
     error_message = "Failed to read and subsequently delete data from DB"
 
-    exception = True
-    while exception:
+    try:
         exception_handler(query, error_message)
-        exception = False
-
-    if exception:
+    except mysql.connector.IntegrityError:
         display_statement = ('Wishlist item for this User_ID and productID  does not exist')
     else:
         display_statement = (
@@ -345,12 +347,9 @@ def delete_wishlist(UserID):
 
     error_message = "Failed to read and subsequently delete data from DB"
 
-    exception = True
-    while exception:
+    try:
         exception_handler(query, error_message)
-        exception = False
-
-    if exception:
+    except mysql.connector.IntegrityError:
         display_statement = ('Wishlist item for this User_ID does not exist')
     else:
         display_statement = (
