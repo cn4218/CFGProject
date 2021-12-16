@@ -1,4 +1,6 @@
 import mysql.connector
+from mysql.connector import cursor
+
 from config import USER, PASSWORD, HOST
 
 '''
@@ -329,7 +331,7 @@ def delete_wishlist_item(UserID, ProductID):
 
     try:
         exception_handler(query, error_message)
-    except mysql.connector.IntegrityError:
+    except mysql.connector.Error:
         display_statement = ('Wishlist item for this User_ID and productID  does not exist')
     else:
         display_statement = (
@@ -346,22 +348,48 @@ It takes the User ID and User Name to find the unique user
 def delete_wishlist(UserID):
     print('The User ID: {}, to be deleted'.format(UserID))
 
-    query = """
-                DELETE FROM Wish_List 
-                WHERE User_ID = '{}' 
-                """.format(UserID)
-
-    error_message = "Failed to read and subsequently delete data from DB"
-
     try:
-        exception_handler(query, error_message)
-    except mysql.connector.IntegrityError:
-        display_statement = ('Wishlist item for this User_ID does not exist')
-    else:
-        display_statement = (
-            'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
-                UserID, {}))
+        db_name = 'cfg_project'
+        db_connection = _connect_to_db(db_name)
+        cur = db_connection.cursor()
+        print("Connected to DB: %s" % db_name)
 
+        cur.execute("""
+                        SELECT EXISTS(SELECT * FROM Wish_List WHERE User_ID = {})
+                        """.format(UserID))
+
+        result = (cur.fetchall())
+        row_count = cur.rowcount
+        cur.close()
+
+    except Exception:
+        raise DbConnectionError("Error")
+
+    else:
+        if row_count == 0:
+            display_statement = ("Wishlist item for this User_ID does not exist")
+        elif row_count != 0:
+            query = """
+                                                    DELETE FROM Wish_List 
+                                                    WHERE User_ID = {}'
+                                                    """.format(UserID)
+
+            error_message = "Failed to read and subsequently delete data from DB"
+            try:
+                exception_handler(query, error_message)
+            except mysql.connector.Error:
+                display_statement = ('Wishlist item for this User_ID and productID  does not exist')
+            else:
+                display_statement = (
+                'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
+                    UserID, {}))
+
+            return display_statement
+
+    finally:
+        if db_connection:
+            db_connection.close()
+            print("DB connection is closed")
     return display_statement
 
 
