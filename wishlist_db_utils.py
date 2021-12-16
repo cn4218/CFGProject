@@ -99,14 +99,12 @@ def exception_handler(query, error_message):
         print("Connected to DB: %s" % db_name)
 
         cur.execute(query)
+
         db_connection.commit()
         cur.close()
 
-
     except Exception:
         raise DbConnectionError(error_message)
-    # you pass whatever error message depending on the function that exception_handler is called within
-    # eg of error messages could be "failure to insert data" , "failure to delete data"
 
     finally:
         if db_connection:
@@ -342,52 +340,54 @@ this function deletes an individual item from the wishlist
 It takes the User ID, User Name and Product ID to find the unique user
 '''
 def delete_wishlist_item(UserID, ProductID):
-    print('The User ID: {}. The Product ID: {}. to be deleted'.format(UserID, ProductID))
-
     query = """
-                DELETE FROM Wish_List 
-                WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
+                        SELECT * FROM wish_list WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
 
-    error_message = "Failed to read and subsequently delete data from DB"
+    error_message = "Error"
 
-    try:
+    row_count = exception_handler_wish(query, error_message)
+
+    if row_count == []:
+        display_statement = ("Wishlist item for this User_ID: {} and productID: {} does not exist").format(UserID, ProductID)
+
+    elif row_count != []:
+        query = """
+                        DELETE FROM wish_list 
+                        WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
+
+        error_message = "Failed to read and subsequently delete data from DB"
+
         exception_handler(query, error_message)
-    except mysql.connector.Error:
-        display_statement = ('Wishlist item for this User_ID and productID  does not exist')
-    else:
+
         display_statement = (
             'The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}'.format(
                 UserID, ProductID, {}))
-
     return display_statement
-
 
 '''
 This function deletes an entire wishlist associated with a user
 It takes the User ID and User Name to find the unique user
 '''
 def delete_wishlist(UserID):
-    print('The User ID: {}, to be deleted'.format(UserID))
 
-    query = ("""
-                            SELECT * FROM Wish_List WHERE User_ID = {}
-                            """.format(UserID))
+    query = """
+                    SELECT * FROM wish_list WHERE User_ID = {} """.format(UserID)
 
     error_message = "Error"
 
     row_count = exception_handler_wish(query, error_message)
 
-    if row_count == 0:
-        display_statement = ("Wishlist item for this User_ID does not exist")
-    elif row_count != 0:
+    if row_count == []:
+        display_statement = ("Wishlist item for this User_ID: {} does not exist").format(UserID)
+    elif row_count != []:
         query = """
-                                                       DELETE FROM Wish_List 
-                                                       WHERE User_ID = {}'
-                                                       """.format(UserID)
+                        DELETE FROM wish_list 
+                        WHERE User_ID = {} """.format(UserID)
 
         error_message = "Failed to read and subsequently delete data from DB"
 
         exception_handler(query, error_message)
+
         display_statement = (
             'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
                 UserID, {}))
