@@ -2,67 +2,58 @@ import requests
 import json
 from user_db_utils import get_user_id
 
-  
-def get_profile_by_id(user_id):
-    result = requests.get(
-        "http://127.0.0.1:5003/profile/{}".format(user_id),
-        headers = {"content_type": "application/json"},
-
-    )
-    #results = _map_values(result)
-    return result.json()
-
-# answer = get_profile_by_id(1)
-# print('h',answer)
-
-
-def add_new_user(user_name,name,email):
-
-    user = {
-        "User_Name": user_name,
-        "Name_User": name,
-        "Email_Address":email
-
-    }
-    result = requests.post(
-        "http://127.0.0.1:5003/register",
-        headers={"content_type":"application/json"},
-        data = json.dumps(user),
-    )
-    return result.json()
-
-# ans = add_new_user('python123','pinealla','pp@hotmail.com')
-# print(ans)
-
-def delete_user_func(user_id):
-    result = requests.get(
-        "http://127.0.0.1:5003/delete/{}".format(user_id),
-        headers= {"content_type": "application/json"}
-    )
-    print(result)
-    return result.json()
-
-
-
-def user_login(user_id,user_name,name,email):
-    user = {
-        "User_ID": user_id,
-        "User_Name": user_name,
-        "Name_User": name,
-        "Email_Address":email
-
-    }
-    result = requests.post(
-        "http://127.0.0.1:5003/login",
-        headers = {"content_type":"application/json"},
-        data = json.dumps(user),
-    )
-    return result.json()
-
-# result = user_login(1,'fang123','Fhhhang','fang@gmail.com')
-# print(result)
 
 class MockFrontEnd:
+        
+    def get_profile_by_id(self,user_id):
+        result = requests.get(
+            "http://127.0.0.1:5004/profile/{}".format(user_id),
+            headers = {"content_type": "application/json"},
+
+        )
+        #results = _map_values(result)
+        return result.json()
+
+    def add_new_user(self,user_name,name,email):
+
+        user = {
+            "User_Name": user_name,
+            "Name_User": name,
+            "Email_Address":email
+
+        }
+        result = requests.post(
+            "http://127.0.0.1:5004/register",
+            headers={"content_type":"application/json"},
+            data = json.dumps(user),
+        )
+        return result.json()
+
+    def delete_user_func(self,user_id):
+        result = requests.get(
+            "http://127.0.0.1:5004/delete/{}".format(user_id),
+            headers= {"content_type": "application/json"}
+        )
+        print(result)
+        return result.json()
+
+
+    def user_login(self,user_id,user_name,name,email):
+        user = {
+            "User_ID": user_id,
+            "User_Name": user_name,
+            "Name_User": name,
+            "Email_Address":email
+
+        }
+        result = requests.post(
+            "http://127.0.0.1:5004/login",
+            headers = {"content_type":"application/json"},
+            data = json.dumps(user),
+        )
+        return result.json()
+
+
     def welcome_message(self):
         print("############################")
         print("Hello, welcome to Cosmo")
@@ -84,7 +75,8 @@ class MockFrontEnd:
                 if answer == 'y' or answer== 'n':
                     return answer
 
-        print('Too many tries inputting the incorrect format')
+        answer = 'Too many tries inputting the incorrect format'
+        print(answer)
         return answer
 
 
@@ -92,27 +84,27 @@ class MockFrontEnd:
         self.username = input('Enter your username: ')
         self.nameuser = input('Enter your name: ')
         self.emailaddress = input('Enter your email address: ')
-        result = add_new_user(self.username,self.nameuser,self.emailaddress)
+        result = self.add_new_user(self.username,self.nameuser,self.emailaddress)
         return result
 
     def verify_account_added(self):
         self.user_id = get_user_id(self.username,self.nameuser,self.emailaddress)
-        verify_account = get_profile_by_id(self.user_id)
+        verify_account = self.user_login(self.user_id, self.username,self.nameuser,self.emailaddress)
         return verify_account
 
     def displaying_user(self):
         print('Account has been created successfully')
-        display_user_details = get_profile_by_id(self.user_id)  
+        display_user_details = self.get_profile_by_id(self.user_id)  
         print(display_user_details)
         return display_user_details
 
     def deleting_account(self):
         ans = input('Would you like to delete your account, y/n? ')
         try: 
-            if ans!= 'y' or ans!='n':
+            if ans!= 'y' and ans!='n':
                 raise Exception
-            if ans == 'y':
-                dict = delete_user_func(self.user_id)
+            elif ans == 'y':
+                dict = self.delete_user_func(self.user_id)
                 if dict == {}:
                     print('Account successfully deleted') 
             return dict
@@ -137,5 +129,4 @@ def run():
 
 if __name__ =='__main__':
     run()
-
 
