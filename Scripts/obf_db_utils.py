@@ -85,7 +85,8 @@ def _map_values(result):
         )
     return mapped
 
-
+# Replaced the DB name 'external_obf_testing' by 'Products'
+# to be consistent with the cosmo)_tables.sql DB file
 # This exception handler can be adapted into 2 functions:
 # 1. One to get all the productID's corresponding to products containing an ingredient
 # 2. And the other that will get products based on their productID
@@ -96,7 +97,7 @@ def exception_handler(query):
     to the database.
     """
     try:
-        db_name = "external_obf_testing"
+        db_name = "Products"   # not external_obf_testing
         db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -325,10 +326,10 @@ def get_proper_ingredients_list(_dict):
 ##########################################################################
 ##########################################################################
 
-# TESTS
-# output = [('poudre de maranta arundinacea (marante)','1'), ('bicarbonate de sodium','2'), ('huile de cocos nucifera (noix de coco)' , '3'),('caprylic/capric triglyceride','0') , ('butyrospermum parkii (beurre de karité)','4')]
+## TESTS
+output = [('poudre de maranta arundinacea (marante)','1'), ('bicarbonate de sodium','2'), ('huile de cocos nucifera (noix de coco)' , '3'),('caprylic/capric triglyceride','0') , ('butyrospermum parkii (beurre de karité)','4')]
 
-# get_products(output,get_productids_containing,get_productids_ingt_in_nth_position)
+get_products(output,get_productids_containing,get_productids_ingt_in_nth_position)
 
 
 """

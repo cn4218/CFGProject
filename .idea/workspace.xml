@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19c92ff5-f125-462e-8d5f-1213e557708c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/.venv/lib/python3.8/site-packages/debugpy/_vendored/pydevd/_pydevd_frame_eval/pydevd_frame_evaluator.cpython-38-darwin.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/.venv/lib/python3.8/site-packages/debugpy/_vendored/pydevd/_pydevd_frame_eval/pydevd_frame_evaluator.pyx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql_script/cosmo_tables.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Scripts/obf_db_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/obf_db_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql_script/placeholder.sql" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

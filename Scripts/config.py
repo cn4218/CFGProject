@@ -1,3 +1,3 @@
 HOST="localhost"
 USER="root"
-PASSWORD="rootpass"
+PASSWORD="Pikachu" # "rootpass"
