@@ -130,9 +130,6 @@ def delete_user(User_ID):
     return answer
 
 
-# in case a user wants to update their user_name - not sure this works or if it's right, will need to fix!
-# also this is not necessary just thought it would be good to add? Ignore if needed
-
 ## checks old user name and updates to a new one
 def update_user(User_ID, Old_User_Name, New_User_Name):
     result = False
