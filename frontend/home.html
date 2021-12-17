@@ -1,0 +1,149 @@
+<!-- This file will contain the home page where users can input their ingredients for the search and a
+navigation bar that links to all other pages -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home&#127800;</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/27198caf80.js" crossorigin="anonymous"></script> -->
+
+    <!--I hope changing to bootstrap 4 doesn't affect my code-->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/27198caf80.js" crossorigin="anonymous"></script>
+  <style> 
+    .active {
+        background-color: rgb(245,49,99,0.5);
+    }
+</style>
+</head>
+
+<body>
+
+
+
+
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            
+        <a  class="navbar-brand" href="#">Cosmo&#127800;</a>
+        <!--When you shrink your browser window, at some point it gets so small that you might not be able 
+            to see all its contents and so bootstrap suggests a toggle feature that lets you still access those contents 
+            via a dropdown navbar that is activated by the click of a button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navblock">
+            <span >&#127800;</span><i class="fas fa-caret-down"></i>
+        </button>
+
+
+
+
+        <div class="collapse navbar-collapse"  id="navblock"> <!--This is what makes it possible for you to list items horizontally -->
+        <ul class="navbar-nav mr-auto"> <!--mr-auto wasn't working until I switched from bootstrap 5 to 4-->
+            <li class="nav-item "> <!--Initially these elements appear in vertically because flex direction was set to column in css(you can see this when you inspect with developer tools)-->
+                <a href="http://127.0.0.1:5500/frontend/home.html" class="nav-link active" id="Home" onclick="show_active('Home')">Home</a> <!--when you first open the website it starts off at home page-->
+            </li>
+            <li class="nav-item">
+                <a href="http://127.0.0.1:5500/frontend/results.html"class="nav-link " id="Results" onclick="show_active('Results')">Results</a>
+            </li>
+            <li class="nav-item">
+                <a href="http://127.0.0.1:5500/frontend/wishlist.html" class="nav-link" id="Wishlist" onclick="show_active('Wishlist')">Wishlist</a>
+            </li>
+        </ul>
+        
+        
+        <ul class="navbar-nav navbar-right">
+            <li class="nav-item"><a href="http://127.0.0.1:5500/frontend/profile.html" class="nav-link" id="Profile" onclick="show_active('Profile')">Profile</a></li>
+            <li class="nav-item"><a href="http://127.0.0.1:5500/frontend/log_out.html" class="nav-link" id="Log-out" onclick="show_active('Log-out')">Log out</a></li>
+        </ul>
+        </div>
+  
+    </nav>
+
+
+
+
+
+
+
+
+<div class="container">
+  <h2 style="color:rgb(245,49,99,0.7)">Ingredient Search</h2>
+  <div class="dropdown">
+      <button type="button" class="btn btn-secondary dropdown-toggle" id="filter" data-toggle="dropdown" > <!--wasnt working until i added data-bs-toggle, need to find out why -->
+            Filter 
+      </button>
+      <ul class="dropdown-menu">
+          <li><a class="dropdown-item" id="option1" href="#" onclick="record_filter(filter_id='option1')">ordered</a></li>
+          <li><a class="dropdown-item" id="option2" href="#" onclick="record_filter(filter_id='option2')">unordered</a></li>
+          <li><a class="dropdown-item" id="option3" href="#" onclick="record_filter(filter_id='option3')">from last</a></li>
+          
+      </ul>
+
+  </div>
+  <br>
+  
+  <form >
+  
+  
+    <div class="row col-sm-5 ">
+        <div class="input-group">
+            <span class="input-group-text" id="addon1" >1</span>
+            <input type="text" class="form-control" id="input1" placeholder="Enter ingredient" name="ingredient">
+            <button type="button" class="btn btn-outline-secondary" style="background-color:rgb(12, 177, 12)" id="button1" onclick="toggle_record_state(icon_id='bb1', button_id='button1', num=1)"><i class="fas fa-check" id="bb1" style="color:white"></i></button>
+            <!--The buttons are meant to be a toggle between green tick and red X-->
+            
+        </div> 
+    </div>
+    <br>
+    <div class="row col-sm-5 ">
+        <div class="input-group">
+            <span class="input-group-text" id="addon2" >2</span>
+            <input type="text" class="form-control" id="input2" placeholder="Enter ingredient" name="ingredient">
+            <button type="button" class="btn btn-outline-secondary" style="background-color:rgb(12, 177, 12)" id="button2" onclick="toggle_record_state(icon_id='bb2', button_id='button2', num=2)"><i id="bb2" class="fas fa-check" style="color:white"></i></button>
+        </div> 
+    </div>
+    <br>
+
+    <div class="row col-sm-5 ">
+        <div class="input-group">
+            <span class="input-group-text" id="addon3" >3</span>
+            <input type="text" class="form-control" id="input3" placeholder="Enter ingredient" name="ingredient">
+            <button type="button" class="btn btn-outline-secondary" style="background-color:rgb(12, 177, 12)" id="button3" onclick="toggle_record_state(icon_id='bb3', button_id='button3', num=3)"><i id="bb3" class="fas fa-check" style="color:white"></i></button>
+        </div> 
+    </div>
+    <br>
+    <div class="row col-sm-5 ">
+        <div class="input-group">
+            <span class="input-group-text" id="addon4" >4</span>
+            <input type="text" class="form-control" id="input4" placeholder="Enter ingredient" name="ingredient">
+            <button type="button" class="btn btn-outline-secondary" style="background-color:rgb(12, 177, 12)" id="button4" onclick="toggle_record_state(icon_id='bb4', button_id='button4', num=4)"><i id="bb4" class="fas fa-check" style="color:white"></i></button>
+        </div> 
+    </div>
+    <br>
+    <div class="row col-sm-5 ">
+        <div class="input-group">
+            <span class="input-group-text" id="addon5" >5</span>
+            <input type="text" class="form-control" id="input5" placeholder="Enter ingredient" name="ingredient">
+            <button type="button" class="btn btn-outline-secondary" style="background-color:rgb(12, 177, 12)" id="button5" onclick="toggle_record_state(icon_id='bb5', button_id='button5', num=5)"><i id="bb5" class="fas fa-check" style="color:white"></i></button>
+        </div> 
+    </div>
+  
+    <br>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10"> <!--Make sure I fully understand this line-->
+        <button type="button" class="btn btn-light btn-outline-secondary" onclick="send_info()">Search</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="js_scripts/home_func.js"></script>
+</body>
+</html>
