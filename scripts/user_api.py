@@ -17,12 +17,12 @@ def get_users(user_id):
 @app.route('/profile/change/<int:user_id>/<old_user_name>/<new_user_name>')
 def change_user_name(user_id,old_user_name, new_user_name):
     result = update_user(user_id,old_user_name,new_user_name)
-    return jsonify(result)
+    return jsonify(result)   ## currently returns true or false depending if username has been changed
 
 @app.route('/profile/change/email/<int:user_id>/<old_user_email>/<new_user_email>')
 def change_user_email(user_id, old_user_email, new_user_email):
     result = update_user_email(user_id, old_user_email, new_user_email)
-    return jsonify(result)
+    return jsonify(result)  ## currently returns true or false depending if email has been changed
 
 ## api endpoint that adds new user by inputing dictionary in form of
 # user_dict = { 'User_Name':'sophie123','Name_User','Sophie', 'Email_Address':'sophie@gmail.com'}
