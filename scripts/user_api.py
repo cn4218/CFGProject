@@ -1,4 +1,4 @@
-"""MAINLY NIKITAS CODE, JUST MADE AFEW CHANGES SO IT ALL RUNS TOGETHER!!!"""
+
 
 from flask import Flask, jsonify, request
 from user_db_utils import add_user, _get_user, delete_user, verify_login, update_user_name, update_user_email
@@ -29,7 +29,7 @@ def change_user_email(user_id, old_user_email, new_user_email):
 ## user_id is added in the database code so no need to input it
 
 @app.route('/register', methods=['POST'])
-def user_acc():
+def user_acc2():
     user = request.get_json()
     add_user(
         User_Name=user['User_Name'],
@@ -38,6 +38,37 @@ def user_acc():
     )
     return user
 
+## SAME FUNCTION AS ABOVE BUT WITH EXCEPTION HANDLING
+@app.route('/register', methods=['POST'])
+def user_acc():
+    try:
+        user = request.get_json()
+        email = user['Email_Address']
+        if '@' not in email or '.' not in email:
+            issue = 'Your email address has NOT been given in the requested format'    ### raises issue if email doesnt have @ or . in thr string
+            raise Exception(issue)
+        result = verify_login(
+            username=user['User_Name'],
+            email_address=user['Email_Address'],
+        )            ### uses db utils function to verify if user already exists
+
+        if result['verify'] == False:   ## if user doesn't exist, it calls on the add user function
+            add_user(
+                User_Name=user['User_Name'],
+                Name_User=user['Name_User'],
+                Email_Address=user['Email_Address'],
+            )
+        elif result['verify'] == True:   ## if user does exist it returns message below
+            message = 'User details already exist, try again with a new username'
+            return jsonify(message)
+        else:
+            print(result['verify'])
+            return jsonify(result['verify'])
+    except:
+            message =  'Error creating account: ' + issue
+            return jsonify(message)
+        #r#eturn jsonify('Issue creating user')
+    return user
 # deleting a user using the user id
 @app.route('/delete/<int:user_id>')
 
