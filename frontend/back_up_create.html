@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!-- Set language to English -->
+<html lang="en">
+    <head>
+    <!-- set characters to utf-8 which means code can be read by a computer
+    (turns it into a binary)-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    
+    <style>
+        html, body {
+            display: flex;
+            justify-content: center;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 15px;
+        }
+
+        .button1{
+            background-color:rgb(245,49,99,0.5) ;
+        }
+
+        .button1:focus {
+            border: 3px solid rgb(245,49,99,0.2);
+
+        }
+
+        form {
+            border: 5px solid #f1f1f1;
+        }
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 16px 8px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: seagreen;
+            color: white;
+            padding: 14px 0;
+            margin: 10px 0;
+            border: none;
+            cursor: grabbing;
+            width:  100%
+        }
+        h1 {
+            text-align: center;
+            font-size: 20px
+        }
+        .formcontainer {
+            text-align: left;
+            margin: 25px 50px 12px;
+        }
+        .container {
+            padding: 16px 0;
+            text-align: left;
+        }
+    </style>
+    </head>
+    <body>
+        <form action="/register" method="POST">
+        <div class="container">
+            <div class="row">
+              <div class="column">
+                <h1>Cosmo&#127800;</h1>
+        
+              </div>
+            </div>
+            <div class="row">
+              <div class="column">
+                <form>
+                <label for="usernameField" >Username</label>
+                <input
+                    name="username"
+                    autofocus placeholder="Insert username"
+                    type="text"
+                    id="usernameField"
+                required />
+                <label for="name" >Insert name</label>
+                <input
+                    name="name"
+                    type="text"
+                    autofocus placeholder="Insert first and last name"
+                    id="nameField"
+                required />
+                <label for="emailField" >Email Address</label>
+                <input
+                    name="email"
+                    type="text"
+                    autofocus placeholder="Insert email address"
+                    id="emailField"
+                required />
+                <div class="accept-box">
+                    <input type="checkbox" name="accept" id="accept">
+                    <p>I accept the <a href="#">Terms & Conditions</a></p>
+                </div>
+                <button type="button" class="button1" onclick="add_user(email_id='emailField',username_id='usernameField',email_id='emailField')">Sign Up</button>
+                <h4 id="error-message"style="color:red"></h4> <!--Error message if all fields are not completed-->
+                <div class="options">
+                    Already have an account? <a href="http://127.0.0.1:5500/frontend/login.html">Login here</a>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    </form>
+    <script>
+    console.log("Here")
+
+    function add_user(ausernameField,nameField,emailField) {
+        console.log('Got to add new user')
+        var add_new_user = {};
+            add_new_user['username'] = document.getElementById(usernameField);
+            add_new_user['name'] = document.getElementById(nameField);
+            add_new_user['email'] = document.getElementById(emailField);
+        console.log(add_user)
+
+        var username = document.getElementById(usernameField);
+        var name = document.getElementById(nameField);
+        var email = document.getElementById(emailField);
+        
+        fetch('http://127.0.0.1:5001/register')
+        .then(( function(response){  //this is where we should either get a hint that the user does not exist or we get all user info
+                    console.log(response);
+                    response.text().then(function(text){ 
+            
+                        verify_dict = JSON.parse(text)
+                        console.log(add_user)
+                    })
+                })
+                .catch((error) => {
+                    console.log("Error raised")
+                    console.log(error)
+                }))}
+</script>
+</body>
+</html>
+
+<!-- //         $.ajax({
+//             url: 'http://127.0.0.1:5001/register',
+//             data: JSON.stringify(add_user),
+//             contentType: 'application/json',
+//             type: 'POST',
+//             dataType: 'json'
+//         })
+//     };
+//     </script>
+//     </body>
+// </html> -->
+ <!--     
+
+//     function add_user(email_id,username_id,name_id) {
+//             console.log("User added")
+//             var username = document.getElementById(username_id);
+//             var email = document.getElementById(email_id);
+//             var name = document.getElementById(name_id);
+                
+//             fetch('http://127.0.0.1:5001/register') // endpoint is register function
+//                 // - if the user doesn't exist, create a new user
+//                 .then( function(response){
+//                 console.log(response);
+//                 response.text().then(function(text){
+    
+//                     add_user_dict = JSON.parse(text) // Send new user information
+//                     console.log(add_user_dict)
+//                         if (add_user_dict["add"] == true){
+//                             var error_message = document.getElementById("error-message");
+//                             error_message.innerHTML = "";
+//                             localStorage.setItem("username", inputUsername.value);
+//                             localStorage.setItem("name", inputName.value);
+//                             localStorage.setItem("email", inputEmail.value);
+//                         }
+//                         else{
+                                
+//                             var error_message = document.getElementById("error-message");
+    
+//                             }
+//                         });
+//                     })
+//                     .catch((error) => {
+//                         console.log("Error raised")
+//                         console.log(error)
+//                     });
+//                     }     
+//           </script> -->
+
+
+//     <!-- <script type = "text/javascript">
+//         function add_user(){
+//             var inputUsername=document.getElementById("username");
+//             localStorage.setItem("username", inputUsername.value);
+//             var inputName=document.getElementById("name");
+//             localStorage.setItem("name", inputName.value);
+//             var inputEmail=document.getElementById("email");
+//             localStorage.setItem("email", inputEmail.value);
+
+//             fetch('http://127.0.0.1:5001/register')
+//                 .then( function(response){
+//                 console.log(response);
+//                 response.text().then(function(text){
+
+//                     add_user_dict = JSON.parse(text) // Send new user information
+//                         console.log(add_user_dict)
+//                         if (add_user_dict["add"] == true){
+//                             var error_message = document.getElementById("error-message");
+//                             error_message.innerHTML = "";
+//                             localStorage.setItem("user_id",add_user_dict["user_id"]);
+//                             location.href = "http://127.0.0.1:5500/frontend/home.html"; // send user to homepage
+//                         }
+//                         else{
+                            
+//                             var error_message = document.getElementById("error-message");
+//                             error_message.innerHTML = "Incorrect email or password, please try again";
+
+//                         }
+//                     });
+//                 })
+//                 .catch((error) => {
+//                     console.log("There is probably a network. Check that app.py is running on the backend please")
+//                     console.log(error)
+//                 });
+//                 } -->
+
+        <!-- // function add_new_user(email_id,username_id,name_id) {
+        //     console.log("User added")
+        //     var user_form = new FormData(); // create new data from the filled out form
+
+        //     user_form.append('User_Name', document.getElementById('usernameField').value); //add username field to web api 
+        //     // user_form.append('User_Name', document.getElementById('usernameField').value = JSON.stringify(""));
+        //     // data appended is stringified as a JSON object to pass to python
+        //     user_form.append('Name_User', document.getElementById('nameField').value); // add name field
+        //     user_form.append('Email_Address', document.getElementById('emailField').value); // add email field
+
+        //     fetch('http://127.0.0.1:5001/register', {
+        //         method: 'PUT', //get Sophie to change app routes to - @app.route('/register', methods=["POST","PUT"]) to include PUT method
+        //         body: user_form
+        //     })
+        //     .then(response => response.json())
+        //     .then(result => {
+        //         console.log('Success:', result);  // Print success and result in console
+        //     })
+        //     .catch(error => {
+        //         console.error('Error:', error); // Log any errors
+        //     }); -->
