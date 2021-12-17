@@ -113,6 +113,7 @@ def exception_handler(query):
         if db_connection:
             db_connection.close()
             print("DB connection is closed")
+
     return result  # SHOULDN'T WE INCREMENT THE SPACING HERE SO IT'S IN THE FINALLY BLOCK?
 
 
@@ -265,7 +266,7 @@ def get_products(output,search_func1,search_func2):
     # print(difference_exclude)
 
     list_dict_products = get_products_by_ids(difference_exclude)   # 5
-    # print(list_dict_products)
+    print(list_dict_products)
     
     return list_dict_products
 
@@ -319,6 +320,7 @@ def get_proper_ingredients_list(_dict):
             get_productids_containing,             # 3a
             get_productids_ingt_in_nth_position    # 3b
         )
+        pp(list_products)
         return list_products
 
 

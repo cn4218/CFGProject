@@ -19,7 +19,7 @@ def serve_home_page():
 def find_products():
     """
     We use a POST method and not a simple GET one because we want to be able to make a
-    request containing the ingredient_input search from the front end.
+    request containing the ingredient_input search from the front end UI.
     Returns a JSON file containing the list of products we asked for according to our request search
     criteria.
     """
