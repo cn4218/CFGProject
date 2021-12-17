@@ -1,4 +1,4 @@
-"""MOST OF THIS IS NIKITAS CODE BUT I JUST MADE A FEW CHANGES SO IT ALL RUNS SMOOTHLY!!!"""
+
 import mysql.connector
 from mysql.connector import Error
 from config import USER, PASSWORD, HOST
@@ -221,8 +221,6 @@ def verify_login(username,email_address): #this needs to be restructured . the f
             answer = {"verify": False} #Chizu: I changed this 
         elif rowcount == 1:   ##user exists
             answer = {"verify": True, "user_id": user_id} #Chizu: I changed this as well because the front end needs the userID
-        elif rowcount>1:  ## duplicate users
-            answer = 'Duplicate users' #Chizu: If it is more than one, and it is duplicate users, what do we do on the front end? like do we let the user login or not ?
 
         cur.close()
         print(answer)
