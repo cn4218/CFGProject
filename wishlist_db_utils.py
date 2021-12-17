@@ -8,6 +8,7 @@ Functions contained in this file:
 _connect_to_db(db_name)
 exception_handler(query, error_message)
 exception_handler_wish(query, error_message)
+exception_record_exists(query, error_message)
 _map_values(result)
 
 add_wish_list(
@@ -312,28 +313,37 @@ UserID
 # return info for a wishlist entry at a time
 # need both user ID and product ID for the specific entry
 def _get_wish_list_individual(UserID, ProductID):
-    print('The User ID: {}. The Product ID: {}.'.format(UserID, ProductID))
 
     query = """ SELECT * FROM wish_list 
-                 WHERE User_ID = '{}' AND productID = '{}' """.format(UserID, ProductID)
+                 WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
 
     error_message = "Failed to read data from DB"
 
-    return exception_handler_wish(query, error_message)
+    result = exception_handler_wish(query, error_message)
+
+    if result == []:
+        display_statement = "Wish list item for User_ID = {} AND productID = {} does not exist """.format(UserID, ProductID)
+        return display_statement
+    elif result != []:
+        return result
+    return
 
 '''
 
 '''
 def _get_wish_list_all(UserID):
-    print('The User ID: {}.'.format(UserID))
-
-    query = """ SELECT * FROM wish_list 
-                 WHERE User_ID = '{}' """.format(UserID)
+    query = """ SELECT * FROM wish_list WHERE User_ID = {} """.format(UserID)
 
     error_message = "Failed to read data from DB"
 
-    return exception_handler_wish(query, error_message)
+    result = exception_handler_wish(query, error_message)
 
+    if result == []:
+        display_statement = "Wish list item for User_ID = {} does not exist """.format(UserID)
+        return display_statement
+    elif result != []:
+        return result
+    return
 
 '''
 this function deletes an individual item from the wishlist
