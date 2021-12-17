@@ -322,7 +322,7 @@ def _get_wish_list_individual(UserID, ProductID):
     result = exception_handler_wish(query, error_message)
 
     if result == []:
-        display_statement = "Wish list item for User_ID = {} AND productID = {} does not exist """.format(UserID, ProductID)
+        display_statement = "Wish list item for User_ID = {} and productID = {} does not exist """.format(UserID, ProductID)
         return display_statement
     elif result != []:
         return result
