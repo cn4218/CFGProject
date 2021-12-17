@@ -32,12 +32,12 @@ def find_products():
     return jsonify(list_of_products)
 
 
-@app.route("/Search", methods=['GET']) 
-def return_list():
-    """
-    Returns a list of one element which is a list of dictionaries [[{}{}{}{}]]
-    """
-    return jsonify(list_)
+# @app.route("/Search", methods=['GET'])
+# def return_list():
+#     """
+#     Returns a list of one element which is a list of dictionaries [[{}{}{}{}]]
+#     """
+#     return jsonify(list_)
 
 
 ## WISH LIST
