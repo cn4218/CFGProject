@@ -67,7 +67,7 @@ def _get_user(User_ID):
             print("Database connection is closed")
     return user
 
-
+## adds user to database, returns none atm
 def add_user(User_Name, Name_User, Email_Address):
     try:
         db_name = "CFG_Project"
@@ -91,11 +91,7 @@ def add_user(User_Name, Name_User, Email_Address):
             print("MySQL connection is closed")
 
 
-# also added except errors but i've done them in 3 different ways
-# - wanted advise on what the best way to handle the error is?
-
-#  not sure if this is needed but adding here just in case?
-#
+## deletes user by user_id returns string describing if deleting user has been successful or not
 def delete_user(User_ID):
     try:
         users = {}
@@ -125,6 +121,8 @@ def delete_user(User_ID):
 
 # in case a user wants to update their user_name - not sure this works or if it's right, will need to fix!
 # also this is not necessary just thought it would be good to add? Ignore if needed
+
+## checks old user name and updates to a new one
 def update_user(User_ID, Old_User_Name, New_User_Name):
     result = False
     try:
@@ -152,7 +150,7 @@ def update_user(User_ID, Old_User_Name, New_User_Name):
             cur.close()
     return result
 
-# result = update_user(1,'fang123','fang12')
+# verifies if user exists in database, mainly useful for the main.py file and testing
 
 def verify_login(username,name_user, email_address):
     try: 
@@ -175,11 +173,11 @@ def verify_login(username,name_user, email_address):
         print(result)
         rowcount = len(result)
 
-        if rowcount == 0:
+        if rowcount == 0:   ## user doesnt exist
             answer = False
-        elif rowcount == 1:
+        elif rowcount == 1:   ##user exists
             answer = True
-        elif rowcount>1:
+        elif rowcount>1:  ## duplicate users
             answer = 'Duplicate users'
 
         cur.close()
@@ -193,6 +191,7 @@ def verify_login(username,name_user, email_address):
             db_connection.close()
             print("DB connection is closed")
 
+ ## finds out user id given the username,name and email
 def get_user_id(username,name,email):
     try:
         db_name = "CFG_Project"
