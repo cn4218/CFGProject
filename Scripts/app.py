@@ -3,12 +3,11 @@ from flask_cors import CORS
 from obf_db_utils import get_proper_ingredients_list
 
 
-
 app = Flask(__name__)
-CORS(app) #cross origin resource sharing 
+CORS(app) #b Cross Origin Resource Sharing
 list_ = []
 
-#OBF 
+## OBF PRODUCTS
 ##################################################################################################
 
 @app.route("/")
@@ -16,9 +15,14 @@ def serve_home_page():
     return render_template("home.html")
 
 
-
-@app.route("/Search", methods=['POST'])  # ??????
+@app.route("/Search", methods=['POST'])
 def find_products():
+    """
+    We use a POST method and not a simple GET one because we want to be able to make a
+    request containing the ingredient_input search from the front end.
+    Returns a JSON file containing the list of products we asked for according to our request search
+    criteria.
+    """
     ingredient_input = request.get_json()
     print(ingredient_input)
     
@@ -30,10 +34,13 @@ def find_products():
 
 @app.route("/Search", methods=['GET']) 
 def return_list():
-    return jsonify(list_) #returns a list of one element and that element is a list of dictionaries 
+    """
+    Returns a list of one element which is a list of dictionaries [[{}{}{}{}]]
+    """
+    return jsonify(list_)
 
 
-#Wishlist 
+## WISH LIST
 #################################################################################################
 @app.route("/Wishlist/<int:user_id>/<int:user_name>", methods=['GET'])
 def send_wishlist(user_id,user_name):
@@ -55,11 +62,9 @@ def add_product_to_wishlist(user_id,user_name,product_id):
 @app.route("/Wishlist/<int:user_id>/<int:user_name>/<int:product_id>", method=['DELETE'])
 def add_product_to_wishlist(user_id,user_name,product_id):
     """
-    This product uses the user_id , user_name and product_id , and deletes it from the wishlist table IF EXISTS.
+    This function uses the user_id, user_name and product_id, and deletes the corresponding
+    product from the wishlist table IF EXISTS.
     """
-
-
-
 
 
 
