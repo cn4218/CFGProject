@@ -158,12 +158,38 @@ def update_user(User_ID, Old_User_Name, New_User_Name):
             cur.close()
     return result
 
+
+
+def update_user_email(User_ID, Old_User_Email, New_User_Email):
+    result = False
+    try:
+        db_name = "CFG_Project"
+        db_connection = _create_db_connection(db_name)
+        cur = db_connection.cursor()
+        print("Connected to DB: %s" % db_name)
+
+        cur.execute("""SELECT email_address FROM user_info WHERE user_id = {}""".format(User_ID))
+        result = cur.fetchall()
+        old_user = cur.fetchone()
+        print(result[0])
+        old_email_check = result[0][0]
+        if Old_User_Email == old_email_check:
+            cur.execute("""UPDATE user_info SET email_address = '{}' WHERE user_id = {}""".format(New_User_Email, User_ID))
+            db_connection.commit()
+            result = True
+        else:
+            print("The current user email address is incorrect")
+            result = False
+    except Exception as err:
+        raise DbConnectionError("Failed to read data from Database", err)
+    finally:
+        if db_connection:
+            db_connection.close()
+            cur.close()
+    return result
+
+
 # verifies if user exists in database, mainly useful for the main.py file and testing
-
-
-
-
-
 def verify_login(username,email_address): #this needs to be restructured . the file needs an exception handler function
 # if someone had a username like: marc'del, would it break this code?
     try: 
