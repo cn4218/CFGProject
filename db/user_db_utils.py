@@ -39,8 +39,15 @@ def _add_values(user_account):
         })
     return mapped
 
-
-    # return info for one user using their name  - can change to user ID if better?
+## returns list containing dictionary containing information for user, given the user_id 
+## e.g. [
+#   {
+#     "Email_Address": "zita@gmail.com", 
+#     "Name_User": "zita,", 
+#     "User_ID": 2, 
+#     "User_Name": "zitazee"
+#   }
+# ]
 def _get_user(User_ID):
     user = {}
     try:
