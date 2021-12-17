@@ -220,6 +220,7 @@ def format_input(ingredients_input):
                 ingredients_output.append(tup)
     return ingredients_output 
 
+
 ## 2
 def get_products(output,search_func1,search_func2): 
     """
