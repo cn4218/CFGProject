@@ -1,0 +1,37 @@
+#results {
+    margin: auto; /*it's in the center*/
+    width: 60%;
+    
+}
+
+.float-container {
+    padding: 0px;
+}
+
+.float-child {
+    
+    float: left;
+    padding: 0px;
+    /* border: 2px solid red; */
+} 
+
+
+.first-box {
+    width: 80%;
+    
+
+}
+
+.second-box {
+    
+    width: 20%;
+    padding: 20px;
+        
+}
+
+
+
+.product-item {
+    
+    border-bottom: 1px solid pink;  
+}
