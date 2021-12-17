@@ -5,7 +5,7 @@ class dbConnection:
     def __init__(self):
         self.host = "localhost"
         self.user = "root"
-        self.password = "skittle1"
+        self.password = ""
         self.db_name = "CFG_Project"
         self.tb_name = "user_info"
         self.conn()
