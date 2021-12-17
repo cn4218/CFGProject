@@ -117,7 +117,7 @@ def exception_handler(query):
 
 # Replaced 'products1' by 'products_table' as in the cosmo_tables.sql DB file
 ## 3 / 3a
-def get_productids_containing(ingredient, n=None): # WHY IS n NOT USED IN THE FUNCTION?
+def get_productids_containing(ingredient, n=None):
     """
     This function takes an ingredient and searches through the Products.products_table
     table to find the rows that contain it, then it gets the productId's of those rows.
