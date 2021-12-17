@@ -97,7 +97,7 @@ def exception_handler(query):
     to the database.
     """
     try:
-        db_name = "Products"   # not external_obf_testing
+        db_name = "Products"
         db_connection = _connect_to_db(db_name)
         cur = db_connection.cursor()
         print("Connected to DB: %s" % db_name)
@@ -349,17 +349,17 @@ print(get_proper_ingredients_list(_dict))
 
 GOT EXPECTED RESULT: 
 [('poudre de maranta arundinacea (marante)', '1'), ('bicarbonate de sodium', '2'), ('huile de cocos nucifera (noix de coco)', '3'), ('butyrospermum parkii (beurre de karité)', '4'), ('caprylic/capric triglyceride', '0')]
-Connected to DB: external_obf_testing
+Connected to DB: Products
 DB connection is closed
-Connected to DB: external_obf_testing
+Connected to DB: Products
 DB connection is closed
-Connected to DB: external_obf_testing
+Connected to DB: Products
 DB connection is closed
-Connected to DB: external_obf_testing
+Connected to DB: Products
 DB connection is closed
-Connected to DB: external_obf_testing
+Connected to DB: Products
 DB connection is closed
-Connected to DB: external_obf_testing
+Connected to DB: Products
 DB connection is closed
 
 [{'productID': 96, 'code': '19962085116', 
