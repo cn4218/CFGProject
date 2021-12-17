@@ -7,28 +7,28 @@ This file serves to test the wishlist  and mock test input
 
 def add_new_wishlist():
 
-    wishlistdict = {'username': 'sarah123',
-                    'User_ID': 3,
-                    'wishlist': {
-                        'productID': 6,
-                        'code': '62263436',
-                        'product_name': 'Huile de massage larnica',
-                        'ingredients_list': 'helianthus annuus (sunflower) seed oil, olea europaea (olive) fruit oil, fragrance*, arnica montana flower extract, betula alba leaf extract, limonene*,  linaloo*, geraniol*, coumarin* *composé présent dans les huiles essentielles naturelles',
-                        'quantity': '100 ml',
-                        'brands': 'Weleda',
-                        'brands_tags': 'weleda',
-                        'categories': 'Skincare',
-                        'categories_tags': r'en:body,en:body-oils,fr:huile-de-massage',
-                        'categories_en': r'Body,Body-oils,fr:huile-de-massage',
-                        'countries': 'France',
-                        'countries_tags': 'en:france',
-                        'countries_en': 'France',
-                        'image_url': 'https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.400.jpg',
-                        'image_small_url': 'https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.200.jpg',
-                        'image_ingredients_url': '',
-                        'image_ingredients_small_url': '',
-                        'image_nutrition_url': '',
-                        'image_nutrition_small_url': ''
+    wishlistdict = {"username": "sarah123",
+                    "User_ID": 1,
+                    "wishlist": {
+                        "productID": 6,
+                        "code": "62263436",
+                        "product_name": "Huile'' de massage larnica",
+                        "ingredients_text": "helianthus 'annuus' (sunflower) seed oil, olea europaea (olive) fruit oil, fragrance*, arnica montana flower extract, betula alba leaf extract, limonene*,  linaloo*, geraniol*, coumarin* *composé présent dans les huiles essentielles naturelles",
+                        "quantity": "100 ml",
+                        "brands": "Weleda",
+                        "brands_tags": "weleda",
+                        "categories": "Skincare",
+                        "categories_tags": r'en:body,en:body-oils,fr:huile-de-massage',
+                        "categories_en": r'Body,Body-oils,fr:huile-de-massage',
+                        "countries": "France",
+                        "countries_tags": "en:france",
+                        "countries_en": "France",
+                        "image_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.400.jpg",
+                        "image_small_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.200.jpg",
+                        "image_ingredients_url": "",
+                        "image_ingredients_small_url": "",
+                        "image_nutrition_url": "",
+                        "image_nutrition_small_url": ""
                     }}
 
     result = requests.post(
