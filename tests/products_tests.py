@@ -1,6 +1,7 @@
 from unittest.mock import patch
 from unittest import TestCase, main
 from main_products import MockProductFrontEnd, run
+from obf_db_utils import _get_all_product_ids, get_productids_containing
 import pandas as pd
 
 class TestProductFrontEnd(TestCase):
@@ -11,8 +12,8 @@ class TestProductFrontEnd(TestCase):
     def test_unordered_containing_water(self,mock_inputs):
         output = run()
         df = pd.DataFrame(output)
-        self.containg_water = df['ingredients_list'].str.contains('water').sum()
-        self.conatining_glycerin = df['ingredients_list'].str.contains('glycerin').sum()
+        self.containg_water = df['ingredients_text'].str.contains('water').sum()
+        self.conatining_glycerin = df['ingredients_text'].str.contains('glycerin').sum()
         self.assertEqual(len(df),self.containg_water)
         self.assertEqual(0,self.conatining_glycerin)
 
@@ -20,9 +21,9 @@ class TestProductFrontEnd(TestCase):
     def test_unordered_containing_glycerin(self,mock_inputs):
         output = run()
         df = pd.DataFrame(output)
-        containg_water = df['ingredients_list'].str.contains('water').sum()
-        conatining_glycerin = df['ingredients_list'].str.contains('glycerin').sum()
-        conatining_citric_acid = df['ingredients_list'].str.contains('citric acid').sum()
+        containg_water = df['ingredients_text'].str.contains('water').sum()
+        conatining_glycerin = df['ingredients_text'].str.contains('glycerin').sum()
+        conatining_citric_acid = df['ingredients_text'].str.contains('citric acid').sum()
         self.assertEqual(len(df),conatining_glycerin)
         self.assertEqual(0,containg_water)
         self.assertEqual(len(df),conatining_citric_acid)
@@ -31,10 +32,10 @@ class TestProductFrontEnd(TestCase):
     def test_unordered_containing_parfum(self, mock_inputs):
         output = run()
         df = pd.DataFrame(output)
-        df['ingredients_list'] = df['ingredients_list'].replace('í','i')
-        containg_bicarb = df['ingredients_list'].str.contains('bicarbonate de sodium').sum()
-        containing_parfum = df['ingredients_list'].str.contains('parfum').sum()
-        containing_limonene = df['ingredients_list'].str.contains('limonene|límonene').sum()
+        df['ingredients_text'] = df['ingredients_text'].replace('í','i')
+        containg_bicarb = df['ingredients_text'].str.contains('bicarbonate de sodium').sum()
+        containing_parfum = df['ingredients_text'].str.contains('parfum').sum()
+        containing_limonene = df['ingredients_text'].str.contains('limonene|límonene').sum()
 
         self.assertEqual(0,containg_bicarb)
         self.assertEqual(len(df),containing_parfum)
@@ -44,11 +45,11 @@ class TestProductFrontEnd(TestCase):
     def test_unordered_bicarb(self,mock_inputs):
         output = run()
         df = pd.DataFrame(output)
-        containg_bicarb = df['ingredients_list'].str.contains('bicarbonate de sodium').sum()
-        containing_geraniol = df['ingredients_list'].str.contains('geraniol').sum()
-        containing_hexyl = df['ingredients_list'].str.contains('hexyl cinnamal').sum()
-        containing_alcohol = df['ingredients_list'].str.contains('alcohol').sum() 
-        containing_water = df['ingredients_list'].str.contains('water').sum()  
+        containg_bicarb = df['ingredients_text'].str.contains('bicarbonate de sodium').sum()
+        containing_geraniol = df['ingredients_text'].str.contains('geraniol').sum()
+        containing_hexyl = df['ingredients_text'].str.contains('hexyl cinnamal').sum()
+        containing_alcohol = df['ingredients_text'].str.contains('alcohol').sum() 
+        containing_water = df['ingredients_text'].str.contains('water').sum()  
         self.assertEqual(0,containg_bicarb)
         self.assertEqual(len(df),containing_geraniol)
         self.assertEqual(len(df),containing_hexyl)
@@ -59,9 +60,9 @@ class TestProductFrontEnd(TestCase):
     def test_ordered_bicarb(self, mock_inputs):
         output = run()
         df = pd.DataFrame(output)
-        df['2nd ingredient'] = df['ingredients_list'].apply(lambda x:x.split(',')[1])
-        df['4th ingredient'] = df['ingredients_list'].apply(lambda x:x.split(',')[3])
-        containg_bicarb = df['ingredients_list'].str.contains('bicarbonate de sodium').sum()
+        df['2nd ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[1])
+        df['4th ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[3])
+        containg_bicarb = df['ingredients_text'].str.contains('bicarbonate de sodium').sum()
         containg_aqua = df['2nd ingredient'].str.contains('aqua').sum()
         containing_alcohol = df['4th ingredient'].str.contains('alcohol').sum()
         self.assertEqual(0,containg_bicarb)
@@ -72,11 +73,11 @@ class TestProductFrontEnd(TestCase):
     def test_ordered_aqua(self, mock_inputs):
         output = run()
         df = pd.DataFrame(output)
-        df['1st ingredient'] = df['ingredients_list'].apply(lambda x:x.split(',')[0])
-        df['2nd ingredient'] = df['ingredients_list'].apply(lambda x:x.split(',')[1])
+        df['1st ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[0])
+        df['2nd ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[1])
         containg_aqua = df['1st ingredient'].str.contains('aqua').sum()
         containg_isobutane = df['2nd ingredient'].str.contains('isobutane').sum()
-        containing_sod_tal = df['ingredients_list'].str.contains('sodium tallowate').sum()
+        containing_sod_tal = df['ingredients_text'].str.contains('sodium tallowate').sum()
         self.assertEqual(len(df),containg_aqua)
         self.assertEqual(len(df),containg_isobutane)
         self.assertEqual(0,containing_sod_tal)
@@ -85,13 +86,66 @@ class TestProductFrontEnd(TestCase):
     def test_ordered_water(self, mock_inputs):
         output = run()
         df = pd.DataFrame(output)
-        df['1st ingredient'] = df['ingredients_list'].apply(lambda x:x.split(',')[0])
-        df['2nd ingredient'] = df['ingredients_list'].apply(lambda x:x.split(',')[1])
+        df['1st ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[0])
+        df['2nd ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[1])
         containg_water = df['1st ingredient'].str.contains('water').sum()
         containg_parfum = df['2nd ingredient'].str.contains('parfum').sum()
         self.assertEqual(len(df),containg_water)
         self.assertEqual(len(df),containg_parfum)
+
+    @patch('builtins.input',side_effect = ['y','water','y','water','n','','','','','',''])
+    def test_bad_input(self,mock_inputs):
+        output = run()
+        self.assertEqual('Query returns no search results',output)
+
+
+    @patch('builtins.input',side_effect = ['y','water','y','Stearalkonium chloride','y','stearyl alcohol','y','butyrospermum parkii (beurre de karité)','n','caprylic/capric triglyceride','n'])
+    def test_bad_input_result(self,mock_inputs):
+        output = run()
+        self.assertEqual('Query returns no search results',output)
+
+
+    @patch('builtins.input',side_effect = ['n','aqua','n','sodium','n','magnesium','n','amyl cinnamal','n','',''])
+    def test_allergic_to_ingredients_aqua(self,mock_inputs):
+        output = run()
+        df = pd.DataFrame(output)
+        containing_water = df['ingredients_text'].str.contains('aqua').sum()
+        containg_gycerin = df['ingredients_text'].str.contains('sodium').sum()
+        containing_sodium = df['ingredients_text'].str.contains('magnesiume').sum()
+        containing_hexyl = df['ingredients_text'].str.contains('amyl cinnamal').sum()
+        self.assertEqual(0,containing_water)
+        self.assertEqual(0,containg_gycerin)
+        self.assertEqual(0,containing_sodium)
+        self.assertEqual(0,containing_hexyl)
+
+    @patch('builtins.input',side_effect = ['y','water','n','glycerin','n','sodium palmate','n','parfum','n','',''])
+    def test_allergic_to_ingredients(self,mock_inputs):
+        output = run()
+        df = pd.DataFrame(output)
+        containing_water = df['ingredients_text'].str.contains('water').sum()
+        containg_gycerin = df['ingredients_text'].str.contains('glycerin').sum()
+        containing_sodium = df['ingredients_text'].str.contains('sodium palmate').sum()
+        containing_hexyl = df['ingredients_text'].str.contains('parfum').sum()
+        self.assertEqual(0,containing_water)
+        self.assertEqual(0,containg_gycerin)
+        self.assertEqual(0,containing_sodium)
+        self.assertEqual(0,containing_hexyl)
+    
+    @patch('builtins.input',side_effect = ['n','water','n','','','','','','','',''])
+    def test_no_water(self, mock_inputs):
+        output = run()
+        df = pd.DataFrame(output)
+        containing_water = df['ingredients_text'].str.contains('water').sum()
+        result_all = _get_all_product_ids()
+        result_water = get_productids_containing('water')
+        expected_length = len(result_all)-len(result_water)
+        self.assertEqual(0,containing_water)
+        self.assertEqual(len(df),expected_length)
         
-        
+    
+
+
+
+
 if __name__ == "__main__":
     main()
