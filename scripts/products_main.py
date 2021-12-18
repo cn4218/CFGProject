@@ -16,13 +16,21 @@ class MockProductFrontEnd:
 
         }
         }
-        print(product_dict)
         result = requests.post(
             "http://127.0.0.1:5001/Search",
             headers = {"content_type": "application/json"},
             data = json.dumps(product_dict)
         )
         return result.json()
+
+    def fetch_existing_search_result(self,search_id):
+        result = requests.get(
+            "http://127.0.0.1:5001/Search/{}".format(search_id),
+            headers = {"content_type": "application/json"},
+        )
+        return result.json()
+
+    
 
     def welcome_message(self):
         print("############################")
@@ -72,6 +80,9 @@ class MockProductFrontEnd:
 
 def run():
     mock = MockProductFrontEnd()
+    result = mock.fetch_existing_search_result(1)
+    print(result)
+
 
     mock.welcome_message()
     mock.selecting_ingredients()
@@ -79,4 +90,5 @@ def run():
     return list_products_
 
 if __name__ == '__main__':
+
     output = run()
