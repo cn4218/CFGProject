@@ -24,14 +24,15 @@ def add_wish_list_func():
     wishlist_dict = request.get_json()
     add_wish_list(
         ProductID = wishlist_dict['wishlist']['ProductID'], 
-        Code_Wish = wishlist_dict['wishlist']['Code_Wish'], 
+        Code_Wish = wishlist_dict['wishlist']['Code'], 
         Product_name = wishlist_dict['wishlist']['Product_name'], 
         Ingredients_Text = wishlist_dict['wishlist']['Ingredients_Text'], 
         Quantity = wishlist_dict['wishlist']['Quantity'],
         Brands = wishlist_dict['wishlist']['Brands'], 
         Brands_tags = wishlist_dict['wishlist']['Brands_tags'], 
+        Categories =wishlist_dict['wishlist']['Categories'],
         Categories_Tags = wishlist_dict['wishlist']['Categories_Tags'], 
-        Categories_En = wishlist_dict['wishlist']['Countries_en'],
+        Categories_En = wishlist_dict['wishlist']['Categories_en'],
         Countries = wishlist_dict['wishlist']['countries'],
         Countries_Tags = wishlist_dict['wishlist']['Countries_Tags'],
         Countries_en = wishlist_dict['wishlist']['Countries_en'],
