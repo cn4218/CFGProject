@@ -1,5 +1,6 @@
 import requests
 import json
+from wishlist_db_utils import _map_values
 
 """
 This file serves to test the wishlist  and mock test input
@@ -70,60 +71,71 @@ def delete_wishlist(User_ID):
     return result.json()
 
 
-class MockFrontEnd:
-    def welcome_message(self):
-        print("############################")
-        print("Hello, welcome to Cosmo")
-        print("############################")
-        print()
-
-    def verify_wish_list_item(self):
-        self.User_ID = input('What is your User ID ')
-        self.productID = input('What is your product ID? ')
-        verify_wishlist_item = _get_wish_list_individual(self.User_ID, self.productID)
-        return verify_wishlist_item
-
-    def verify_wish_list(self):
-        self.User_ID = input('What is your User ID ')
-        verify_wishlist = _get_wish_list_all(self.User_ID)
-        return verify_wishlist
+def welcome_message():
+    print("############################")
+    print("Hello, welcome to Cosmo")
+    print("############################")
+    print()
 
 
-    def deleting_wishlist_item(self):
-        self.User_ID = input('What is your User ID')
-        self.productID = input('What is your product ID? ')
-        dict = delete_wishlist_item(self.User_ID, self.productID)
-        if dict == {}:
-            print('Wishlist item successfully deleted')
-        return dict
+def verify_wish_list_item():
+    User_ID = input('What is your User ID ')
+    productID = input('What is your product ID? ')
+    data = (_get_wish_list_individual(User_ID, productID))
+    data_dict = json.loads(data)['User_ID']['productID']
+    # data_string = json.dumps(data_dict)
+    # convert single-entry dictionaries to tuples
+    data_2 = [list(data_dict.items())[0] for data in data_dict]
+    # filter the courses based on the condition
+    filtered_data = list(filter(lambda data: data[1] > 5, data_2))
+    return filtered_data
 
-    def deleting_wishlist(self):
-        self.User_ID = input('What is your User ID ')
-        dict = delete_wishlist(self.User_ID)
-        if dict == {}:
-            print('Wishlist item successfully deleted')
-        return dict
+
+def verify_wish_list():
+    User_ID = input('What is your User ID ')
+    data = (_get_wish_list_all(User_ID))
+    data_dict = json.loads(data)
+    data_string = json.dumps(data_dict)
+    return data_string
+
+
+def deleting_wishlist_item():
+    User_ID = input('What is your User ID')
+    productID = input('What is your product ID? ')
+    dict = delete_wishlist_item(User_ID, productID)
+    if dict == {}:
+        print('Wishlist item successfully deleted')
+    return dict
+
+
+def deleting_wishlist(self):
+    User_ID = input('What is your User ID ')
+    dict = delete_wishlist(User_ID)
+    if dict == {}:
+        print('Wishlist item successfully deleted')
+    return dict
+
+
 
 
 def run():
-    mock = MockFrontEnd()
-    mock.welcome_message()
+    welcome_message()
     while True:
         answer_wishlist_add = input('Do you want to add to the wishlist? y/n ')
         if answer_wishlist_add == 'y':
             add_new_wishlist()
         answer_wishlist_item = input('Do you wish to get a wishlist item? y/n ')
         if answer_wishlist_item == 'y':
-            mock.verify_wish_list_item()
+            verify_wish_list_item()
         answer_wishlist = input('Do you wish to retrieve the wishlist? y/n ')
         if answer_wishlist == 'y':
-            mock.verify_wish_list()
+            verify_wish_list()
         answer_delete_wishlist_item = input('Do you wish to delete a wishlist item? y/n' )
         if answer_delete_wishlist_item == 'y':
-            mock.deleting_wishlist_item()
+            deleting_wishlist_item()
         answer_delete_wishlist = input('Do you wish to delete the entire wishlist? y/n ')
         if answer_delete_wishlist == 'y':
-            mock.deleting_wishlist()
+            deleting_wishlist()
             break
         break
 
