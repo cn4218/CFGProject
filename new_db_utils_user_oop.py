@@ -183,7 +183,6 @@ class dbConnection:
         return answer
 
 
-
     def verify_login(self, user_id, username, name_user, email_address):
         try:
             self.conn()
@@ -197,10 +196,12 @@ class dbConnection:
             result = cur.fetchall()
             print(result)
             rowcount = len(result)
-            if rowcount == 0:
+            if rowcount == 0:  ## user doesnt exist
                 answer = False
-            else:
+            elif rowcount == 1:  ##user exists
                 answer = True
+            elif rowcount > 1:  ## duplicate users
+                answer = 'Duplicate users'
             cur.close()
             return answer
 
@@ -247,6 +248,7 @@ class dbConnection:
             db= self.db_name,
         )
         self.db = db
+
 
 
 c = dbConnection()
