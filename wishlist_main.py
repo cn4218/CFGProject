@@ -42,7 +42,7 @@ def add_new_wishlist():
 
 def _get_wish_list_individual(User_ID, productID):
     result = requests.get(
-        "http://127.0.0.1:500/wishlist/{}/{}".format(User_ID, productID),
+        "http://127.0.0.1:5001/wishlist/{}/{}".format(User_ID, productID),
         # headers restrict the type of data to be received
         headers={"content-type": "application/json"},
     )
@@ -50,21 +50,21 @@ def _get_wish_list_individual(User_ID, productID):
 
 def _get_wish_list_all(User_ID):
     result = requests.get(
-        "http://127.0.0.1:500/wishlist/{}/".format(User_ID),
+        "http://127.0.0.1:5001/wishlist/{}/".format(User_ID),
         headers={"content-type": "application/json"},
     )
     return result.json()
 
 def delete_wishlist_item(User_ID, productID):
     result = requests.get(
-        "http://127.0.0.1:500/delete/{}/{}".format(User_ID, productID),
+        "http://127.0.0.1:5001/delete/{}/{}".format(User_ID, productID),
         headers={"content-type": "application/json"},
     )
     return result.json()
 
 def delete_wishlist(User_ID):
     result = requests.get(
-        "http://127.0.0.1:500/delete/{}/".format(User_ID),
+        "http://127.0.0.1:5001/delete/{}/".format(User_ID),
         headers={"content-type": "application/json"},
     )
     return result.json()
@@ -128,6 +128,6 @@ def run():
         break
 
 if __name__ == '__main__':
-    add_new_wishlist()
-    # run()
+    # add_new_wishlist()
+    run()
 
