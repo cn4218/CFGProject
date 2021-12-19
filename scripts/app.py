@@ -100,7 +100,7 @@ def add_wish_list_func(user_id,product_id):
             ProductID = wishlist_dict['wishlist']['productID'], 
             Code_Wish = wishlist_dict['wishlist']['code'], 
             Product_name = wishlist_dict['wishlist']['product_name'], 
-            Ingredients_Text = wishlist_dict['wishlist']['ingredients_list'], 
+            Ingredients_Text = wishlist_dict['wishlist']['ingredients_text'], 
             Quantity = wishlist_dict['wishlist']['quantity'],
             Brands = wishlist_dict['wishlist']['brands'], 
             Brands_tags = wishlist_dict['wishlist']['brands_tags'], 
