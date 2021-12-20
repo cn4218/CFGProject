@@ -1,7 +1,8 @@
 from unittest.mock import patch
 from unittest import TestCase, main
 from wishlist_main import MockFrontEnd
-from wishlist_db_utils import _get_wish_list_individual, _get_wish_list_all, delete_wishlist, delete_wishlist_item
+from wishlist_db_utils import DbConnectionError, _connect_to_db, exception_handler, exception_handler_wish, exception_record_exists, _map_values, add_wish_list, _get_wish_list_individual, _get_wish_list_all, delete_wishlist_item, delete_wishlist
+
 
 """
 Things to test:
@@ -30,7 +31,31 @@ class TestWishListApiDb(TestCase):
     def setUp(self):
         self.mock = MockFrontEnd("cfg_project")
 
-    def test_get_wish_list_item(self):
+
+    def test_get_wish_list_item_if_not_exists(self):
+        self.UserID = 1500
+        self.ProductID = 1500
+        expected = "Wish list item for User_ID = {} and productID = {} does not exist ".format(self.UserID, self.ProductID)
+        result = _get_wish_list_individual(self.UserID, self.ProductID)
+        self.assertEqual(expected, result)
+
+    def test_get_wish_list_all_if_not_exists(self):
+        self.UserID = 1500
+        expected = "Wish list item for User_ID = {} does not exist ".format(self.UserID)
+        result = _get_wish_list_all(self.UserID)
+        self.assertEqual(expected, result)
+
+    def test_delete_wish_list_item(self):
+        self.UserID = 1
+        self.ProductID = 2
+        expected = 'The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}'.format(self.UserID, self.ProductID, {}))
+        result = delete_wishlist_item(self.UserID, self.ProductID)
+        self.assertEqual(expected, result)
+
+    def test_delete_wish
+
+
+    def test_get_wish_list_item_if_exists(self):
         expected = [
   {
     "User_ID": 1,
@@ -111,8 +136,7 @@ class TestWishListApiDb(TestCase):
         result = _get_wish_list_all(self.UserID)
         self.assertEqual(expected, result)
 
-    def test_delete_wishlist_item(self):
-        
+
 
 if __name__ == "__main__":
     main()
