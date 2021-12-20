@@ -38,6 +38,7 @@ def add_new_wishlist():
         headers={"content-type": "application/json"},
         data=json.dumps(wishlistdict),
     )
+    print(result)
 
     return result.json()
 
@@ -51,21 +52,21 @@ def _get_wish_list_individual(User_ID, productID):
 
 def _get_wish_list_all(User_ID):
     result = requests.get(
-        "http://127.0.0.1:5001/wishlist/{}/".format(User_ID),
+        "http://127.0.0.1:5001/wishlist/{}".format(User_ID),
         headers={"content-type": "application/json"},
     )
     return result.json()
 
 def delete_wishlist_item(User_ID, productID):
     result = requests.get(
-        "http://127.0.0.1:5001/delete/{}/{}".format(User_ID, productID),
+        "http://127.0.0.1:5001/wishlist/delete/{}/{}".format(User_ID, productID),
         headers={"content-type": "application/json"},
     )
     return result.json()
 
 def delete_wishlist(User_ID):
     result = requests.get(
-        "http://127.0.0.1:5001/delete/{}/".format(User_ID),
+        "http://127.0.0.1:5001/wishlist/delete/{}".format(User_ID),
         headers={"content-type": "application/json"},
     )
     return result.json()
@@ -81,22 +82,14 @@ def welcome_message():
 def verify_wish_list_item():
     User_ID = input('What is your User ID ')
     productID = input('What is your product ID? ')
-    data = (_get_wish_list_individual(User_ID, productID))
-    data_dict = json.loads(data)['User_ID']['productID']
-    # data_string = json.dumps(data_dict)
-    # convert single-entry dictionaries to tuples
-    data_2 = [list(data_dict.items())[0] for data in data_dict]
-    # filter the courses based on the condition
-    filtered_data = list(filter(lambda data: data[1] > 5, data_2))
-    return filtered_data
+    data = _get_wish_list_individual(User_ID, productID)
+    return data
 
 
 def verify_wish_list():
     User_ID = input('What is your User ID ')
-    data = (_get_wish_list_all(User_ID))
-    data_dict = json.loads(data)
-    data_string = json.dumps(data_dict)
-    return data_string
+    data = _get_wish_list_all(User_ID)
+    return data
 
 
 def deleting_wishlist_item():
@@ -108,7 +101,7 @@ def deleting_wishlist_item():
     return dict
 
 
-def deleting_wishlist(self):
+def deleting_wishlist():
     User_ID = input('What is your User ID ')
     dict = delete_wishlist(User_ID)
     if dict == {}:
@@ -123,23 +116,27 @@ def run():
     while True:
         answer_wishlist_add = input('Do you want to add to the wishlist? y/n ')
         if answer_wishlist_add == 'y':
-            add_new_wishlist()
+            res = add_new_wishlist()
+            print(res)
         answer_wishlist_item = input('Do you wish to get a wishlist item? y/n ')
         if answer_wishlist_item == 'y':
-            verify_wish_list_item()
+            res2 = verify_wish_list_item()
+            print(res2)
         answer_wishlist = input('Do you wish to retrieve the wishlist? y/n ')
         if answer_wishlist == 'y':
-            verify_wish_list()
-        answer_delete_wishlist_item = input('Do you wish to delete a wishlist item? y/n' )
+            res3 = verify_wish_list()
+            print(res3)
+        answer_delete_wishlist_item = input('Do you wish to delete a wishlist item? y/n ' )
         if answer_delete_wishlist_item == 'y':
-            deleting_wishlist_item()
+            res4 = deleting_wishlist_item()
+            print(res4)
         answer_delete_wishlist = input('Do you wish to delete the entire wishlist? y/n ')
         if answer_delete_wishlist == 'y':
-            deleting_wishlist()
+            res5 = deleting_wishlist()
+            print(res5)
             break
         break
 
 if __name__ == '__main__':
     # add_new_wishlist()
     run()
-
