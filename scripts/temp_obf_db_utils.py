@@ -460,9 +460,28 @@ def fetch_results(search_id):
 
 def returning_products_in_pages(list_dict_products,page_number):
     """
+    Function that divides list of product dictionaries into groups of 25
+    page #: list slicing - # of results
     page 1: 0-25 --(1-24)
     page2: 25-50 -- (25-49)
     page3: 50-75 -- (50-74)
+
+    Parameters
+    -----------
+    list_dict_products: list
+        list of product dictionaries for a search result
+    page_number: int
+        page number being called in the search
+    
+    Returns
+    ---------
+    Either:
+    products_list: list
+        list of product dictionaries for given page number(will have length 25, unless its the last page)
+    message: str
+        message for when a page number is called thats larger than the max number of pages for a search result
+        'No more search results for this query'
+
     """
     amount_products = len(list_dict_products)
     products_per_page = 25
