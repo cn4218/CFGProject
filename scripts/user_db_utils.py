@@ -37,6 +37,7 @@ class dbConnection:
         return mapped
 
     def verify_login(self, username,emailaddress):
+
         try:
             self.conn()
             cur = self.db.cursor()
@@ -69,6 +70,30 @@ class dbConnection:
                 print("DB connection is closed")
 
     def add_user(self, user_name, name_user, email_address):
+        """
+        Function that firstly checks if email address has been given in a format containing '@' and '.' then verifies if a user account with username, name and email already exist. 
+        If not, then the new user is added to the sql table, wherea user ID is given.
+        Parameters
+        -----------
+        user_name: str
+            username of user
+        name_user: str
+            name of user
+        email_addres: str
+            email of user
+
+        Returns
+        ---------
+        Either:
+        Issue: str
+            if theres an issue addng new user, either:
+                1. 'Your email address has NOT been given in the requested format'
+                2. 'User details already exist, try again with a new username'
+        OR:
+        True: bool
+            if user is successfully added
+
+        """
         try:
             if '@' not in email_address or '.' not in email_address:
                 issue = 'Your email address has NOT been given in the requested format'    ### raises issue if email doesnt have @ or . in thr string
@@ -191,6 +216,20 @@ class dbConnection:
 
     # new delete - seems to work
     def delete_user(self, user_id):
+        """
+        Function that deletes user from sql table
+        Parameters
+        -----------
+        user_id: int
+            id of user
+        Returns
+        -------
+        answer: str
+            Either:
+            1. "Account successfully deleted for username {}".format(user_name)
+            2. "Unsuccessful deleting account for username {},{}".format(user_name,err)
+            3. 'No entry in database corresponding to given user ID: {}'.format(user_id)
+        """
         try:
 
             dict = self._get_user(user_id)
@@ -252,3 +291,8 @@ class dbConnection:
                 self.db.close()
 
  #had to change because I was getting syntax errors 
+
+
+
+cd = dbConnection('blu3bottl3')
+result = cd.verify_login('Ayesha11','ayesha@live.com')
