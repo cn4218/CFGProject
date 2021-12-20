@@ -1,8 +1,7 @@
-
-
 import json
 from flask import Flask, jsonify, request
-from user_db_utils import dbConnection
+from user_db_utils import add_user, _get_user, delete_user, verify_login, update_user_name, update_user_email
+from user_db_utils_oop import dbConnection
 from wishlist_db_utils import delete_wishlist
 
 app = Flask(__name__)
@@ -33,6 +32,19 @@ def change_user_email(user_id, old_user_email, new_user_email):
 ## user_id is added in the database code so no need to input it
 @app.route('/register', methods=['POST'])
 def user_acc():
+    """
+    API endpoint that registers a user into the sql table. Takes in a dictionary, user in formtat:
+    user = { 'User_Name':'sophie123','Name_User','Sophie', 'Email_Address':'sophie@gmail.com'}
+    Returns
+    --------
+    Either:
+    user: dict
+        user dictionary for the new user thats been added
+    OR:
+    answer: str
+        string containing message on why the user hasn't been added
+    
+    """
     user = request.get_json()
 
     answer = db_utils.add_user(
