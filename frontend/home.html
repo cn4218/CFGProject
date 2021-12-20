@@ -19,7 +19,7 @@ navigation bar that links to all other pages -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/27198caf80.js" crossorigin="anonymous"></script>
-  <style>
+  <style> 
     .active {
         background-color: rgb(245,49,99,0.5);
     }
@@ -27,6 +27,11 @@ navigation bar that links to all other pages -->
 </head>
 
 <body>
+
+
+
+
+
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
             
         <a  class="navbar-brand" href="#">Cosmo&#127800;</a>
@@ -49,25 +54,30 @@ navigation bar that links to all other pages -->
                 <a href="http://127.0.0.1:5500/frontend/results.html"class="nav-link " id="Results" onclick="show_active('Results')">Results</a>
             </li>
             <li class="nav-item">
-                <a href="http://127.0.0.1:5500/frontend/wishlist
-                
-                .html" class="nav-link" id="Wishlist" onclick="show_active('Wishlist')">Wishlist</a>
+                <a href="http://127.0.0.1:5500/frontend/wishlist.html" class="nav-link" id="Wishlist" onclick="show_active('Wishlist')">Wishlist</a>
             </li>
         </ul>
         
         
         <ul class="navbar-nav navbar-right">
-            <li class="nav-item"><a href="#" class="nav-link" id="Profile" onclick="show_active('Profile')">Profile</a></li>
-            <li class="nav-item"><a href="#" class="nav-link" id="Log-out" onclick="show_active('Log-out')">Log out</a></li>
+            <li class="nav-item"><a href="http://127.0.0.1:5500/frontend/profile.html" class="nav-link" id="Profile" onclick="show_active('Profile')">Profile</a></li>
+            <li class="nav-item"><a href="http://127.0.0.1:5500/frontend/log_out.html" class="nav-link" id="Log-out" onclick="show_active('Log-out')">Log out</a></li>
         </ul>
         </div>
   
     </nav>
 
+
+
+
+
+
+
+
 <div class="container">
-  <h2 style="color:grey">Ingredient Search</h2>
+  <h2 style="color:rgb(245,49,99,0.7)">Ingredient Search</h2>
   <div class="dropdown">
-      <button type="button" class="btn btn-secondary dropdown-toggle" id="filter" data-bs-toggle="dropdown" > <!--wasnt working until i added data-bs-toggle, need to find out why -->
+      <button type="button" class="btn btn-secondary dropdown-toggle" id="filter" data-toggle="dropdown" > <!--wasnt working until i added data-bs-toggle, need to find out why -->
             Filter 
       </button>
       <ul class="dropdown-menu">

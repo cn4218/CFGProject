@@ -110,6 +110,7 @@ function send_info(){
     
     post_data = {
         method: 'POST',
+        
         headers: {'Content-Type': 'application/json',},
         
         body: JSON.stringify(export_info)
@@ -142,7 +143,6 @@ function send_info(){
                 localStorage.setItem("bool", true)
                 
 
-
                 
                 
 
@@ -151,6 +151,10 @@ function send_info(){
 
             
         }) //check if this is correct syntax for url endpoints 
+        .catch((error) => {
+            console.log("There is probably a network. Check that app.py is running on the backend please")
+            console.log(error)
+          });
 
 }
 

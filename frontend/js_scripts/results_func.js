@@ -15,6 +15,14 @@
    
   
 // }, 30000);
+
+
+
+
+
+
+
+
 function show_active(item_id){
     document.getElementById("Home").className = "nav-link";
     document.getElementById("Results").className = "nav-link";
@@ -51,9 +59,9 @@ function format_div(result,num){
             
             <br>
             <h4 style="color:rgb(245,49,99,0.7)"> ${product_name}</h4>
-            <span style="color:rgb(245,49,99,0.6);display:none"><b>ProductID:</b></span>
-            <span style="display:none">${product_id}</span> 
-           <!-- <br> -->
+            <span style="color:rgb(245,49,99,0.6)"><b>ProductID:</b></span>
+            <span>${product_id}</span> 
+            <br> 
             <span style="color:rgb(245,49,99,0.6)"><b> Brand:</b></span>
             <span>${brand}</span>
             <br>
@@ -66,12 +74,7 @@ function format_div(result,num){
             </span>
           </div>
         </div>
-        <div class="float-child second-box">
-            <button type="button" class="btn btn-dark" id="btn-${num}" style="font-size:25px" onclick="toggle_wishlist_button(button_id='btn-${num}',sign='sign-${num}')">+</button>
-            <p style="font-size:12px" >add or remove from wishlist</p>
-            <p style="font-size:12px" id="sign-${num}"></p>
-    
-        </div>
+ 
     </div>
     
     `
@@ -97,6 +100,7 @@ function format_div(result,num){
 // you will insert into the html 
 // have to check and make sure the string isn't empty on the backend, if it is, it 
 // has to send an error message somehow 
+
 function add_results(results_list){
     len = results_list.length;
     results_string = "";
@@ -115,40 +119,110 @@ function add_results(results_list){
 
  
 
-function toggle_wishlist_button(button_id,sign){ //make this reproducable by passing id's for the i element and for the specific button
-    var element = document.getElementById(button_id);
-    var symbol = element.innerHTML 
+// function toggle_wishlist_button(button_id,sign){ //make this reproducable by passing id's for the i element and for the specific button
+//     var element = document.getElementById(button_id);
+//     var symbol = element.innerHTML 
     
-    if (symbol == "+"){ // This means they want to add something to the wishlist 
-        element.innerHTML = "-";
-        document.getElementById(button_id).style.color = "black";
-        document.getElementById(button_id).className = "btn btn-outline-dark";
-        document.getElementById(sign).innerHTML = "Added!";
-        document.getElementById(sign).style.color = "green";
-         //2 seconds 
-        setTimeout(function() {
-            document.getElementById(sign).innerHTML = "";
-        },1000)
+//     if (symbol == "+"){ // This means they want to add something to the wishlist 
+//         element.innerHTML = "-";
+//         document.getElementById(button_id).style.color = "black";
+//         document.getElementById(button_id).className = "btn btn-outline-dark";
+//         document.getElementById(sign).innerHTML = "Added!";
+//         document.getElementById(sign).style.color = "green";
+//          2 seconds 
+//         setTimeout(function() {
+//             document.getElementById(sign).innerHTML = "";
+//         },1000)
         
         
-       // add to array 
+//        add to array 
         
         
-    }
-    else{
-        element.innerHTML = "+";
-        document.getElementById(button_id).style.color = "white";
-        document.getElementById(button_id).className = "btn btn-dark";
-        document.getElementById(sign).innerHTML = "Removed!";
-        document.getElementById(sign).style.color = "red";
+//     }
+//     else{
+//         element.innerHTML = "+";
+//         document.getElementById(button_id).style.color = "white";
+//         document.getElementById(button_id).className = "btn btn-dark";
+//         document.getElementById(sign).innerHTML = "Removed!";
+//         document.getElementById(sign).style.color = "red";
 
-        setTimeout(function() {
-            document.getElementById(sign).innerHTML = "";
-        },1000)
+//         setTimeout(function() {
+//             document.getElementById(sign).innerHTML = "";
+//         },1000)
         
-       // remove from array 
-    }
+//        remove from array 
+//     }
+// }
+
+
+
+// localStorage.setItem("user_id",10234) //just for now //make sure to remove later.Using it in the fetch() for now 
+var export_dict = {}
+function wishlist_button(wish_id,sign){
+    var element = document.getElementById(wish_id);
+    console.log(element)
+    var wish_product_id = element.value; //I had an error here because I put .innerHTML instead of .value 
+    console.log(wish_product_id)
+    console.log(typeof(wish_product_id))
+    // error handling on the backend to make sure its actually an int that was sent 
+    // if not,return a message as a response "Error", else return "Added"
+    // remember to add error handling for the fetch() api function itself 
+
+
+    
+   // fetch(`http://127.0.0.1:5001/wishlist/add/?user_id=${user_id}&product_id=${wish_product_id }`) //error handling should go on the next line
+    // export_dict = {"user_id": user_id.toString() , "product_id": wish_product_id.toString()}
+    // console.log(export_dict)
+
+    // post_data = {
+    //     method: 'POST',
+        
+    //     headers: {'Content-Type': 'application/json',},
+        
+    //     body: JSON.stringify(export_dict)
+
+    // }
+    var user_id = 10234;
+    var product_id = wish_product_id.toString()
+    fetch(`http://127.0.0.1:5001/wishlist/add/${user_id}/${product_id}`) //error handling should go on the next line
+    .then( function(response){  //the above endpoint works 
+        console.log(response);
+        response.text().then(function(text){ 
+            
+            text = JSON.parse(text)
+            
+            if (text == "Error"){
+                console.log(text)
+                document.getElementById(sign).innerHTML = "Nothing added, please try again!";
+                document.getElementById(sign).style.color = "red";
+            } else if (text == "Added"){
+                console.log(text)
+                document.getElementById(sign).innerHTML = "Added!";
+                document.getElementById(sign).style.color = "green";
+
+            }
+            setTimeout(function() {
+                document.getElementById(sign).innerHTML = "";
+            },1000)
+        }); 
+    }) 
+    .catch((error) => {
+        console.log("There is probably a network. Check that app.py is running on the backend please")
+        console.log(error)
+      });
+
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 function test_func(){
@@ -172,7 +246,7 @@ function test_func(){
 // "http://127.0.0.1:5001/Search" endpoint. Then a request is sent to that endpoint to fetch 
 // the new data and use it to populate the results.html page . 
 // The function add_results is what makes the formating and the population of the results.html page possible 
-
+var parsed_list = [] 
 setInterval(function(){  
     if (localStorage.getItem("bool") == "true"){
         localStorage.setItem("bool",false)
@@ -193,6 +267,10 @@ setInterval(function(){
         
     }
 },800)
+
+
+
+ 
 
 
 
@@ -228,6 +306,8 @@ setInterval(function(){
  
 
 // ]
+
+
 
 
 

@@ -24,7 +24,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light" >
             
         <a  class="navbar-brand" href="#">Cosmo&#127800;</a>
         <!--When you shrink your browser window, at some point it gets so small that you might not be able 
@@ -48,15 +48,31 @@
             <li class="nav-item">
                 <a href="http://127.0.0.1:5500/frontend/wishlist.html"class="nav-link" id="Wishlist" onclick="show_active('Wishlist')">Wishlist</a>
             </li>
+            <li class="nav-item">
+                <div class="input-group">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                    <input type="text" class="form-control" id="wish1" placeholder="Enter productID " name="wish">
+                    <button type="button" class="btn " style="background-color:rgb(245,49,99,0.5);color:white" id="btn-1" onclick="wishlist_button(wish_id='wish1',sign='sign-1')">Add to Wishlist</button>
+                    <!-- <p style="font-size:12px" >&nbsp;add remove from wishlist</p> -->
+                    <p>&nbsp;&nbsp;</p>
+                    <p style="font-size:15px" id="sign-1"></p>
+
+
+                    <!--The buttons are meant to be a toggle between green tick and red X-->
+                    
+                </div> 
+            </li>
         </ul>
         
         <ul class="navbar-nav navbar-right">
-            <li class="nav-item"><a href="#" class="nav-link" id="Profile" onclick="show_active('Profile')">Profile</a></li>
-            <li class="nav-item"><a href="#" class="nav-link" id="Log-out" onclick="show_active('Log-out')">Log out</a></li>
+            <li class="nav-item"><a href="http://127.0.0.1:5500/frontend/profile.html" class="nav-link" id="Profile" onclick="show_active('Profile')">Profile</a></li>
+            <li class="nav-item"><a href="http://127.0.0.1:5500/frontend/log_out.html"class="nav-link" id="Log-out" onclick="show_active('Log-out')">Log out</a></li>
         </ul>
         </div>
   
     </nav>
+
+    
 
 
 
@@ -76,11 +92,136 @@
 
 
 
-    <div id="results-parent"> <!--When you fill inner html in javascript, all the content inside here gets rewritten-->
-        <!-- <div></div> Display the ingredients you searched for eg unordered search for : included - , not included - -->
+    <div id="results-parent"> 
+
+        <br>
+        <br>
         <h1 style="color:rgb(245,49,99,0.7)"> Results </h1> 
         <div id="results"></div> <!--This is where js inserts html into-->
         <!-- <div class="float-container">
+            <div class="float-child first-box">
+              <div class="product-item">
+              <h4 style="color:rgb(245,49,99,0.7)"> Wonder Water Product </h4>
+        
+              <span style="color:rgb(245,49,99,0.6)"><b>Product Name:</b></span>
+              <span>'Soin + - peau à boutons'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Quantity:</b></span>
+              <span> '150 ml'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Brand:</b></span>
+              <span>'La vie est à Nous'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Ingredient List:</b></span>
+              <br>
+              <span>aqua, illite, propylene glycol. kaolin, montmorillonite, titanium dioxide, parfum. 
+                sodium polyacrylate, calcite, sodium acrylate / sodium acryloyldimethyl taurate copolymer, 
+                polysorbate 80, phenoxyethanol, isohexadecane, disodium cocoamphodiacetate, magnesium 
+                aluminum silicate, xanthan gum, disodium edta, citric acid, caprylyl glycol, alcohol denat,  
+                polysorbate 20, melaleuca alternifolia leaf extract
+              </span>
+              </div>
+          </div>
+          <div class="float-container">
+            <div class="float-child first-box">
+              <div class="product-item">
+              <h4 style="color:rgb(245,49,99,0.7)"> Wonder Water Product </h4>
+        
+              <span style="color:rgb(245,49,99,0.6)"><b>Product Name:</b></span>
+              <span>'Soin + - peau à boutons'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b>ProductID:</b></span>
+              <span>1147829</span> 
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Quantity:</b></span>
+              <span> '150 ml'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Brand:</b></span>
+              <span>'La vie est à Nous'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Ingredient List:</b></span>
+              <br>
+              <span>aqua, illite, propylene glycol. kaolin, montmorillonite, titanium dioxide, parfum. 
+                sodium polyacrylate, calcite, sodium acrylate / sodium acryloyldimethyl taurate copolymer, 
+                polysorbate 80, phenoxyethanol, isohexadecane, disodium cocoamphodiacetate, magnesium 
+                aluminum silicate, xanthan gum, disodium edta, citric acid, caprylyl glycol, alcohol denat,  
+                polysorbate 20, melaleuca alternifolia leaf extract
+              </span>
+              </div>
+          </div>
+          <div class="float-container">
+            <div class="float-child first-box">
+              <div class="product-item">
+              <h4 style="color:rgb(245,49,99,0.7)"> Wonder Water Product </h4>
+        
+              <span style="color:rgb(245,49,99,0.6)"><b>Product Name:</b></span>
+              <span>'Soin + - peau à boutons'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Quantity:</b></span>
+              <span> '150 ml'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Brand:</b></span>
+              <span>'La vie est à Nous'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Ingredient List:</b></span>
+              <br>
+              <span>aqua, illite, propylene glycol. kaolin, montmorillonite, titanium dioxide, parfum. 
+                sodium polyacrylate, calcite, sodium acrylate / sodium acryloyldimethyl taurate copolymer, 
+                polysorbate 80, phenoxyethanol, isohexadecane, disodium cocoamphodiacetate, magnesium 
+                aluminum silicate, xanthan gum, disodium edta, citric acid, caprylyl glycol, alcohol denat,  
+                polysorbate 20, melaleuca alternifolia leaf extract
+              </span>
+              </div>
+          </div>
+          <div class="float-container">
+            <div class="float-child first-box">
+              <div class="product-item">
+              <h4 style="color:rgb(245,49,99,0.7)"> Wonder Water Product </h4>
+        
+              <span style="color:rgb(245,49,99,0.6)"><b>Product Name:</b></span>
+              <span>'Soin + - peau à boutons'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Quantity:</b></span>
+              <span> '150 ml'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Brand:</b></span>
+              <span>'La vie est à Nous'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Ingredient List:</b></span>
+              <br>
+              <span>aqua, illite, propylene glycol. kaolin, montmorillonite, titanium dioxide, parfum. 
+                sodium polyacrylate, calcite, sodium acrylate / sodium acryloyldimethyl taurate copolymer, 
+                polysorbate 80, phenoxyethanol, isohexadecane, disodium cocoamphodiacetate, magnesium 
+                aluminum silicate, xanthan gum, disodium edta, citric acid, caprylyl glycol, alcohol denat,  
+                polysorbate 20, melaleuca alternifolia leaf extract
+              </span>
+              </div>
+          </div>
+          <div class="float-container">
+            <div class="float-child first-box">
+              <div class="product-item">
+              <h4 style="color:rgb(245,49,99,0.7)"> Wonder Water Product </h4>
+        
+              <span style="color:rgb(245,49,99,0.6)"><b>Product Name:</b></span>
+              <span>'Soin + - peau à boutons'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Quantity:</b></span>
+              <span> '150 ml'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Brand:</b></span>
+              <span>'La vie est à Nous'</span>
+              <br>
+              <span style="color:rgb(245,49,99,0.6)"><b> Ingredient List:</b></span>
+              <br>
+              <span>aqua, illite, propylene glycol. kaolin, montmorillonite, titanium dioxide, parfum. 
+                sodium polyacrylate, calcite, sodium acrylate / sodium acryloyldimethyl taurate copolymer, 
+                polysorbate 80, phenoxyethanol, isohexadecane, disodium cocoamphodiacetate, magnesium 
+                aluminum silicate, xanthan gum, disodium edta, citric acid, caprylyl glycol, alcohol denat,  
+                polysorbate 20, melaleuca alternifolia leaf extract
+              </span>
+              </div>
+          </div>
+          <div class="float-container">
             <div class="float-child first-box">
               <div class="product-item">
               <h4 style="color:rgb(245,49,99,0.7)"> Wonder Water Product </h4>
