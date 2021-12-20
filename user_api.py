@@ -1,8 +1,8 @@
 import json
 from flask import Flask, jsonify, request
-# from user_db import add_user, _get_user, delete_user, verify_login, update_user_name, update_user_email
+from user_db import add_user, _get_user, delete_user, verify_login, update_user_name, update_user_email
 from user_db import dbConnection
-# from wishlist_db_utils import delete_wishlist
+from wishlist_db_utils import delete_wishlist
 
 app = Flask(__name__)
 
