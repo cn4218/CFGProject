@@ -8,13 +8,13 @@ This file serves to test the wishlist  and mock test input
 
 def add_new_wishlist():
 
-    wishlistdict = {"username": "sarah123",
+    wishlistdict = {"username": "sarah",
                     "User_ID": 1,
                     "wishlist": {
                         "productID": 6,
                         "code": "62263436",
                         "product_name": "Huile'' de massage larnica",
-                        "ingredients_text": "helianthus 'annuus' (sunflower) seed oil, olea europaea (olive) fruit oil, fragrance*, arnica montana flower extract, betula alba leaf extract, limonene*,  linaloo*, geraniol*, coumarin* *composé présent dans les huiles essentielles naturelles",
+                        "ingredients_text": "helianthus '''annuus' (sunflower) seed oil, olea europaea (olive) fruit oil, fragrance*, arnica montana flower extract, betula alba leaf extract, limonene*,  linaloo*, geraniol*, coumarin* *composé présent dans les huiles essentielles naturelles",
                         "quantity": "100 ml",
                         "brands": "Weleda",
                         "brands_tags": "weleda",
@@ -93,7 +93,7 @@ def verify_wish_list():
 
 
 def deleting_wishlist_item():
-    User_ID = input('What is your User ID')
+    User_ID = input('What is your User ID ')
     productID = input('What is your product ID? ')
     dict = delete_wishlist_item(User_ID, productID)
     if dict == {}:
@@ -134,9 +134,7 @@ def run():
         if answer_delete_wishlist == 'y':
             res5 = deleting_wishlist()
             print(res5)
-            break
         break
 
 if __name__ == '__main__':
-    # add_new_wishlist()
     run()
