@@ -1,3 +1,4 @@
+#In[]
 import mysql.connector
 from config import USER, PASSWORD, HOST
 from pprint import pp 
@@ -21,6 +22,15 @@ get_proper_ingredients_list(_dict)
 # Ex: ## 3
 #     def function(): ...
 # so it is easier to follow our logic and the path of our data.
+"""
+NEW FUNCTIONS:
+_get_all_product_ids
+display_less_null_values
+store_results
+fetch_results
+returning_products_in_pages
+"""
+
 
 
 # Required to handle database connection error exceptions
@@ -248,17 +258,14 @@ def get_products(output,search_func1,search_func2): #both functions have to do w
     This function takes a list of productID's corresponding to the products that contain 
     ingredients you want to find (either unordered or in  specific positions) and include,
     as well as ingredients you don't want to include.
-
     It then finds the productID's corresponding to the products that have all the ingredients 
     you want first and foremost. Eg [[1,2,4,5,3], [5,4,3], [3,6,7,4,84,25,5]] -> [4,5,3]
-
     Then it makes sure that result does not contain a productID corresponding to a 
     product which contains an ingredient you do not want. For example, if you don't want 
     an ingredient found in the product that equals productID 4, then your final result would be [5,3]
     
     After it has created this list, it uses the get_products_by_ids() function to fetch the product info 
     for of every productID in your list
-
     """
     include = []
     exclude = []
@@ -283,7 +290,6 @@ def get_products(output,search_func1,search_func2): #both functions have to do w
 
         intersection_include = list(set.intersection(*map(set,include)))
         difference_exclude = list(set(intersection_include).difference(set(exclude)))
-
     try:
         if len(difference_exclude) == 0:
             issue = 'Query returns no search results'
@@ -296,7 +302,7 @@ def get_products(output,search_func1,search_func2): #both functions have to do w
 
     list_dict_products = get_products_by_ids(difference_exclude)
 
-    return list_dict_products, difference_exclude
+    return list_dict_products
 
 # So we need to make sure empty fields don't display null but maybe NotAvailable. 
 # We also need a function that pushes the products with a lot of null values to the bottom of the list being sent.
@@ -309,13 +315,10 @@ def display_less_null_values(input_list_dict_products):
     ----------
     input_list_dict_products: list
         list of product of dictionaries
-
     Returns
     --------
     list_dict_products_sorted: list
         list of product of dictionaries after sorting null values
-
-
     """
     df = pd.DataFrame(input_list_dict_products)
     df['null_count'] = df.isnull().sum(axis=1)
@@ -357,19 +360,20 @@ def get_proper_ingredients_list(_dict):
     pp(ingredients_output)
 
     if filtered == 'unordered':
-        list_products,product_ids = get_products(     # 2
+        list_products = get_products(     # 2
             ingredients_output,
             get_productids_containing,    # 3
             get_productids_containing     # 3
         ) 
         print(type(list_products))
         if isinstance(list_products,list):
-            list_products = display_less_null_values(list_products)   
+            list_products = display_less_null_values(list_products)  
+            products_dictionary = store_results(list_products) 
         ## sophie: returns list with product dictionarys with more null values at the end, replacing None with NotAvailable
         return list_products
 
     elif filtered == 'ordered':
-        list_products,product_ids = get_products(              # 2
+        list_products = get_products(              # 2
             ingredients_output, 
             get_productids_containing,             # 3a
             get_productids_ingt_in_nth_position    # 3b
@@ -379,7 +383,12 @@ def get_proper_ingredients_list(_dict):
         if isinstance(list_products,list):
             list_products = display_less_null_values(list_products) 
 
-        return list_products,product_ids
+            products_dictionary = store_results(list_products)
+
+        return list_products
+        
+
+
         
 def store_results(list_of_products):
     """
@@ -393,7 +402,13 @@ def store_results(list_of_products):
         list of product ids retrieved from search result
 
     """
-    products_dictionary = {"product_ids": list_of_products}
+    df = pd.DataFrame(list_of_products)
+    product_ids = df['productID'].tolist()
+    print(product_ids)
+    print(type(product_ids))
+    products_dictionary = {"product_ids": product_ids}
+    print('HERE')
+    print(products_dictionary)
     products_dict_string = str(products_dictionary)
     print(products_dict_string)
     try:
@@ -413,6 +428,7 @@ def store_results(list_of_products):
         db_connection.commit()
 
         cur.close()
+        return products_dictionary
     except Exception as err:
         raise DbConnectionError("Failed to read data from DB",err)
     finally:
@@ -447,6 +463,8 @@ def fetch_results(search_id):
     
     list_dict_products = get_products_by_ids(list_ids)
     list_dict_products = display_less_null_values(list_dict_products)
+
+    
 
     return list_dict_products
 
@@ -486,3 +504,4 @@ def returning_products_in_pages(list_dict_products,page_number):
     else:
         message = 'No more search results for this query'
         return message
+
