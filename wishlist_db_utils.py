@@ -370,7 +370,7 @@ def delete_wishlist_item(UserID, ProductID):
         exception_handler(query, error_message)
 
         display_statement = (
-            'The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}'.format(
+            "The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}".format(
                 UserID, ProductID, {}))
     return display_statement
 
@@ -399,7 +399,7 @@ def delete_wishlist(UserID):
         exception_handler(query, error_message)
 
         display_statement = (
-            'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
+            "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(
                 UserID, {}))
     return display_statement
 
