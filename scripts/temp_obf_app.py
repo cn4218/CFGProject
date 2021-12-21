@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-from obf_db_utils import get_proper_ingredients_list, fetch_results, returning_products_in_pages
+from obf_db_utils import get_proper_ingredients_list, store_results,fetch_results, returning_products_in_pages
 
 
 app = Flask(__name__)
@@ -31,17 +31,22 @@ def find_products():
         return jsonify('Query returns no search results')
     list_.clear()
     list_.append(list_of_products)
+
+    result = store_results(list_of_products)
+
     return jsonify(list_of_products)
 
-@app.route("/Search/<int:search_id>", methods=['GET'])
-def search_result(search_id):
+@app.route("/Results", methods=['GET'])
+def send_results():
     """
     Retrieves ssearch results for given search id
     """
     
-    list_of_products = fetch_results(search_id)
+    list_of_products = fetch_results(1)
     list_.clear()
     list_.append(list_of_products)
+
+    
     return jsonify(list_of_products)
 
 
@@ -60,3 +65,4 @@ def page_results(search_id,page_id):
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
+
