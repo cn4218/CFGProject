@@ -1,10 +1,9 @@
 import mysql.connector
 from mysql.connector import cursor
-
 from config import USER, PASSWORD, HOST
 
 '''
-Functions contained in this file:
+FUNCTIONS CONTAINED IN THIS FILE:
 _connect_to_db(db_name)
 exception_handler(query, error_message)
 exception_handler_wish(query, error_message)
@@ -90,9 +89,10 @@ def _connect_to_db(db_name):
 
 
 def exception_handler(query, error_message):
-    """This function is the exception handler for exceptions that may arise when connecting to the
-                    db  - it is a more general function"""
-
+    """
+    This function is the exception handler for exceptions that may arise when
+    connecting to the database — it is a more general function
+    """
     try:
         db_name = 'cfg_project'
         db_connection = _connect_to_db(db_name)
@@ -116,9 +116,10 @@ def exception_handler(query, error_message):
 
 
 def exception_handler_wish(query, error_message):
-    """This function is the exception handler for exceptions that may arise when connecting to the
-            db specifically for the wishlist functions"""
-
+    """
+    This function is the exception handler for exceptions that may arise when
+    connecting to the database — specifically for the wishlist functions
+    """
     try:
         db_name = 'cfg_project'
         db_connection = _connect_to_db(db_name)
@@ -139,6 +140,8 @@ def exception_handler_wish(query, error_message):
             db_connection.close()
             print("DB connection is closed")
     return wish
+
+
 
 def exception_record_exists(query, error_message):
     try:
@@ -162,6 +165,8 @@ def exception_record_exists(query, error_message):
             print("DB connection is closed")
     return row_count
 
+
+
 def _map_values(result):
     mapped = []
     for item in result:
@@ -171,22 +176,22 @@ def _map_values(result):
                 "code": item[1],
                 "product_name": item[2],
                 "ingredients_text": item[3],
-                 "quantity": item[4],
-                 "brands": item[5],
-                 "brands_tags": item[6],
-                 "categories": item[7],
-                 "categories_tags": item[8],
-                 "categories_en": item[9],
-                  "countries": item[10],
-                 "countries_tags": item[11],
-                  "countries_en": item[12],
-                  "image_url": item[13],
-                  "image_small_url": item[14],
-                  "image_ingredients_url": item[15],
-                  "image_ingredients_small_url": item[16],
-                  "image_nutrition_url": item[17],
-                  "image_nutrition_small_url": item[18],
-                  "User_ID": item[19],
+                "quantity": item[4],
+                "brands": item[5],
+                "brands_tags": item[6],
+                "categories": item[7],
+                "categories_tags": item[8],
+                "categories_en": item[9],
+                "countries": item[10],
+                "countries_tags": item[11],
+                "countries_en": item[12],
+                "image_url": item[13],
+                "image_small_url": item[14],
+                "image_ingredients_url": item[15],
+                "image_ingredients_small_url": item[16],
+                "image_nutrition_url": item[17],
+                "image_nutrition_small_url": item[18],
+                "User_ID": item[19],
             }
         )
     return mapped
@@ -198,9 +203,8 @@ You cannot pass another function or such into the argument for the add_wish_list
 '''
 
 '''
- use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
+ Use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
  it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently without generating an error.
- took the '' outside of the integer
 '''
 
 '''
@@ -211,26 +215,26 @@ Failed insert will throw MySQLdb.IntegrityError, so you should be ready to catch
 
 
 def add_wish_list(
-ProductID,
-Code_Wish,
-Product_name,
-Ingredients_Text,
-Quantity,
-Brands,
-Brands_tags,
-Categories,
-Categories_Tags,
-Categories_En,
-Countries,
-Countries_Tags,
-Countries_en,
-Image_url,
-Image_Small_url,
-Image_Ingredients_url,
-Image_Ingredients_Small_url,
-Image_Nutrition_url,
-Image_Nutrition_Small_url,
-UserID
+        ProductID,
+        Code_Wish,
+        Product_name,
+        Ingredients_Text,
+        Quantity,
+        Brands,
+        Brands_tags,
+        Categories,
+        Categories_Tags,
+        Categories_En,
+        Countries,
+        Countries_Tags,
+        Countries_en,
+        Image_url,
+        Image_Small_url,
+        Image_Ingredients_url,
+        Image_Ingredients_Small_url,
+        Image_Nutrition_url,
+        Image_Nutrition_Small_url,
+        UserID
 ):
     query = """ INSERT IGNORE INTO wish_list (productID,
     code,
@@ -310,7 +314,7 @@ UserID
 
 
 
-# return info for a wishlist entry at a time
+# returns info for a wishlist entry at a time
 # need both user ID and product ID for the specific entry
 def _get_wish_list_individual(UserID, ProductID):
 
@@ -322,15 +326,15 @@ def _get_wish_list_individual(UserID, ProductID):
     result = exception_handler_wish(query, error_message)
 
     if result == []:
-        display_statement = "Wish list item for User_ID = {} and productID = {} does not exist """.format(UserID, ProductID)
+        display_statement = "Wish list item for User_ID = {} and " \
+                            "productID = {} does not exist """.format(UserID, ProductID)
         return display_statement
     elif result != []:
         return result
     return
 
-'''
 
-'''
+
 def _get_wish_list_all(UserID):
     query = """ SELECT * FROM wish_list WHERE User_ID = {} """.format(UserID)
 
@@ -339,67 +343,71 @@ def _get_wish_list_all(UserID):
     result = exception_handler_wish(query, error_message)
 
     if result == []:
-        display_statement = "Wish list item for User_ID = {} does not exist """.format(UserID)
+        display_statement = "Wish list User_ID = {} is empty """.format(UserID)
         return display_statement
     elif result != []:
         return result
     return
 
-'''
-this function deletes an individual item from the wishlist
-It takes the User ID, User Name and Product ID to find the unique user
-'''
+
 def delete_wishlist_item(UserID, ProductID):
+    """
+    This function deletes an individual item from the wishlist
+    It takes the User ID, User Name and Product ID to find the unique user
+    """
     query = """
-                        SELECT * FROM wish_list WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
+    SELECT * FROM wish_list WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
 
     error_message = "Error"
 
     row_count = exception_handler_wish(query, error_message)
 
     if row_count == []:
-        display_statement = ("Wishlist item for this User_ID: {} and productID: {} does not exist").format(UserID, ProductID)
+        display_statement = ("Wishlist item for User_ID: {} and "
+                             "productID: {} does not exist").format(UserID, ProductID)
 
     elif row_count != []:
         query = """
-                        DELETE FROM wish_list 
-                        WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
+                DELETE FROM wish_list 
+                WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
 
         error_message = "Failed to read and subsequently delete data from DB"
 
         exception_handler(query, error_message)
 
         display_statement = (
-            'The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}'.format(
+            "The wish list item for User ID: {} and  Product ID: {}, has now been deleted. "
+            "This wishlist record is now empty: {}".format(
                 UserID, ProductID, {}))
     return display_statement
 
-'''
-This function deletes an entire wishlist associated with a user
-It takes the User ID and User Name to find the unique user
-'''
-def delete_wishlist(UserID):
 
+
+def delete_wishlist(UserID):
+    """
+    This function deletes an entire wishlist associated with a user
+    It takes the User ID and User Name to find the unique user
+    """
     query = """
-                    SELECT * FROM wish_list WHERE User_ID = {} """.format(UserID)
+    SELECT * FROM wish_list WHERE User_ID = {} """.format(UserID)
 
     error_message = "Error"
 
     row_count = exception_handler_wish(query, error_message)
 
     if row_count == []:
-        display_statement = ("Wishlist item for this User_ID: {} does not exist").format(UserID)
+        display_statement = "Wishlist item for this User_ID: {} does not exist".format(UserID)
     elif row_count != []:
         query = """
-                        DELETE FROM wish_list 
-                        WHERE User_ID = {} """.format(UserID)
+                DELETE FROM wish_list 
+                WHERE User_ID = {} """.format(UserID)
 
         error_message = "Failed to read and subsequently delete data from DB"
 
         exception_handler(query, error_message)
 
         display_statement = (
-            'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
+            "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(
                 UserID, {}))
     return display_statement
 

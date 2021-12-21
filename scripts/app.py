@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-from obf_db_utils import get_proper_ingredients_list, get_productids_containing , get_products_by_ids
+from temp_obf_db_utils import get_proper_ingredients_list, get_productids_containing , get_products_by_ids
 from wishlist_db_utils import _get_wish_list_all, add_wish_list, delete_wishlist_item
 from user_db_utils import add_user, _get_user, delete_user, verify_login, update_user
 

@@ -53,13 +53,7 @@ def _connect_to_db(db_name):
     return cnx
 
 
-# NEED CLARIFICATION:
-# Are we using this function? Where?
-# Is 'brands' after 'quantity' somewhere?
-# I simply reordered the item[i]s according to the column order
-# in the cosmo_tables.sql DB file.
-# + I replaced 'ingredients_list' with 'ingredients_text' as in the the cosmo_tables.sql DB file.
-# Also there were some unwanted spaces between 'item' and '[i]' in places so I corrected that
+
 def _map_values(result):
     """
     Transforms the (productID, code, product_name, ingredients_text, ...) item tuple result
@@ -81,7 +75,7 @@ def _map_values(result):
                 "brands": item[4], 
                 "quantity": item[5],
                 "brands_tags": item[6],
-                "categories": item[7],   # CHECK ORDER!!!
+                "categories": item[7],
                 "categories_tags": item[8],
                 "categories_en": item[9],
                 "countries": item[10],
@@ -97,8 +91,7 @@ def _map_values(result):
         )
     return mapped
 
-# Replaced the DB name 'external_obf_testing' by 'Products'
-# to be consistent with the cosmo)_tables.sql DB file
+
 # This exception handler can be adapted into 2 functions:
 # 1. One to get all the productID's corresponding to products containing an ingredient
 # 2. And the other that will get products based on their productID

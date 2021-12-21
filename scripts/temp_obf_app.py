@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-from obf_db_utils import get_proper_ingredients_list, store_results,fetch_results, returning_products_in_pages
+from temp_obf_db_utils import get_proper_ingredients_list, store_results,fetch_results, returning_products_in_pages
 
 
 app = Flask(__name__)
