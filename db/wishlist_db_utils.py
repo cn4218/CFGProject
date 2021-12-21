@@ -322,7 +322,7 @@ def _get_wish_list_individual(UserID, ProductID):
     result = exception_handler_wish(query, error_message)
 
     if result == []:
-        display_statement = "Wish list item for User_ID = {} and productID = {} does not exist """.format(UserID, ProductID)
+        display_statement = "Wish list item for User_ID = {} and productID = {} does not exist ".format(UserID, ProductID)
         return display_statement
     elif result != []:
         return result
@@ -339,7 +339,7 @@ def _get_wish_list_all(UserID):
     result = exception_handler_wish(query, error_message)
 
     if result == []:
-        display_statement = "Wish list item for User_ID = {} does not exist """.format(UserID)
+        display_statement = "Wish list item for User_ID = {} does not exist ".format(UserID)
         return display_statement
     elif result != []:
         return result
@@ -370,7 +370,7 @@ def delete_wishlist_item(UserID, ProductID):
         exception_handler(query, error_message)
 
         display_statement = (
-            'The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}'.format(
+            "The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}".format(
                 UserID, ProductID, {}))
     return display_statement
 
@@ -399,7 +399,7 @@ def delete_wishlist(UserID):
         exception_handler(query, error_message)
 
         display_statement = (
-            'The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}'.format(
+            "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(
                 UserID, {}))
     return display_statement
 
