@@ -20,8 +20,10 @@ Deleting an entire wishlist (test through API, mocking and test what happens whe
 
 """
 Functions contained in this file: 
+
 class TestWishListApiDb(TestCase):
-setUp(self)
+test_add_wish_list(self)
+test_get_wish_list_item_if_not_exists(self)
 test_get_wish_list_item(self)
 test_get_wish_list_all(self)
 """
@@ -31,12 +33,81 @@ Comments:
 Remember to add test at the beginning of function names or the test will not run e.g. test_get_wish_list_item rather
 than get_wish_list_item()
 
-Make sure to add dummy data through the dummy data file as these functions rely on the dummy data
+Make sure to add dummy data through the dummy data file as these functions rely on the dummy data, please run the
+dummy data SQL file before running this file
+
+Please have your cursor located at the bottom of this file before running
+"""
+
+"""
+This following class tests the actual API and runs unit tests on the functions of the wishlist API
 """
 
 class TestWishListApiDb(unittest.TestCase):
-    def setUp(self):
-        self.mock = MockFrontEnd("cfg_project")
+
+    def test_add_wish_list(self):
+        self.ProductID = 4
+        self.Code_Wish = 702
+        self.Product_name = "xyz"
+        self.Ingredients_Text = "xyz"
+        self.Quantity = "xyz"
+        self.Brands = "xyz"
+        self.Brands_tags = "xyz"
+        self.Categories = "xyz"
+        self.Categories_Tags = "xyz"
+        self.Categories_En = "xyz"
+        self.Countries = "xyz"
+        self.Countries_Tags = "xyz"
+        self.Countries_en = "xyz"
+        self.Image_url = "xyz"
+        self.Image_Small_url = "xyz"
+        self.Image_Ingredients_url = "xyz"
+        self.Image_Ingredients_Small_url = "xyz"
+        self.Image_Nutrition_url = "xyz"
+        self.Image_Nutrition_Small_url = "xyz"
+        self.UserID = 2
+        add_wish_list(self.ProductID,
+                      self.Code_Wish,
+                      self.Product_name,
+                      self.Ingredients_Text,
+                      self.Quantity,
+                      self.Brands,
+                      self.Brands_tags,
+                      self.Categories,
+                      self.Categories_Tags,
+                      self.Categories_En,
+                      self.Countries,
+                      self.Countries_Tags,
+                      self.Countries_en,
+                      self.Image_url,
+                      self.Image_Small_url,
+                      self.Image_Ingredients_url,
+                      self.Image_Ingredients_Small_url,
+                      self.Image_Nutrition_url,
+                      self.Image_Nutrition_Small_url,
+                      self.UserID)
+        result = _get_wish_list_individual(self.UserID, self.ProductID)
+        expected = [{"User_ID": 2,
+                     "brands": "xyz",
+                     "brands_tags": "xyz",
+                     "categories": "xyz",
+                     "categories_en": "xyz",
+                     "categories_tags": "xyz",
+                     "code": 702,
+                     "countries": "xyz",
+                     "countries_en": "xyz",
+                     "countries_tags": "xyz",
+                     "image_ingredients_small_url": "xyz",
+                     "image_ingredients_url": "xyz",
+                     "image_nutrition_small_url": "xyz",
+                     "image_nutrition_url": "xyz",
+                     "image_small_url": "xyz",
+                     "image_url": "xyz",
+                     "ingredients_text": "xyz",
+                     "productID": 4,
+                     "product_name": "xyz",
+                     "quantity": "xyz"}]
+        self.assertEqual(expected, result)
 
     def test_get_wish_list_item_if_not_exists(self):
         self.UserID = 1500
@@ -142,18 +213,24 @@ class TestWishListApiDb(unittest.TestCase):
         result = _get_wish_list_all(self.UserID)
         self.assertEqual(expected, result)
 
-class MockFrontEnd(unittest.TestCase):
+"""
+This following class tests mocked input derived from my wishlist_main file to test the wishlist functions
+"""
+
+class MockingFrontEnd(unittest.TestCase):
     def setUp(self):
         self.mock = MockFrontEnd("cfg_project")
 
 """
 I put the following code even though they are also testing the API into a seperate class, as the tests don't seem to be
 running in order they are written so these functions were messing with other tests 
+
+
+This following class tests the actual API and runs unit tests related to deleting data such as deleting the individual
+wishlist item and entire wishlist 
+
 """
 class TestWishListApiDbDeletingUsers(unittest.TestCase):
-    def setUp(self):
-        self.mock = MockFrontEnd("cfg_project")
-
     def test_delete_wish_list_item(self):
         self.UserID = 2
         self.ProductID = 2
