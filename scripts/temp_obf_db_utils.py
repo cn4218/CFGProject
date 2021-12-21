@@ -209,23 +209,27 @@ def get_products_by_ids(id_list):
     """
     # converting to tuple() alone didn't work be cause the syntax of a tuple
     # with 1 single element conflicts with mysql. Eg: (96,)
-    form_tup_string = "("
-    length = len(id_list)
-    for i in range(length):
-        if i < length-1:
-            form_tup_string += str(id_list[i]) + ","
-        else:
-            form_tup_string += str(id_list[i]) + ")"  
+    try:
+        form_tup_string = "("
+        length = len(id_list)
+        for i in range(length):
+            if i < length-1:
+                form_tup_string += str(id_list[i]) + ","
+            else:
+                form_tup_string += str(id_list[i]) + ")"  
 
-    query = """
-            SELECT * FROM products_table  --  what is products1? products_table?
-            WHERE productID IN 
-            """
-    query += form_tup_string
-    # print(query)
+        query = """
+                SELECT * FROM products_table  --  what is products1? products_table?
+                WHERE productID IN 
+                """
+        query += form_tup_string
+        # print(query)
 
-    query_result = exception_handler(query)
-    list_products = _map_values(query_result)
+        query_result = exception_handler(query)
+        list_products = _map_values(query_result)
+    except Exception:
+        raise mysql.connector.ProgrammingError('Input value is an empty list')
+
     return list_products
 
 
@@ -391,8 +395,9 @@ def get_proper_ingredients_list(_dict):
         
 def store_results(list_of_products):
     """
-    This takes in a list of product dictionaries where a list of product ids is retrieved from the search, turns the list into a different dict and then into a string.
-    The string is entered into the database at search_id=1, so that the database only has one row at a time.
+    This takes in a list of product ids retrieved from the search, turns the list into a dict and then into a string.
+    The string is entered into a sql table within products database where its given an unique search id, (can also enter user id??)
+    When inserted the search id created is retrieved and returned.
 
     Parameters
     -----------
@@ -451,18 +456,20 @@ def fetch_results(search_id):
     list_dict_products: list
         list dicionary products of saved search result
     """
-    query = """
-    SELECT List_Product_ID FROM search_results WHERE Search_ID = {}""".format(search_id)
-    query_result = exception_handler(query)
-    query_dict = query_result[0][0].replace("'",'"')
-    print(query_dict)
-    dict_product_ids = json.loads(query_dict)
-    list_ids = dict_product_ids['product_ids']
-    
-    list_dict_products = get_products_by_ids(list_ids)
-    list_dict_products = display_less_null_values(list_dict_products)
+    try:
+        query = """
+        SELECT List_Product_ID FROM search_results WHERE Search_ID = {}""".format(search_id)
+        query_result = exception_handler(query)
+        query_dict = query_result[0][0].replace("'",'"')
+        print(query_dict)
+        dict_product_ids = json.loads(query_dict)
+        list_ids = dict_product_ids['product_ids']
+        
+        list_dict_products = get_products_by_ids(list_ids)
+        list_dict_products = display_less_null_values(list_dict_products)
 
-    
+    except Exception as err:
+        raise IndexError('Query returns no search results, use search ID 1')
 
     return list_dict_products
 
@@ -504,19 +511,3 @@ def returning_products_in_pages(list_dict_products,page_number):
         return message
 
 
-
-product_dict = {
-            "filter": 'unordered',
-            "data": {
-            "1" : ('water', False),
-            "2": ('glycerin', False),
-            "3": ('sodium palmate',False ),
-            "4": ('parfum', False),
-            "5": ('', True)
-
-
-        }
-        }
-
-
-list_prod = get_proper_ingredients_list(product_dict)
