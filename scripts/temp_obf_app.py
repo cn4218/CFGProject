@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-from temp_obf_db_utils import get_proper_ingredients_list, store_results,fetch_results, returning_products_in_pages
+from obf_db_utils import get_proper_ingredients_list, store_results,fetch_results, returning_products_in_pages
 
 
 app = Flask(__name__)
@@ -20,8 +20,8 @@ def find_products():
     """
     We use a POST method and not a simple GET one because we want to be able to make a
     request containing the ingredient_input search from the front end UI.
-    Returns a JSON file containing the list of products we asked for according to our request search
-    criteria.
+    Returns a JSON file containing the list of products we asked for according to our request
+    search criteria.
     """
     ingredient_input = request.get_json()
     print(ingredient_input)
