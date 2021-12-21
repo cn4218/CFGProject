@@ -6,6 +6,19 @@ import pandas as pd
 from operator import *
 import mysql.connector
 
+
+"""
+TESTCASES:
+- Ordered ingredients input
+- Unordered ingredients input
+- Input that returns no results
+- Input with only ingredients not wanted
+- Tests no null values in output
+- Tests product dictionaries with more null values appear at bottom of results
+- Tests retrieving most recent search result brings back exact same result
+- Tests exception handling in obf db utils
+"""
+
 class TestAPIProductFrontEnd(TestCase):
     def setUp(self):
         self.mock = MockProductFrontEnd()
