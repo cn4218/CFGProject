@@ -1,3 +1,4 @@
+#In[]
 import mysql.connector
 from config import USER, PASSWORD, HOST
 from pprint import pp 
@@ -53,7 +54,13 @@ def _connect_to_db(db_name):
     return cnx
 
 
-
+# NEED CLARIFICATION:
+# Are we using this function? Where?
+# Is 'brands' after 'quantity' somewhere?
+# I simply reordered the item[i]s according to the column order
+# in the cosmo_tables.sql DB file.
+# + I replaced 'ingredients_list' with 'ingredients_text' as in the the cosmo_tables.sql DB file.
+# Also there were some unwanted spaces between 'item' and '[i]' in places so I corrected that
 def _map_values(result):
     """
     Transforms the (productID, code, product_name, ingredients_text, ...) item tuple result
@@ -75,7 +82,7 @@ def _map_values(result):
                 "brands": item[4], 
                 "quantity": item[5],
                 "brands_tags": item[6],
-                "categories": item[7],
+                "categories": item[7],   # CHECK ORDER!!!
                 "categories_tags": item[8],
                 "categories_en": item[9],
                 "countries": item[10],
@@ -91,7 +98,8 @@ def _map_values(result):
         )
     return mapped
 
-
+# Replaced the DB name 'external_obf_testing' by 'Products'
+# to be consistent with the cosmo)_tables.sql DB file
 # This exception handler can be adapted into 2 functions:
 # 1. One to get all the productID's corresponding to products containing an ingredient
 # 2. And the other that will get products based on their productID
@@ -359,7 +367,8 @@ def get_proper_ingredients_list(_dict):
         ) 
         print(type(list_products))
         if isinstance(list_products,list):
-            list_products = display_less_null_values(list_products)   
+            list_products = display_less_null_values(list_products)  
+            products_dictionary = store_results(list_products) 
         ## sophie: returns list with product dictionarys with more null values at the end, replacing None with NotAvailable
         return list_products
 
@@ -374,25 +383,32 @@ def get_proper_ingredients_list(_dict):
         if isinstance(list_products,list):
             list_products = display_less_null_values(list_products) 
 
+            products_dictionary = store_results(list_products)
+
         return list_products
         
 
 
+        
 def store_results(list_of_products):
     """
     This takes in a list of product ids retrieved from the search, turns the list into a dict and then into a string.
     The string is entered into a sql table within products database where its given an unique search id, (can also enter user id??)
     When inserted the search id created is retrieved and returned.
+
     Parameters
     -----------
     list_of_products: list
         list of product ids retrieved from search result
-    Returns
-    --------
-    search_id: int
-        primary key of sql table, unique id of search results retrieved
+
     """
-    products_dictionary = {"product_ids": list_of_products}
+    df = pd.DataFrame(list_of_products)
+    product_ids = df['productID'].tolist()
+    print(product_ids)
+    print(type(product_ids))
+    products_dictionary = {"product_ids": product_ids}
+    print('HERE')
+    print(products_dictionary)
     products_dict_string = str(products_dictionary)
     print(products_dict_string)
     try:
@@ -401,30 +417,27 @@ def store_results(list_of_products):
         cur = db_connection.cursor()
 
         print("Connected to DB: %s" % db_name)
-        ## cant put through exception handler function as need to execute two queries at once
-        query_insert = """
-        INSERT INTO search_results (List_Product_ID) VALUES ("{}")
-        """.format(products_dict_string)
-        query_retrieve = """
-        select @@identity 
-        """    ## query retrieves the search id just created 
-        cur.execute(query_insert)
-        db_connection.commit()
-        cur.execute(query_retrieve)
 
-        result = (cur.fetchall())
-        search_id = result[0][0]
-        print(search_id)
+        query_update = """
+        UPDATE search_results
+        SET list_product_id = "{}"
+        WHERE search_id=1;
+        """.format(products_dict_string)
+        ## query retrieves the search id just created 
+        cur.execute(query_update)
+        db_connection.commit()
+
         cur.close()
+        return products_dictionary
     except Exception as err:
         raise DbConnectionError("Failed to read data from DB",err)
-
     finally:
         if db_connection:
             db_connection.close()
             print("DB connection is closed")
 
-    return search_id
+
+
 
 def fetch_results(search_id):
     """
@@ -434,6 +447,7 @@ def fetch_results(search_id):
     -----------
     search_id: int
         identifier to search sql table and retrieve search results
+
     Returns
     --------
     list_dict_products: list
@@ -443,11 +457,14 @@ def fetch_results(search_id):
     SELECT List_Product_ID FROM search_results WHERE Search_ID = {}""".format(search_id)
     query_result = exception_handler(query)
     query_dict = query_result[0][0].replace("'",'"')
+    print(query_dict)
     dict_product_ids = json.loads(query_dict)
     list_ids = dict_product_ids['product_ids']
     
     list_dict_products = get_products_by_ids(list_ids)
     list_dict_products = display_less_null_values(list_dict_products)
+
+    
 
     return list_dict_products
 
@@ -485,22 +502,6 @@ def returning_products_in_pages(list_dict_products,page_number):
         products_list = list_dict_products[lower_page:upper_page]
         return products_list
     else:
-        return 'No more search results for this query'
+        message = 'No more search results for this query'
+        return message
 
-
-
-product_dict = {
-            "filter": 'unordered',
-            "data": {
-            "1" : ('water', False),
-            "2": ('glycerin', False),
-            "3": ('sodium palmate',False ),
-            "4": ('parfum', False),
-            "5": ('', True)
-
-
-        }
-        }
-
-
-list_prod = get_proper_ingredients_list(product_dict)
