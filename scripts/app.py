@@ -7,7 +7,7 @@ from user_db_utils import add_user, _get_user, delete_user, verify_login, update
 
 
 app = Flask(__name__)
-CORS(app) #cross origin resource sharing #doesn't let frontend send requests without this 
+CORS(app) # Cross Origin Resource Sharing   # Required for the to frontend send requests
 list_ = []
 
 #OBF 
@@ -19,7 +19,7 @@ list_ = []
 
 
 
-@app.route("/Search", methods=['POST'])  # ??????
+@app.route("/Search", methods=['POST'])
 def find_products():
     """
     The front end sends a post request to the /Search endpoint and this post request also contains 
@@ -33,7 +33,7 @@ def find_products():
     list_of_products = get_proper_ingredients_list(ingredient_input)
     list_.clear()
     list_.append(list_of_products)
-    # T
+
     # store_results(list_of_products)
 
     return jsonify(list_of_products)
@@ -41,7 +41,10 @@ def find_products():
 
 @app.route("/Search", methods=['GET']) 
 def return_list():
-    return jsonify(list_) #returns a list of one element and that element is a list of dictionaries 
+    """
+    Returns a list of one element and that element is a list of dictionaries
+    """
+    return jsonify(list_)
 
 
 @app.route("/results", methods=['GET'])
@@ -50,8 +53,10 @@ def get_results():
     This function calls an obf_db_utils function, fetch_results() that returns a list of product results 
     and returns a jsonified version of it to the frontend 
     """
+
+
 ##########################################################################################################################################################
-#At the moment, wishlist code will not work unless you have the dummy data in the user_info table:
+# At the moment, wishlist code will not work unless you have the dummy data in the user_info table:
 # 10234,'sample_name','sample_user','sample@gmail.com'
 
 
