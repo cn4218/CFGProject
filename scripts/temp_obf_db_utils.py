@@ -366,7 +366,8 @@ def get_proper_ingredients_list(_dict):
         ) 
         print(type(list_products))
         if isinstance(list_products,list):
-            list_products = display_less_null_values(list_products)   
+            list_products = display_less_null_values(list_products)  
+            products_dictionary = store_results(list_products) 
         ## sophie: returns list with product dictionarys with more null values at the end, replacing None with NotAvailable
         return list_products
 
@@ -381,25 +382,31 @@ def get_proper_ingredients_list(_dict):
         if isinstance(list_products,list):
             list_products = display_less_null_values(list_products) 
 
+            products_dictionary = store_results(list_products)
+
         return list_products
         
 
 
+        
 def store_results(list_of_products):
     """
-    This takes in a list of product ids retrieved from the search, turns the list into a dict and then into a string.
-    The string is entered into a sql table within products database where its given an unique search id, (can also enter user id??)
-    When inserted the search id created is retrieved and returned.
+    This takes in a list of product dictionaries where a list of product ids is retrieved from the search, turns the list into a different dict and then into a string.
+    The string is entered into the database at search_id=1, so that the database only has one row at a time.
+
     Parameters
     -----------
     list_of_products: list
         list of product ids retrieved from search result
-    Returns
-    --------
-    search_id: int
-        primary key of sql table, unique id of search results retrieved
+
     """
-    products_dictionary = {"product_ids": list_of_products}
+    df = pd.DataFrame(list_of_products)
+    product_ids = df['productID'].tolist()
+    print(product_ids)
+    print(type(product_ids))
+    products_dictionary = {"product_ids": product_ids}
+    print('HERE')
+    print(products_dictionary)
     products_dict_string = str(products_dictionary)
     print(products_dict_string)
     try:
@@ -408,30 +415,27 @@ def store_results(list_of_products):
         cur = db_connection.cursor()
 
         print("Connected to DB: %s" % db_name)
-        ## cant put through exception handler function as need to execute two queries at once
-        query_insert = """
-        INSERT INTO search_results (List_Product_ID) VALUES ("{}")
-        """.format(products_dict_string)
-        query_retrieve = """
-        select @@identity 
-        """    ## query retrieves the search id just created 
-        cur.execute(query_insert)
-        db_connection.commit()
-        cur.execute(query_retrieve)
 
-        result = (cur.fetchall())
-        search_id = result[0][0]
-        print(search_id)
+        query_update = """
+        UPDATE search_results
+        SET list_product_id = "{}"
+        WHERE search_id=1;
+        """.format(products_dict_string)
+        ## query retrieves the search id just created 
+        cur.execute(query_update)
+        db_connection.commit()
+
         cur.close()
+        return products_dictionary
     except Exception as err:
         raise DbConnectionError("Failed to read data from DB",err)
-
     finally:
         if db_connection:
             db_connection.close()
             print("DB connection is closed")
 
-    return search_id
+
+
 
 def fetch_results(search_id):
     """
@@ -441,6 +445,7 @@ def fetch_results(search_id):
     -----------
     search_id: int
         identifier to search sql table and retrieve search results
+
     Returns
     --------
     list_dict_products: list
@@ -450,19 +455,41 @@ def fetch_results(search_id):
     SELECT List_Product_ID FROM search_results WHERE Search_ID = {}""".format(search_id)
     query_result = exception_handler(query)
     query_dict = query_result[0][0].replace("'",'"')
+    print(query_dict)
     dict_product_ids = json.loads(query_dict)
     list_ids = dict_product_ids['product_ids']
     
     list_dict_products = get_products_by_ids(list_ids)
     list_dict_products = display_less_null_values(list_dict_products)
 
+    
+
     return list_dict_products
 
 def returning_products_in_pages(list_dict_products,page_number):
     """
+    Function that divides list of product dictionaries into groups of 25
+    page #: list slicing - # of results
     page 1: 0-25 --(1-24)
     page2: 25-50 -- (25-49)
     page3: 50-75 -- (50-74)
+
+    Parameters
+    -----------
+    list_dict_products: list
+        list of product dictionaries for a search result
+    page_number: int
+        page number being called in the search
+    
+    Returns
+    ---------
+    Either:
+    products_list: list
+        list of product dictionaries for given page number(will have length 25, unless its the last page)
+    message: str
+        message for when a page number is called thats larger than the max number of pages for a search result
+        'No more search results for this query'
+
     """
     amount_products = len(list_dict_products)
     products_per_page = 25
@@ -473,7 +500,8 @@ def returning_products_in_pages(list_dict_products,page_number):
         products_list = list_dict_products[lower_page:upper_page]
         return products_list
     else:
-        return 'No more search results for this query'
+        message = 'No more search results for this query'
+        return message
 
 
 
