@@ -1,7 +1,7 @@
 import requests
 import json
 from wishlist_db_utils import _connect_to_db, DbConnectionError
-import config
+from wishlist_config import USER, PASSWORD, HOST
 
 """
 This file serves to test the wishlist  and mock test input
