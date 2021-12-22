@@ -1,39 +1,44 @@
 from unittest.mock import patch
-from unittest import TestCase, main
+from unittest import TestCase, main, TestSuite, TextTestRunner, defaultTestLoader
 from user_main import MockFrontEnd, run
+from user_db_utils import dbConnection
+import inspect
 
 from user_db_utils import _get_user, get_user_id
 
 
-class TestUserApiDb(TestCase):
+class TestApiDb(TestCase):
     def setUp(self):
         self.mock = MockFrontEnd()
+        self.db = dbConnection('blu3bottl3')
 
-    def test_new_user(self):
+    def test_add_new_user(self):
         expected = {'Email_Address': 'zita@gmail.com', 'Name_User': 'zita', 'User_Name': 'zita123'}
         result = self.mock.add_new_user('zita123','zita','zita@gmail.com')
         self.assertEqual(expected,result)
 
-    def test_new_user_2(self):
+    def test_add_new_user_2(self):
         expected = {'Email_Address': 'fang@gmail.com', 'Name_User': 'Fang','User_Name': 'fang123'}
         result = self.mock.add_new_user('fang123','Fang','fang@gmail.com')
         self.assertEqual(expected,result)
+    
+    def test_get_fang_profile(self):
         self.user_id_fang = get_user_id('fang123','Fang','fang@gmail.com')
         expected = [{'Email_Address': 'fang@gmail.com', 'Name_User': 'Fang', 'User_ID': self.user_id_fang, 'User_Name': 'fang123'}]
         result = self.mock.get_profile_by_id(self.user_id_fang)
         self.assertEqual(expected,result)
 
 
-    def test_new_user_has_been_added(self):
+    def test_add_new_user_has_been_added(self):
         add_to_db = self.mock.add_new_user('Holly123','Holly','holly@gmail.com')
-        self.user_id_holly = get_user_id('Holly123','Holly','holly@gmail.com')
+        self.user_id_holly = self.db.get_user_id('Holly123','Holly','holly@gmail.com')
         expected = [{'User_ID': self.user_id_holly, 'User_Name': 'Holly123', 'Name_User': 'Holly', 'Email_Address': 'holly@gmail.com'}]
         result = _get_user(self.user_id_holly)  ##calls new input from database
         self.assertEqual(expected,result)
 
 
     def test_deleting_user(self):
-        self.user_id_holly = get_user_id('Holly123','Holly','holly@gmail.com')
+        self.user_id_holly = self.db.get_user_id('Holly123','Holly','holly@gmail.com')
         result =  self.mock.delete_user_func(self.user_id_holly)
         expected = "Account successfully deleted for username {}".format('Holly123')
         self.assertEqual(expected,result)
@@ -70,7 +75,7 @@ class TestMockFrontEnd(TestCase):
         self.assertEqual(result,'y')
 
     @patch('builtins.input', return_value = 'n')
-    def test_positive_input(self, mock_input):
+    def test_negative_input(self, mock_input):
         result = self.mock.welcome_message()
         self.assertEqual(result,'n')
 
@@ -117,12 +122,12 @@ class TestRunFunction(TestCase):
 
 
     @patch('builtins.input', side_effect = ['y','Ayesha11','Ayesha','ayesha@live.com'])
-    def test_creating_user2(self,mock_inputs):
+    def test_creating_user2_ayesha(self,mock_inputs):
         result = run()
         self.assertEqual(result, 'User details already exist, try again with a new username')
 
     @patch('builtins.input', side_effect = ['y','zita123','zita','zita@gmail.com'])
-    def test_creating_user2(self,mock_inputs):
+    def test_creating_user_zita(self,mock_inputs):
         result = run()
         self.assertEqual(result, 'User details already exist, try again with a new username')
 
@@ -131,31 +136,33 @@ class TestRunFunction(TestCase):
         result = run()
         self.assertEqual(result,'Goodbye!')
 
-class TestDeleteUsersCreated(TestCase):
+class TestUsersDelete(TestCase):
+
     def setUp(self):
         self.mock = MockFrontEnd()
+        self.db = dbConnection('blu3bottl3')
 
     def test_delete_zita_user(self):
-        zita_id = get_user_id('zita123','zita','zita@gmail.com')
+        zita_id = self.db.get_user_id('zita123','zita','zita@gmail.com')
         result = self.mock.delete_user_func(zita_id)
         expected = "Account successfully deleted for username {}".format('zita123')
         self.assertEqual(expected,result)
 
     def test_delete_fang_user(self):
-        fang_id = get_user_id('fang123','Fang','fang@gmail.com')
+        fang_id = self.db.get_user_id('fang123','Fang','fang@gmail.com')
         result = self.mock.delete_user_func(fang_id)
         expected = "Account successfully deleted for username {}".format('fang123')
         self.assertEqual(expected,result)
 
     def test_delete_sophie_user(self):
-        sophie_id = get_user_id('sophie1998','Sophie','sophie@hotmail.com')
+        sophie_id = self.db.get_user_id('sophie1998','Sophie','sophie@hotmail.com')
         result = self.mock.delete_user_func(sophie_id)
         expected = "Account successfully deleted for username {}".format('sophie1998')
         self.assertEqual(expected,result)
 
 
     def test_delete_ayesha_user(self):
-        ayesha_id = get_user_id('Ayesha11','Ayesha','ayesha@live.com')
+        ayesha_id = self.db.get_user_id('Ayesha11','Ayesha','ayesha@live.com')
         print(ayesha_id)
         result = self.mock.delete_user_func(ayesha_id)
         print(result)
