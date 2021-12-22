@@ -17,7 +17,7 @@ Also besides one test, all these tests work the issue is they're not running in 
 """
 FUNCTIONS CONTAINED IN THIS FILE:
 
-class TestWishListApiDb(unittest.TestCase)
+class TestWishListApiDb(TestCase)
 test_1_add_wish_list(self)
 test_2_get_wish_list_item_if_not_exists(self)
 test_3_get_wish_list_all_if_not_exists(self)
@@ -26,27 +26,27 @@ test_5_delete_wish_list_all_if_not_exists(self)
 test_6_get_wish_list_item_if_exists(self)
 test_7_get_wish_list_all_if_exists(self)
 
-class TestMockFrontEndDeleteDataFirst(unittest.TestCase):
+class TestMockFrontEndDeleteDataFirst(TestCase):
 setUp(self)
 test_8_delete_wish_list_item_before_re_adding(self, mock_inputs)
 
-class TestMockFrontEnd(unittest.TestCase):
+class TestMockFrontEnd(TestCase):
 test_8_add_new_wishlist(self)
 test_9_verify_wish_list_item(self, mock_inputs)
 test_10_verify_wish_list(self, mock_inputs)
 test_11_add_new_wishlist_mocked_values(self, mock_wish_list_dict)
 
-class TestMockFrontEndDelete(unittest.TestCase):
+class TestMockFrontEndDelete(TestCase):
 setUp(self)
 test_12_delete_wish_list_item(self, mock_inputs)
 test_13_delete_wish_list_all(self, mock_inputs)
 
-class ReAddingData(unittest.TestCase):
+class ReAddingData(TestCase):
 test_14_re_add_mock_wish_list(self)
 test_15_re_add_wish_list_1(self)
 test_16_re_add_wish_list_2(self)
 
-class TestWishListApiDbDeletingUsers(unittest.TestCase):
+class TestWishListApiDbDeletingUsers(TestCase):
 test_17_delete_wish_list_item(self):
 test_18_re_add_wish_list(self):
 test_19_delete_wish_list_all(self)
@@ -206,53 +206,67 @@ class TestWishListApiDb(unittest.TestCase):
 
 
     def test_7_get_wish_list_all_if_exists(self):
-        expected = [{
-                "User_ID": 3,
-                "brands": "xyz",
-                "brands_tags": "xyz",
-                "categories": "xyz",
-                "categories_en": "xyz",
-                "categories_tags": "xyz",
-                "code": 101,
-                "countries": "xyz",
-                "countries_en": "xyz",
-                "countries_tags": "xyz",
-                "image_ingredients_small_url": "xyz",
-                "image_ingredients_url": "xyz",
-                "image_nutrition_small_url": "xyz",
-                "image_nutrition_url": "xyz",
-                "image_small_url": "xyz",
-                "image_url": "xyz",
-                "ingredients_text": "xyz",
-                "productID": 1,
-                "product_name": "xyz",
-                "quantity": "xyz"
-            },
-
-            {
-                "User_ID": 3,
-                "brands": "xyz",
-                "brands_tags": "xyz",
-                "categories": "xyz",
-                "categories_en": "xyz",
-                "categories_tags": "xyz",
-                "code": 101,
-                "countries": "xyz",
-                "countries_en": "xyz",
-                "countries_tags": "xyz",
-                "image_ingredients_small_url": "xyz",
-                "image_ingredients_url": "xyz",
-                "image_nutrition_small_url": "xyz",
-                "image_nutrition_url": "xyz",
-                "image_small_url": "xyz",
-                "image_url": "xyz",
-                "ingredients_text": "xyz",
-                "productID": 2,
-                "product_name": "xyz",
-                "quantity": "xyz"
-            }
-        ]
-        self.UserID = 3
+        expected = [{'productID': 1,
+                     'code': 101,
+                     'product_name': 'xyz',
+                     'ingredients_text': 'xyz',
+                     'quantity': 'xyz',
+                     'brands': 'xyz',
+                     'brands_tags': 'xyz',
+                     'categories': 'xyz',
+                     'categories_tags': 'xyz',
+                     'categories_en': 'xyz',
+                     'countries': 'xyz',
+                     'countries_tags': 'xyz',
+                     'countries_en': 'xyz',
+                     'image_url': 'xyz',
+                     'image_small_url': 'xyz',
+                     'image_ingredients_url': 'xyz',
+                     'image_ingredients_small_url': 'xyz',
+                     'image_nutrition_url': 'xyz',
+                     'image_nutrition_small_url': 'xyz',
+                     'User_ID': 2},
+                    {'productID': 3,
+                     'code': 101,
+                     'product_name': 'xyz',
+                     'ingredients_text': 'xyz',
+                     'quantity': 'xyz',
+                     'brands': 'xyz',
+                     'brands_tags': 'xyz',
+                     'categories': 'xyz',
+                     'categories_tags': 'xyz',
+                     'categories_en': 'xyz',
+                     'countries': 'xyz',
+                     'countries_tags': 'xyz',
+                     'countries_en': 'xyz',
+                     'image_url': 'xyz',
+                     'image_small_url': 'xyz',
+                     'image_ingredients_url': 'xyz',
+                     'image_ingredients_small_url': 'xyz',
+                     'image_nutrition_url': 'xyz',
+                     'image_nutrition_small_url': 'xyz',
+                     'User_ID': 2},
+                    {'productID': 4,
+                     'code': 702,
+                     'product_name': 'xyz',
+                     'ingredients_text': 'xyz',
+                     'quantity': 'xyz',
+                     'brands': 'xyz',
+                     'brands_tags': 'xyz',
+                     'categories': 'xyz',
+                     'categories_tags': 'xyz',
+                     'categories_en': 'xyz',
+                     'countries': 'xyz',
+                     'countries_tags': 'xyz',
+                     'countries_en': 'xyz',
+                     'image_url': 'xyz',
+                     'image_small_url': 'xyz',
+                     'image_ingredients_url': 'xyz',
+                     'image_ingredients_small_url': 'xyz',
+                     'image_nutrition_url': 'xyz',
+                     'image_nutrition_small_url': 'xyz',
+                     'User_ID': 2}]
+        self.UserID = 2
         result = _get_wish_list_all(self.UserID)
         self.assertEqual(expected, result)
 
