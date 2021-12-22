@@ -1,25 +1,40 @@
 from unittest.mock import patch
 from unittest import TestCase, main
 from main_products import MockProductFrontEnd, run
-from obf_db_utils import _get_all_product_ids, get_productids_containing
+from obf_db_utils import _get_all_product_ids, get_productids_containing, get_products_by_ids, fetch_results
 import pandas as pd
+from operator import *
+import mysql.connector
 
-class TestProductFrontEnd(TestCase):
+
+"""
+TESTCASES:
+- Ordered ingredients input
+- Unordered ingredients input
+- Input that returns no results
+- Input with only ingredients not wanted
+- Tests no null values in output
+- Tests product dictionaries with more null values appear at bottom of results
+- Tests retrieving most recent search result brings back exact same result
+- Tests exception handling in obf db utils
+"""
+
+class TestAPIProductFrontEnd(TestCase):
     def setUp(self):
         self.mock = MockProductFrontEnd()
 
-    @patch('builtins.input',side_effect=['n','water','y','glycerin','n','','','','','',''])
+    @patch('builtins.input',side_effect=['n','water','y','glycerin','n','','','','','','',''])
     def test_unordered_containing_water(self,mock_inputs):
-        output = run()
+        output,_ = run()
         df = pd.DataFrame(output)
         self.containg_water = df['ingredients_text'].str.contains('water').sum()
         self.conatining_glycerin = df['ingredients_text'].str.contains('glycerin').sum()
         self.assertEqual(len(df),self.containg_water)
         self.assertEqual(0,self.conatining_glycerin)
 
-    @patch('builtins.input',side_effect=['n','water','n','glycerin','y','citric acid','y','','','',''])
+    @patch('builtins.input',side_effect=['n','water','n','glycerin','y','citric acid','y','','','','',''])
     def test_unordered_containing_glycerin(self,mock_inputs):
-        output = run()
+        output,_ = run()
         df = pd.DataFrame(output)
         containg_water = df['ingredients_text'].str.contains('water').sum()
         conatining_glycerin = df['ingredients_text'].str.contains('glycerin').sum()
@@ -28,9 +43,9 @@ class TestProductFrontEnd(TestCase):
         self.assertEqual(0,containg_water)
         self.assertEqual(len(df),conatining_citric_acid)
 
-    @patch('builtins.input',side_effect=['n','bicarbonate de sodium','n','parfum','y','limonene','y','','','',''])
+    @patch('builtins.input',side_effect=['n','bicarbonate de sodium','n','parfum','y','limonene','y','','','','',''])
     def test_unordered_containing_parfum(self, mock_inputs):
-        output = run()
+        output,_ = run()
         df = pd.DataFrame(output)
         df['ingredients_text'] = df['ingredients_text'].replace('í','i')
         containg_bicarb = df['ingredients_text'].str.contains('bicarbonate de sodium').sum()
@@ -41,9 +56,9 @@ class TestProductFrontEnd(TestCase):
         self.assertEqual(len(df),containing_parfum)
         self.assertEqual(len(df),containing_limonene)
         
-    @patch('builtins.input',side_effect=['n','bicarbonate de sodium','n','geraniol','y','hexyl cinnamal','y','alcohol','n','water','n'])
+    @patch('builtins.input',side_effect=['n','bicarbonate de sodium','n','geraniol','y','hexyl cinnamal','y','alcohol','n','water','n',''])
     def test_unordered_bicarb(self,mock_inputs):
-        output = run()
+        output,_ = run()
         df = pd.DataFrame(output)
         containg_bicarb = df['ingredients_text'].str.contains('bicarbonate de sodium').sum()
         containing_geraniol = df['ingredients_text'].str.contains('geraniol').sum()
@@ -56,9 +71,9 @@ class TestProductFrontEnd(TestCase):
         self.assertEqual(0,containing_alcohol)
         self.assertEqual(0,containing_water)
 
-    @patch('builtins.input',side_effect=['y','bicarbonate de sodium','n','aqua','y','','','alcohol','y','',''])
+    @patch('builtins.input',side_effect=['y','bicarbonate de sodium','n','aqua','y','','','alcohol','y','','',''])
     def test_ordered_bicarb(self, mock_inputs):
-        output = run()
+        output,_ = run()
         df = pd.DataFrame(output)
         df['2nd ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[1])
         df['4th ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[3])
@@ -69,9 +84,9 @@ class TestProductFrontEnd(TestCase):
         self.assertEqual(len(df),containg_aqua)
         self.assertEqual(len(df),containing_alcohol)
 
-    @patch('builtins.input',side_effect=['y','aqua','y','isobutane','y','','','','','sodium tallowate','n'])
+    @patch('builtins.input',side_effect=['y','aqua','y','isobutane','y','','','','','sodium tallowate','n',''])
     def test_ordered_aqua(self, mock_inputs):
-        output = run()
+        output,_ = run()
         df = pd.DataFrame(output)
         df['1st ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[0])
         df['2nd ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[1])
@@ -82,9 +97,9 @@ class TestProductFrontEnd(TestCase):
         self.assertEqual(len(df),containg_isobutane)
         self.assertEqual(0,containing_sod_tal)
 
-    @patch('builtins.input',side_effect=['y','water','y','parfum','y','','','','','',''])
+    @patch('builtins.input',side_effect=['y','water','y','parfum','y','','','','','','',''])
     def test_ordered_water(self, mock_inputs):
-        output = run()
+        output,_ = run()
         df = pd.DataFrame(output)
         df['1st ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[0])
         df['2nd ingredient'] = df['ingredients_text'].apply(lambda x:x.split(',')[1])
@@ -93,21 +108,21 @@ class TestProductFrontEnd(TestCase):
         self.assertEqual(len(df),containg_water)
         self.assertEqual(len(df),containg_parfum)
 
-    @patch('builtins.input',side_effect = ['y','water','y','water','n','','','','','',''])
+    @patch('builtins.input',side_effect = ['n','water','y','water','n','','','','','',''])
     def test_bad_input(self,mock_inputs):
-        output = run()
+        output,_ = run()
         self.assertEqual('Query returns no search results',output)
 
 
     @patch('builtins.input',side_effect = ['y','water','y','Stearalkonium chloride','y','stearyl alcohol','y','butyrospermum parkii (beurre de karité)','n','caprylic/capric triglyceride','n'])
     def test_bad_input_result(self,mock_inputs):
-        output = run()
+        output,_ = run()
         self.assertEqual('Query returns no search results',output)
 
 
-    @patch('builtins.input',side_effect = ['n','aqua','n','sodium','n','magnesium','n','amyl cinnamal','n','',''])
+    @patch('builtins.input',side_effect = ['n','aqua','n','sodium','n','magnesium','n','amyl cinnamal','n','','',''])
     def test_allergic_to_ingredients_aqua(self,mock_inputs):
-        output = run()
+        output,_ = run()
         df = pd.DataFrame(output)
         containing_water = df['ingredients_text'].str.contains('aqua').sum()
         containg_gycerin = df['ingredients_text'].str.contains('sodium').sum()
@@ -118,9 +133,9 @@ class TestProductFrontEnd(TestCase):
         self.assertEqual(0,containing_sodium)
         self.assertEqual(0,containing_hexyl)
 
-    @patch('builtins.input',side_effect = ['y','water','n','glycerin','n','sodium palmate','n','parfum','n','',''])
+    @patch('builtins.input',side_effect = ['y','water','n','glycerin','n','sodium palmate','n','parfum','n','','',''])
     def test_allergic_to_ingredients(self,mock_inputs):
-        output = run()
+        output,_ = run()
         df = pd.DataFrame(output)
         containing_water = df['ingredients_text'].str.contains('water').sum()
         containg_gycerin = df['ingredients_text'].str.contains('glycerin').sum()
@@ -131,9 +146,9 @@ class TestProductFrontEnd(TestCase):
         self.assertEqual(0,containing_sodium)
         self.assertEqual(0,containing_hexyl)
     
-    @patch('builtins.input',side_effect = ['n','water','n','','','','','','','',''])
+    @patch('builtins.input',side_effect = ['n','water','n','','','','','','','','',''])
     def test_no_water(self, mock_inputs):
-        output = run()
+        output,_ = run()
         df = pd.DataFrame(output)
         containing_water = df['ingredients_text'].str.contains('water').sum()
         result_all = _get_all_product_ids()
@@ -142,11 +157,49 @@ class TestProductFrontEnd(TestCase):
         self.assertEqual(0,containing_water)
         self.assertEqual(len(df),expected_length)
 
-    @patch('builtins.input',side_effect = ['n','aqua','n','sodium','n','magnesium','n','amyl cinnamal','n','',''])
+    @patch('builtins.input',side_effect = ['n','aqua','n','sodium','n','magnesium','n','amyl cinnamal','n','','','y'])
     def test_null_values(self,mock_inputs):
-        output = run()
-        df=pd.DataFrame(output)
-        
+        self.aqua_output,output = run()
+        df=pd.DataFrame(self.aqua_output)
+        result = df.isnull().values.any()
+        print(result)
+        self.assertEqual(False,result)
+        self.assertEqual(self.aqua_output,output)
+
+    @patch('builtins.input',side_effect = ['n','aqua','n','sodium','n','magnesium','n','amyl cinnamal','n','','',''])
+    def test_null_values_order(self,mock_inputs):
+        output,_ = run()
+        occurence_na = []
+        for item in output:
+            count_occ = countOf(item.values(), 'NotAvailable')
+            occurence_na.append(count_occ)      
+        print(occurence_na)
+
+        self.assertEqual(occurence_na,sorted(occurence_na))
+
+    @patch('builtins.input',side_effect=['n','aqua','n','sodium','n','magnesium','n','amyl cinnamal','n','','','y'])
+    def test_result_save(self,mock_inputs):
+        output1,output2 = run()
+        self.assertEqual(output1,output2)
+
+
+class TestDBUtils(TestCase):
+
+
+    def test_empty_input_list(self):
+        with self.assertRaises(mysql.connector.ProgrammingError) as err:
+            get_products_by_ids([]) 
+        self.assertEqual('Input value is an empty list',str(err.exception))
+
+    def test_one_search_id(self):
+        with self.assertRaises(IndexError) as err:
+            fetch_results(2)
+        self.assertEqual('Query returns no search results, use search ID 1',str(err.exception))
+
+
+    
+
+
 
 
 
