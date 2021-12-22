@@ -210,23 +210,28 @@ def get_products_by_ids(id_list):
     """
     # converting to tuple() alone didn't work be cause the syntax of a tuple
     # with 1 single element conflicts with mysql. Eg: (96,)
-    form_tup_string = "("
-    length = len(id_list)
-    for i in range(length):
-        if i < length-1:
-            form_tup_string += str(id_list[i]) + ","
-        else:
-            form_tup_string += str(id_list[i]) + ")"  
+    try:
+        form_tup_string = "("
+        length = len(id_list)
+        for i in range(length):
+            if i < length-1:
+                form_tup_string += str(id_list[i]) + ","
+            else:
+                form_tup_string += str(id_list[i]) + ")"  
 
-    query = """
-            SELECT * FROM products_table  --  what is products1? products_table?
-            WHERE productID IN 
-            """
-    query += form_tup_string
-    # print(query)
+        query = """
+                SELECT * FROM products_table  --  what is products1? products_table?
+                WHERE productID IN 
+                """
+        query += form_tup_string
+        # print(query)
 
-    query_result = exception_handler(query)
-    list_products = _map_values(query_result)
+        query_result = exception_handler(query)
+        list_products = _map_values(query_result)
+
+    except Exception:
+        raise mysql.connector.ProgrammingError('Input value is an empty list')
+
     return list_products
 
 
@@ -368,7 +373,6 @@ def get_proper_ingredients_list(_dict):
         print(type(list_products))
         if isinstance(list_products,list):
             list_products = display_less_null_values(list_products)  
-            products_dictionary = store_results(list_products) 
         ## sophie: returns list with product dictionarys with more null values at the end, replacing None with NotAvailable
         return list_products
 
@@ -383,7 +387,6 @@ def get_proper_ingredients_list(_dict):
         if isinstance(list_products,list):
             list_products = display_less_null_values(list_products) 
 
-            products_dictionary = store_results(list_products)
 
         return list_products
         
@@ -404,13 +407,9 @@ def store_results(list_of_products):
     """
     df = pd.DataFrame(list_of_products)
     product_ids = df['productID'].tolist()
-    print(product_ids)
-    print(type(product_ids))
     products_dictionary = {"product_ids": product_ids}
-    print('HERE')
-    print(products_dictionary)
+
     products_dict_string = str(products_dictionary)
-    print(products_dict_string)
     try:
         db_name = "Products"
         db_connection = _connect_to_db(db_name)
@@ -453,18 +452,19 @@ def fetch_results(search_id):
     list_dict_products: list
         list dicionary products of saved search result
     """
-    query = """
-    SELECT List_Product_ID FROM search_results WHERE Search_ID = {}""".format(search_id)
-    query_result = exception_handler(query)
-    query_dict = query_result[0][0].replace("'",'"')
-    print(query_dict)
-    dict_product_ids = json.loads(query_dict)
-    list_ids = dict_product_ids['product_ids']
-    
-    list_dict_products = get_products_by_ids(list_ids)
-    list_dict_products = display_less_null_values(list_dict_products)
+    try:
+        query = """
+        SELECT List_Product_ID FROM search_results WHERE Search_ID = {}""".format(search_id)
+        query_result = exception_handler(query)
+        query_dict = query_result[0][0].replace("'",'"')
+        dict_product_ids = json.loads(query_dict)
+        list_ids = dict_product_ids['product_ids']
+        
+        list_dict_products = get_products_by_ids(list_ids)
+        list_dict_products = display_less_null_values(list_dict_products)
 
-    
+    except Exception as err:
+        raise IndexError('Query returns no search results, use search ID 1')
 
     return list_dict_products
 
