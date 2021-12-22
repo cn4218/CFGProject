@@ -52,16 +52,19 @@ def return_list():
     return jsonify(list_)
 
 
+
 @app.route("/Results", methods=['GET'])
 def send_results():
     """
-    Retrieves search results for given search id
+    Retrieves ssearch results for given search id
     """
     
     list_of_products = fetch_results(1)
-    # list_.clear()
-    # list_.append(list_of_products) 
+    if isinstance(list_of_products,Exception):
+        return jsonify([])
+
     return jsonify(list_of_products)
+
 
 #Wishlist endpoints 
 ##########################################################################################################################################################
