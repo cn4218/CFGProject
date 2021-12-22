@@ -1,4 +1,3 @@
-
 import requests
 import json
 
@@ -21,11 +20,12 @@ class MockProductFrontEnd:
             headers = {"content_type": "application/json"},
             data = json.dumps(product_dict)
         )
+        print(result)
         return result.json()
 
-    def fetch_existing_search_result(self,search_id):
+    def fetch_existing_search_result(self):
         result = requests.get(
-            "http://127.0.0.1:5001/Search/{}".format(search_id),
+            "http://127.0.0.1:5001/Results",
             headers = {"content_type": "application/json"},
         )
         return result.json()
@@ -78,16 +78,33 @@ class MockProductFrontEnd:
         ingredient4 = self.ingredientfour,boolean4 = self.booleanfour,ingredient5= self.ingredientfive,boolean5 = self.booleanfive)
         return list_products
 
+    def results_again(self):
+        answer = input('Would you like to see your search results again, y/n? ')
+        if answer == 'y':
+            result = self.fetch_existing_search_result()
+        else:
+            result = 'Goodbye!'
+            print('Goodbye!')
+        return result
+
+
 def run():
     mock = MockProductFrontEnd()
-    result = mock.fetch_existing_search_result(1)
-    print(result)
-
+    # result = mock.get_every_product('unordered','water',True,'water',False,'','','','','','')
+    # res2 = mock.fetch_existing_search_result()
+    # print(result)
+    # print(res2)
+    #'y','water','y','Stearalkonium chloride','y','stearyl alcohol','y','butyrospermum parkii (beurre de karité)','n','caprylic/capric triglyceride','n'
 
     mock.welcome_message()
     mock.selecting_ingredients()
     list_products_ = mock.input_products()
-    return list_products_
+    result_dict={}
+    if not isinstance(list_products_,str):
+        result_dict = mock.results_again()
+    # print(list_products_)
+    # print('Results: ',result_dict)
+    return list_products_,result_dict
 
 if __name__ == '__main__':
 
