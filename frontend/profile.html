@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+  <title>Profile&#127800;</title>
+  <meta charset="utf-8">
+  
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <script src="https://kit.fontawesome.com/27198caf80.js" crossorigin="anonymous"></script>
+     <style> 
+       .active {
+           background-color: rgb(245,49,99,0.5);
+       }
+   </style>
+</head>
+
+</body>
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+            
+    <a  class="navbar-brand" href="#">Cosmo&#127800;</a>
+    <!--When you shrink your browser window, at some point it gets so small that you might not be able 
+        to see all its contents and so bootstrap suggests a toggle feature that lets you still access those contents 
+        via a dropdown navbar that is activated by the click of a button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navblock">
+        <span >&#127800;</span><i class="fas fa-caret-down"></i>
+    </button>
+
+
+
+
+    <div class="collapse navbar-collapse"  id="navblock"> <!--This is what makes it possible for you to list items horizontally -->
+    <ul class="navbar-nav mr-auto"> <!--mr-auto wasn't working until I switched from bootstrap 5 to 4-->
+        <li class="nav-item "> <!--Initially these elements appear in vertically because flex direction was set to column in css(you can see this when you inspect with developer tools)-->
+            <a href="http://127.0.0.1:5500/frontend/home.html" class="nav-link " id="Home" onclick="show_active('Home')">Home</a> <!--when you first open the website it starts off at home page-->
+        </li>
+        <li class="nav-item">
+            <a href="http://127.0.0.1:5500/frontend/results.html"class="nav-link " id="Results" onclick="show_active('Results')">Results</a>
+        </li>
+        <li class="nav-item">
+            <a href="http://127.0.0.1:5500/frontend/wishlist.html" class="nav-link" id="Wishlist" onclick="show_active('Wishlist')">Wishlist</a>
+        </li>
+    </ul>
+    
+    
+    <ul class="navbar-nav navbar-right">
+        <li class="nav-item"><a href="http://127.0.0.1:5500/frontend/profile.html" class="nav-link active" id="Profile" onclick="show_active('Profile')">Profile</a></li>
+        <li class="nav-item"><a href="http://127.0.0.1:5500/frontend/log_out.html" class="nav-link" id="Log-out" onclick="show_active('Log-out')">Log out</a></li>
+    </ul>
+    </div>
+
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <!--Please change image to a girl-->
+        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" class="rounded-circle" width="150">
+            <div class="mt-3">
+                <h3 id="username">Jane Doe</h3>
+                <h6 id="name-user">@janedoe7</h6>
+                <a href="#" id="email">janedoe@gmail.com</a>
+                <br>
+                <button type="button" class="btn btn-dark" ><a href="http://127.0.0.1:5500/frontend/log_out.html" style="color:white">Log out</a></button>
+             </div>
+    </div>
+    <div class="col">
+        <div class="container">
+            <div class="row">
+              <div class="column">
+                <h2 style="color:rgb(245,49,99,0.6)">Update User Information</h2>
+                <div class="row mt-1">
+                    <div class="col-md-8"><label class="labels">Username</label><input type="text" class="form-control" id="input-1" placeholder="Jane Doe" value=""></div>
+                    <div class="col-md-8"><label class="labels">User Handle</label><input type="text" class="form-control" value="" id="input-2" placeholder="jane_doe7"></div>
+                    <div class="col-md-8"><label class="labels">Email Address</label><input type="text" class="form-control" value="" id="input-3" placeholder="email@address.com"></div>
+                    <!--Earlier in the project, we decided that we wouldn't be using passwords-->
+                    <!-- <div class="col-md-6"><label class="labels">Password</label><input type="text" class="form-control" value="" id="input-4" placeholder="password"></div> -->
+                </div>
+              </div>
+            </div>
+                
+        </div>
+    </div>
+    <div class="col"></div>
+    
+<script>
+    function show_active(item_id){
+    document.getElementById("Home").className = "nav-link";
+    document.getElementById("Results").className = "nav-link";
+    document.getElementById("Wishlist").className = "nav-link";
+    document.getElementById("Profile").className = "nav-link";
+    document.getElementById("Log-out").className = "nav-link";
+    
+
+
+    document.getElementById(item_id).className = "nav-link active";
+
+   
+    }
+
+    //in your function, you have to change the user info details and also all the place holders 
+    function display_user_info(){
+        var user_id = parseInt(localStorage.getItem("user_id"))
+        console.log(user_id)
+        console.log(typeof(user_id))
+
+        fetch(`http://127.0.0.1:5001/profile/${user_id}`)
+        .then(function(response){
+            console.log(response);
+            response.text().then(function(text){
+                console.log(text);
+                text = JSON.parse(text)
+                console.log(text["User_Name"])
+
+                document.getElementById("username").innerHTML= text["User_Name"];
+                document.getElementById("name-user").innerHTML = text["Name_User"];
+                document.getElementById("email").innerHTML = text["Email_Address"];
+
+                document.getElementById("input-1").placeholder = text["User_Name"];
+                document.getElementById("input-2").placeholder = text["Name_User"];
+                document.getElementById("input-3").placeholder = text["Email_Address"];
+
+
+
+            });
+        })
+        .catch((error) => {
+                    console.log("There is probably a network. Check that app.py is running on the backend please")
+                    console.log(error)
+                });
+    }
+
+    display_user_info();
+    
+
+</script>
+</body>
