@@ -1,13 +1,13 @@
-CREATE DATABASE if not exists CFG_Project;
-use CFG_Project;
+CREATE DATABASE IF NOT EXISTS CFG_Project;
+USE CFG_Project;
 
 -- creating the user info table
-CREATE TABLE if not exists  `User_Info` (
+CREATE TABLE IF NOT EXISTS `User_Info` (
 -- after we get an MVP, can possible implement user/password
-`User_ID` int NOT NULL UNIQUE AUTO_INCREMENT,
-`User_Name` varchar(50) UNIQUE NOT NULL,
-`Name_User` varchar(50) NOT NULL,
-`Email_Address` varchar(100) NOT NULL,
+`User_ID` INT NOT NULL UNIQUE AUTO_INCREMENT,
+`User_Name` VARCHAR(50) UNIQUE NOT NULL,
+`Name_User` VARCHAR(50) NOT NULL,
+`Email_Address` VARCHAR(100) NOT NULL,
 -- In this statement, you can also use the UNIQUE INDEX instead of the UNIQUE KEY because they are synonyms.
 -- When you create a UNIQUE constraint, MySQL creates a UNIQUE index behind the scenes.
 -- UNIQUE KEY line is to prevent duplicate records, the combination of User_ID, User_Name, Name_User should produce a unique record
@@ -18,7 +18,7 @@ CONSTRAINT PK_User PRIMARY KEY (User_Name, User_ID)
 
 -- this stored procedure called `fill_user_info` to create dummy data within our database
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_user_info`(UserID int, UserName varchar(50), NameUser varchar(50), EmailAddress varchar(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_user_info`(UserID int, UserName VARCHAR(50), NameUser VARCHAR(50), EmailAddress VARCHAR(100))
 BEGIN
 -- Use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
 -- it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently without generating an error.
@@ -28,7 +28,7 @@ DELIMITER ;
 
 -- creating the wish list table
 
-CREATE TABLE if not exists  `Wish_List` (
+CREATE TABLE IF NOT EXISTS `Wish_List` (
 `productID` INTEGER,
 `code` BIGINT NULL,
 `product_name` VARCHAR(500) NULL,
@@ -48,7 +48,7 @@ CREATE TABLE if not exists  `Wish_List` (
 `image_ingredients_small_url` VARCHAR(1000) NULL,
 `image_nutrition_url` VARCHAR(1000) NULL,
 `image_nutrition_small_url` VARCHAR(1000) NULL,
-`User_ID` int,
+`User_ID` INT,
 FOREIGN KEY (User_ID) REFERENCES User_Info(User_ID),
 CONSTRAINT PK_User PRIMARY KEY (User_ID, productID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -75,7 +75,7 @@ Image_Ingredients_url VARCHAR(1000),
 Image_Ingredients_Small_url VARCHAR(1000),
 Image_Nutrition_url VARCHAR(1000),
 Image_Nutrition_Small_url VARCHAR(1000),
-UserID int
+UserID INT
 )
 BEGIN
     INSERT IGNORE INTO Wish_List (
