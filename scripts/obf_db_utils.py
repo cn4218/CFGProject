@@ -444,6 +444,7 @@ def fetch_results(search_id):
     -----------
     search_id: int
         identifier to search sql table and retrieve search results
+
     Returns
     --------
     list_dict_products: list
@@ -461,11 +462,11 @@ def fetch_results(search_id):
         list_dict_products = get_products_by_ids(list_ids)
         list_dict_products = display_less_null_values(list_dict_products)
 
-    except Exception as err:
-        print( IndexError('Query returns no search results, use search ID 1'))
-        return list_dict_products
-    return list_dict_products
+    except Exception:
+        return IndexError('Query returns no search results, use search ID 1')
 
+
+    return list_dict_products
 def returning_products_in_pages(list_dict_products,page_number):
     """
     Function that divides list of product dictionaries into groups of 25
