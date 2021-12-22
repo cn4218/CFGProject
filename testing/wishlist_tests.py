@@ -1,5 +1,7 @@
 from unittest.mock import patch
+from mock import patch
 from unittest import TestCase, main
+from wishlist_config import USER, PASSWORD, HOST
 from wishlist_main import MockFrontEnd
 from wishlist_db_utils import DbConnectionError, _connect_to_db, exception_handler, exception_handler_wish, exception_record_exists, _map_values, add_wish_list, _get_wish_list_individual, _get_wish_list_all, delete_wishlist_item, delete_wishlist
 import unittest
@@ -21,11 +23,18 @@ Deleting an entire wishlist (test through API, mocking and test what happens whe
 """
 Functions contained in this file: 
 
-class TestWishListApiDb(TestCase):
+class TestWishListApiDb(unittest.TestCase):
 test_add_wish_list(self)
 test_get_wish_list_item_if_not_exists(self)
-test_get_wish_list_item(self)
-test_get_wish_list_all(self)
+test_get_wish_list_all_if_not_exists(self)
+test_delete_wish_list_item_if_not_exists(self)
+test_delete_wish_list_all_if_not_exists(self)
+test_get_wish_list_item_if_exists(self)
+test_get_wish_list_all_if_exists(self)
+
+class TestWishListApiDbDeletingUsers(unittest.TestCase):
+test_delete_wish_list_item(self)
+test_delete_wish_list_all(self)
 """
 
 """
@@ -36,7 +45,8 @@ than get_wish_list_item()
 Make sure to add dummy data through the dummy data file as these functions rely on the dummy data, please run the
 dummy data SQL file before running this file
 
-Please have your cursor located at the bottom of this file before running
+Please have your cursor located at the bottom of this file before running:
+https://stackoverflow.com/questions/52472091/how-to-run-unittest-test-cases-in-the-order-they-are-declared
 """
 
 """
@@ -215,11 +225,109 @@ class TestWishListApiDb(unittest.TestCase):
 
 """
 This following class tests mocked input derived from my wishlist_main file to test the wishlist functions
+
+Notes on whats going on:
+Must use setUp to initialize this class for mocking input rather than __init__ as this will overrwrite __init__ and is
+not allowed. Whenever initializing test classes you must use the setUp function.
+
+The patch function temporarily replaces the target object with a different object during the test. The @patch decorator 
+accepts a big amount of arguments. As I will talk only about mocking inputs, our target is the builtin function input, 
+and the target for the patch decorator is ‘builtins.input’.
+
+The side_effect argument can accept a function to be called when the mock is called, an iterable or an Exception. 
+Passing in an iterable is very useful to mock multiple inputs inside the testing function, because it will yield the 
+next value everytime it’s called. When using side_effects, put mock_inputs as your second argument.
+
+The return_value configure the value returned when the mock is called. It will always return the same value when the 
+mock is called.
+
+When to use side_effect or return_value: I use side_effect when the function I’m testing has more than one call to 
+input(). The return_value is good to functions that call input() once.
 """
 
 class MockingFrontEnd(unittest.TestCase):
     def setUp(self):
         self.mock = MockFrontEnd("cfg_project")
+
+    def test_add_new_wishlist(self):
+        self.mock.add_new_wishlist()
+        result = _get_wish_list_individual(1, 6)
+        expected = [{"User_ID": 1,
+                     "productID": 6,
+                     "code": 62263436,
+                     "product_name": "Huile'' de massage larnica",
+                     "ingredients_text": "helianthus '''annuus' (sunflower) seed oil, olea europaea (olive) fruit oil, fragrance*, arnica montana flower extract, betula alba leaf extract, limonene*,  linaloo*, geraniol*, coumarin* *composé présent dans les huiles essentielles naturelles",
+                     "quantity": "100 ml",
+                     "brands": "Weleda",
+                     "brands_tags": "weleda",
+                     "categories": "Skincare",
+                     "categories_tags": r'en:body,en:body-oils,fr:huile-de-massage',
+                     "categories_en": r'Body,Body-oils,fr:huile-de-massage',
+                     "countries": "France",
+                     "countries_tags": "en:france",
+                     "countries_en": "France",
+                     "image_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.400.jpg",
+                     "image_small_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.200.jpg",
+                     "image_ingredients_url": "",
+                     "image_ingredients_small_url": "",
+                     "image_nutrition_url": "",
+                     "image_nutrition_small_url": ""
+                        }]
+        self.assertEqual(expected, result)
+
+    @patch("wishlist_main.MockFrontEnd.add_new_wishlist")
+    def test_add_new_wishlist_mocked_values(self, mock_wish_list_dict):
+        wishlistdict = {"username": "sarah",
+                        "User_ID": 1,
+                        "wishlist": {
+                            "productID": 4,
+                            "code": "62263436",
+                            "product_name": "Huile'' de massage larnica",
+                            "ingredients_text": "helianthus '''annuus' (sunflower) seed oil, olea europaea (olive) fruit oil, fragrance*, arnica montana flower extract, betula alba leaf extract, limonene*,  linaloo*, geraniol*, coumarin* *composé présent dans les huiles essentielles naturelles",
+                            "quantity": "100 ml",
+                            "brands": "Weleda",
+                            "brands_tags": "weleda",
+                            "categories": "Skincare",
+                            "categories_tags": r'en:body,en:body-oils,fr:huile-de-massage',
+                            "categories_en": r'Body,Body-oils,fr:huile-de-massage',
+                            "countries": "France",
+                            "countries_tags": "en:france",
+                            "countries_en": "France",
+                            "image_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.400.jpg",
+                            "image_small_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.200.jpg",
+                            "image_ingredients_url": "",
+                            "image_ingredients_small_url": "",
+                            "image_nutrition_url": "",
+                            "image_nutrition_small_url": ""
+                        }}
+        wishlistdict = mock_wish_list_dict.return_value
+        wishlistdict = self.mock.add_new_wishlist.wishlistdict.return_value
+        data = self.mock.add_new_wishlist()
+        data()
+        result = _get_wish_list_individual(1, 4)
+        expected = [{"User_ID": 1,
+                     "productID": 4,
+                     "code": "62263436",
+                     "product_name": "Huile'' de massage larnica",
+                     "ingredients_text": "helianthus '''annuus' (sunflower) seed oil, olea europaea (olive) fruit oil, fragrance*, arnica montana flower extract, betula alba leaf extract, limonene*,  linaloo*, geraniol*, coumarin* *composé présent dans les huiles essentielles naturelles",
+                     "quantity": "100 ml",
+                     "brands": "Weleda",
+                     "brands_tags": "weleda",
+                     "categories": "Skincare",
+                     "categories_tags": r'en:body,en:body-oils,fr:huile-de-massage',
+                     "categories_en": r'Body,Body-oils,fr:huile-de-massage',
+                     "countries": "France",
+                     "countries_tags": "en:france",
+                     "countries_en": "France",
+                     "image_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.400.jpg",
+                     "image_small_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.200.jpg",
+                     "image_ingredients_url": "",
+                     "image_ingredients_small_url": "",
+                     "image_nutrition_url": "",
+                     "image_nutrition_small_url": ""
+                        }]
+        self.assertEqual(expected, result)
+
 
 """
 I put the following code even though they are also testing the API into a seperate class, as the tests don't seem to be
@@ -230,21 +338,23 @@ This following class tests the actual API and runs unit tests related to deletin
 wishlist item and entire wishlist 
 
 """
-class TestWishListApiDbDeletingUsers(unittest.TestCase):
-    def test_delete_wish_list_item(self):
-        self.UserID = 2
-        self.ProductID = 2
-        expected = "The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}".format(
-            self.UserID, self.ProductID, {})
-        result = delete_wishlist_item(self.UserID, self.ProductID)
-        self.assertEqual(expected, result)
+# commented these out so they don't interfere with other tests
 
-    def test_delete_wish_list_all(self):
-        self.UserID = 3
-        expected = "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(
-            self.UserID, {})
-        result = delete_wishlist(self.UserID)
-        self.assertEqual(expected, result)
+# class TestWishListApiDbDeletingUsers(unittest.TestCase):
+#     def test_delete_wish_list_item(self):
+#         self.UserID = 2
+#         self.ProductID = 2
+#         expected = "The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}".format(
+#             self.UserID, self.ProductID, {})
+#         result = delete_wishlist_item(self.UserID, self.ProductID)
+#         self.assertEqual(expected, result)
+#
+#     def test_delete_wish_list_all(self):
+#         self.UserID = 3
+#         expected = "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(
+#             self.UserID, {})
+#         result = delete_wishlist(self.UserID)
+#         self.assertEqual(expected, result)
 
 
 
