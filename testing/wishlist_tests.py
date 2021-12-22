@@ -11,22 +11,41 @@ Note to Chizu:
 This code is unfinished but I am finishing it today and tomorrow
 """
 
-
 """
 Functions contained in this file: 
 
-class TestWishListApiDb(unittest.TestCase):
-test_add_wish_list(self)
-test_get_wish_list_item_if_not_exists(self)
-test_get_wish_list_all_if_not_exists(self)
-test_delete_wish_list_item_if_not_exists(self)
-test_delete_wish_list_all_if_not_exists(self)
-test_get_wish_list_item_if_exists(self)
-test_get_wish_list_all_if_exists(self)
+class TestWishListApiDb(unittest.TestCase)
+test_1_add_wish_list(self)
+test_2_get_wish_list_item_if_not_exists(self)
+test_3_get_wish_list_all_if_not_exists(self)
+test_4_delete_wish_list_item_if_not_exists(self)
+test_5_delete_wish_list_all_if_not_exists(self)
+test_6_get_wish_list_item_if_exists(self)
+test_7_get_wish_list_all_if_exists(self)
+
+class TestMockFrontEnd(unittest.TestCase):
+setUp(self)
+test_8_add_new_wishlist(self)
+test_9_verify_wish_list_item(self, mock_inputs)
+test_10_verify_wish_list(self, mock_inputs)
+test_11_add_new_wishlist_mocked_values(self, mock_wish_list_dict)
+
+class TestMockFrontEndDelete(unittest.TestCase):
+setUp(self)
+test_12_delete_wish_list_item(self, mock_inputs)
+test_13_delete_wish_list_all(self, mock_inputs)
+
+class ReAddingData(unittest.TestCase):
+test_14_re_add_mock_wish_list(self)
+test_15_re_add_wish_list_1(self)
+test_16_re_add_wish_list_2(self)
 
 class TestWishListApiDbDeletingUsers(unittest.TestCase):
-test_delete_wish_list_item(self)
-test_delete_wish_list_all(self)
+test_17_delete_wish_list_item(self):
+test_18_re_add_wish_list(self):
+test_19_delete_wish_list_all(self)
+test_20_re_add_wish_list_1(self):
+test_21_re_add_wish_list_2(self):
 """
 
 """
