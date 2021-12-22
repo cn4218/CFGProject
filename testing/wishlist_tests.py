@@ -245,7 +245,7 @@ When to use side_effect or return_value: I use side_effect when the function Iâ€
 input(). The return_value is good to functions that call input() once.
 """
 
-class MockingFrontEnd(unittest.TestCase):
+class TestMockFrontEnd(unittest.TestCase):
     def setUp(self):
         self.mock = MockFrontEnd("cfg_project")
 
@@ -275,7 +275,84 @@ class MockingFrontEnd(unittest.TestCase):
                         }]
         self.assertEqual(expected, result)
 
-# this is my only test so far that i cant get to work, currently working on it 
+    @patch('builtins.input', side_effect=[1, 2])
+    def test_verify_wish_list_item(self, mock_inputs):
+        expected = [{"User_ID": 1,
+                     "brands": "xyz",
+                     "brands_tags": "xyz",
+                     "categories": "xyz",
+                     "categories_en": "xyz",
+                     "categories_tags": "xyz",
+                     "code": 101,
+                     "countries": "xyz",
+                     "countries_en": "xyz",
+                     "countries_tags": "xyz",
+                     "image_ingredients_small_url": "xyz",
+                     "image_ingredients_url": "xyz",
+                     "image_nutrition_small_url": "xyz",
+                     "image_nutrition_url": "xyz",
+                     "image_small_url": "xyz",
+                     "image_url": "xyz",
+                     "ingredients_text": "xyz",
+                     "productID": 2,
+                     "product_name": "xyz",
+                     "quantity": "xyz"}]
+        result = self.mock.verify_wish_list_item()
+        self.assertEqual(expected, result)
+
+    @patch('builtins.input', side_effect=[3])
+    def test_verify_wish_list(self, mock_inputs):
+        expected = [
+            {
+                "User_ID": 3,
+                "brands": "xyz",
+                "brands_tags": "xyz",
+                "categories": "xyz",
+                "categories_en": "xyz",
+                "categories_tags": "xyz",
+                "code": 101,
+                "countries": "xyz",
+                "countries_en": "xyz",
+                "countries_tags": "xyz",
+                "image_ingredients_small_url": "xyz",
+                "image_ingredients_url": "xyz",
+                "image_nutrition_small_url": "xyz",
+                "image_nutrition_url": "xyz",
+                "image_small_url": "xyz",
+                "image_url": "xyz",
+                "ingredients_text": "xyz",
+                "productID": 1,
+                "product_name": "xyz",
+                "quantity": "xyz"
+            },
+
+            {
+                "User_ID": 3,
+                "brands": "xyz",
+                "brands_tags": "xyz",
+                "categories": "xyz",
+                "categories_en": "xyz",
+                "categories_tags": "xyz",
+                "code": 101,
+                "countries": "xyz",
+                "countries_en": "xyz",
+                "countries_tags": "xyz",
+                "image_ingredients_small_url": "xyz",
+                "image_ingredients_url": "xyz",
+                "image_nutrition_small_url": "xyz",
+                "image_nutrition_url": "xyz",
+                "image_small_url": "xyz",
+                "image_url": "xyz",
+                "ingredients_text": "xyz",
+                "productID": 2,
+                "product_name": "xyz",
+                "quantity": "xyz"
+            }
+        ]
+        result = self.mock.verify_wish_list()
+        self.assertEqual(expected, result)
+
+    # this is my only test so far that i cant get to work, currently working on it
 
     @patch("wishlist_main.MockFrontEnd.add_new_wishlist")
     def test_add_new_wishlist_mocked_values(self, mock_wish_list_dict):
@@ -330,6 +407,149 @@ class MockingFrontEnd(unittest.TestCase):
                         }]
         self.assertEqual(expected, result)
 
+"""
+I put the following code even though they are also testing the wishlist_main into a seperate class, as the tests don't 
+seem to be running in order they are written so these functions were messing with other tests 
+
+This following class tests mocked input derived from my wishlist_main file to test the wishlist functions
+"""
+
+class TestMockFrontEndDelete(unittest.TestCase):
+    def setUp(self):
+        self.mock = MockFrontEnd("cfg_project")
+
+    @patch('builtins.input', side_effect=[2, 2])
+    def test_delete_wish_list_item(self, mock_inputs):
+        expected = "The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}".format(
+            2, 2, {})
+        result = self.mock.deleting_wishlist_item()
+        self.assertEqual(expected, result)
+
+    @patch('builtins.input', side_effect=[3])
+    def test_delete_wish_list_all(self, mock_inputs):
+        expected = expected = "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(3, {})
+        result = self.mock.deleting_wishlist()
+        self.assertEqual(expected, result)
+
+"""
+The following class is to re-add data that was just deleted by testing delete functions from wishlist_main file
+"""
+class ReAddingData(unittest.TestCase):
+    def test_re_add_mock_wish_list(self):
+        self.ProductID = 2
+        self.Code_Wish = 101
+        self.Product_name = "xyz"
+        self.Ingredients_Text = "xyz"
+        self.Quantity = "xyz"
+        self.Brands = "xyz"
+        self.Brands_tags = "xyz"
+        self.Categories = "xyz"
+        self.Categories_Tags = "xyz"
+        self.Categories_En = "xyz"
+        self.Countries = "xyz"
+        self.Countries_Tags = "xyz"
+        self.Countries_en = "xyz"
+        self.Image_url = "xyz"
+        self.Image_Small_url = "xyz"
+        self.Image_Ingredients_url = "xyz"
+        self.Image_Ingredients_Small_url = "xyz"
+        self.Image_Nutrition_url = "xyz"
+        self.Image_Nutrition_Small_url = "xyz"
+        self.UserID = 2
+        add_wish_list(self.ProductID,
+                      self.Code_Wish,
+                      self.Product_name,
+                      self.Ingredients_Text,
+                      self.Quantity,
+                      self.Brands,
+                      self.Brands_tags,
+                      self.Categories,
+                      self.Categories_Tags,
+                      self.Categories_En,
+                      self.Countries,
+                      self.Countries_Tags,
+                      self.Countries_en,
+                      self.Image_url,
+                      self.Image_Small_url,
+                      self.Image_Ingredients_url,
+                      self.Image_Ingredients_Small_url,
+                      self.Image_Nutrition_url,
+                      self.Image_Nutrition_Small_url,
+                      self.UserID)
+        result = _get_wish_list_individual(self.UserID, self.ProductID)
+        expected = [{"User_ID": 2,
+                     "brands": "xyz",
+                     "brands_tags": "xyz",
+                     "categories": "xyz",
+                     "categories_en": "xyz",
+                     "categories_tags": "xyz",
+                     "code": 101,
+                     "countries": "xyz",
+                     "countries_en": "xyz",
+                     "countries_tags": "xyz",
+                     "image_ingredients_small_url": "xyz",
+                     "image_ingredients_url": "xyz",
+                     "image_nutrition_small_url": "xyz",
+                     "image_nutrition_url": "xyz",
+                     "image_small_url": "xyz",
+                     "image_url": "xyz",
+                     "ingredients_text": "xyz",
+                     "productID": 2,
+                     "product_name": "xyz",
+                     "quantity": "xyz"}]
+        self.assertEqual(expected, result)
+
+    def test_re_add_mock_wish_list_all_if_exists(self):
+        expected = [
+            {
+                "User_ID": 3,
+                "brands": "xyz",
+                "brands_tags": "xyz",
+                "categories": "xyz",
+                "categories_en": "xyz",
+                "categories_tags": "xyz",
+                "code": 101,
+                "countries": "xyz",
+                "countries_en": "xyz",
+                "countries_tags": "xyz",
+                "image_ingredients_small_url": "xyz",
+                "image_ingredients_url": "xyz",
+                "image_nutrition_small_url": "xyz",
+                "image_nutrition_url": "xyz",
+                "image_small_url": "xyz",
+                "image_url": "xyz",
+                "ingredients_text": "xyz",
+                "productID": 1,
+                "product_name": "xyz",
+                "quantity": "xyz"
+            },
+
+            {
+                "User_ID": 3,
+                "brands": "xyz",
+                "brands_tags": "xyz",
+                "categories": "xyz",
+                "categories_en": "xyz",
+                "categories_tags": "xyz",
+                "code": 101,
+                "countries": "xyz",
+                "countries_en": "xyz",
+                "countries_tags": "xyz",
+                "image_ingredients_small_url": "xyz",
+                "image_ingredients_url": "xyz",
+                "image_nutrition_small_url": "xyz",
+                "image_nutrition_url": "xyz",
+                "image_small_url": "xyz",
+                "image_url": "xyz",
+                "ingredients_text": "xyz",
+                "productID": 2,
+                "product_name": "xyz",
+                "quantity": "xyz"
+            }
+        ]
+        self.UserID = 3
+        result = _get_wish_list_all(self.UserID)
+        self.assertEqual(expected, result)
 
 """
 I put the following code even though they are also testing the API into a seperate class, as the tests don't seem to be
@@ -339,8 +559,9 @@ running in order they are written so these functions were messing with other tes
 This following class tests the actual API and runs unit tests related to deleting data such as deleting the individual
 wishlist item and entire wishlist 
 
-"""
+I readded the data after running the delete tests
 
+"""
 
 class TestWishListApiDbDeletingUsers(unittest.TestCase):
     def test_delete_wish_list_item(self):
@@ -351,11 +572,129 @@ class TestWishListApiDbDeletingUsers(unittest.TestCase):
         result = delete_wishlist_item(self.UserID, self.ProductID)
         self.assertEqual(expected, result)
 
+# the following test re-adds the data, I decided to do it as a test to make sure the right data was indeed re-added
+    def test_re_add_wish_list(self):
+        self.ProductID = 2
+        self.Code_Wish = 101
+        self.Product_name = "xyz"
+        self.Ingredients_Text = "xyz"
+        self.Quantity = "xyz"
+        self.Brands = "xyz"
+        self.Brands_tags = "xyz"
+        self.Categories = "xyz"
+        self.Categories_Tags = "xyz"
+        self.Categories_En = "xyz"
+        self.Countries = "xyz"
+        self.Countries_Tags = "xyz"
+        self.Countries_en = "xyz"
+        self.Image_url = "xyz"
+        self.Image_Small_url = "xyz"
+        self.Image_Ingredients_url = "xyz"
+        self.Image_Ingredients_Small_url = "xyz"
+        self.Image_Nutrition_url = "xyz"
+        self.Image_Nutrition_Small_url = "xyz"
+        self.UserID = 2
+        add_wish_list(self.ProductID,
+                      self.Code_Wish,
+                      self.Product_name,
+                      self.Ingredients_Text,
+                      self.Quantity,
+                      self.Brands,
+                      self.Brands_tags,
+                      self.Categories,
+                      self.Categories_Tags,
+                      self.Categories_En,
+                      self.Countries,
+                      self.Countries_Tags,
+                      self.Countries_en,
+                      self.Image_url,
+                      self.Image_Small_url,
+                      self.Image_Ingredients_url,
+                      self.Image_Ingredients_Small_url,
+                      self.Image_Nutrition_url,
+                      self.Image_Nutrition_Small_url,
+                      self.UserID)
+        result = _get_wish_list_individual(self.UserID, self.ProductID)
+        expected = [{"User_ID": 2,
+                     "brands": "xyz",
+                     "brands_tags": "xyz",
+                     "categories": "xyz",
+                     "categories_en": "xyz",
+                     "categories_tags": "xyz",
+                     "code": 101,
+                     "countries": "xyz",
+                     "countries_en": "xyz",
+                     "countries_tags": "xyz",
+                     "image_ingredients_small_url": "xyz",
+                     "image_ingredients_url": "xyz",
+                     "image_nutrition_small_url": "xyz",
+                     "image_nutrition_url": "xyz",
+                     "image_small_url": "xyz",
+                     "image_url": "xyz",
+                     "ingredients_text": "xyz",
+                     "productID": 2,
+                     "product_name": "xyz",
+                     "quantity": "xyz"}]
+        self.assertEqual(expected, result)
+
     def test_delete_wish_list_all(self):
         self.UserID = 3
         expected = "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(
             self.UserID, {})
         result = delete_wishlist(self.UserID)
+        self.assertEqual(expected, result)
+
+# the following test re-adds the data, I decided to do it as a test to make sure the right data was indeed re-added
+    def test_re_add_wish_list_all_if_exists(self):
+        expected = [
+            {
+                "User_ID": 3,
+                "brands": "xyz",
+                "brands_tags": "xyz",
+                "categories": "xyz",
+                "categories_en": "xyz",
+                "categories_tags": "xyz",
+                "code": 101,
+                "countries": "xyz",
+                "countries_en": "xyz",
+                "countries_tags": "xyz",
+                "image_ingredients_small_url": "xyz",
+                "image_ingredients_url": "xyz",
+                "image_nutrition_small_url": "xyz",
+                "image_nutrition_url": "xyz",
+                "image_small_url": "xyz",
+                "image_url": "xyz",
+                "ingredients_text": "xyz",
+                "productID": 1,
+                "product_name": "xyz",
+                "quantity": "xyz"
+            },
+
+            {
+                "User_ID": 3,
+                "brands": "xyz",
+                "brands_tags": "xyz",
+                "categories": "xyz",
+                "categories_en": "xyz",
+                "categories_tags": "xyz",
+                "code": 101,
+                "countries": "xyz",
+                "countries_en": "xyz",
+                "countries_tags": "xyz",
+                "image_ingredients_small_url": "xyz",
+                "image_ingredients_url": "xyz",
+                "image_nutrition_small_url": "xyz",
+                "image_nutrition_url": "xyz",
+                "image_small_url": "xyz",
+                "image_url": "xyz",
+                "ingredients_text": "xyz",
+                "productID": 2,
+                "product_name": "xyz",
+                "quantity": "xyz"
+            }
+        ]
+        self.UserID = 3
+        result = _get_wish_list_all(self.UserID)
         self.assertEqual(expected, result)
 
 
