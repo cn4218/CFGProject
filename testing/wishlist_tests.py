@@ -275,6 +275,8 @@ class MockingFrontEnd(unittest.TestCase):
                         }]
         self.assertEqual(expected, result)
 
+# this is my only test so far that i cant get to work, currently working on it 
+
     @patch("wishlist_main.MockFrontEnd.add_new_wishlist")
     def test_add_new_wishlist_mocked_values(self, mock_wish_list_dict):
         wishlistdict = {"username": "sarah",
@@ -338,23 +340,23 @@ This following class tests the actual API and runs unit tests related to deletin
 wishlist item and entire wishlist 
 
 """
-# commented these out so they don't interfere with other tests
 
-# class TestWishListApiDbDeletingUsers(unittest.TestCase):
-#     def test_delete_wish_list_item(self):
-#         self.UserID = 2
-#         self.ProductID = 2
-#         expected = "The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}".format(
-#             self.UserID, self.ProductID, {})
-#         result = delete_wishlist_item(self.UserID, self.ProductID)
-#         self.assertEqual(expected, result)
-#
-#     def test_delete_wish_list_all(self):
-#         self.UserID = 3
-#         expected = "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(
-#             self.UserID, {})
-#         result = delete_wishlist(self.UserID)
-#         self.assertEqual(expected, result)
+
+class TestWishListApiDbDeletingUsers(unittest.TestCase):
+    def test_delete_wish_list_item(self):
+        self.UserID = 2
+        self.ProductID = 2
+        expected = "The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}".format(
+            self.UserID, self.ProductID, {})
+        result = delete_wishlist_item(self.UserID, self.ProductID)
+        self.assertEqual(expected, result)
+
+    def test_delete_wish_list_all(self):
+        self.UserID = 3
+        expected = "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(
+            self.UserID, {})
+        result = delete_wishlist(self.UserID)
+        self.assertEqual(expected, result)
 
 
 
