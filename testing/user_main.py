@@ -1,12 +1,12 @@
 import requests
 import json
-from user_db_utils import dbConnection
+# from user_db_utils import get_user_id
+from user_db_utils_oop import dbConnection
 
 
 class MockFrontEnd:
-    def __init__(self,password):
-        self.password = password
-        self.db_utils = dbConnection(self.password)
+    def __init__(self):
+        self.db_utils = dbConnection('blu3bottl3')
         
     def get_profile_by_id(self,user_id):
         result = requests.get(
@@ -156,9 +156,5 @@ def run():
 
 
 if __name__ =='__main__':
-    cd = MockFrontEnd('blu3bottl3')
-    res = cd.delete_user_func(82)
-    print(res)
-    res = cd.add_new_user('Ayesha11','Ayesha','ayeshalive.com')
-    print(res)
+
     output = run()
