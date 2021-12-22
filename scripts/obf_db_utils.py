@@ -464,7 +464,8 @@ def fetch_results(search_id):
         list_dict_products = display_less_null_values(list_dict_products)
 
     except Exception as err:
-        raise IndexError('Query returns no search results, use search ID 1')
+        print( IndexError('Query returns no search results, use search ID 1'))
+        return list_dict_products
 
     return list_dict_products
 
