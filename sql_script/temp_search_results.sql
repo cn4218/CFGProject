@@ -15,4 +15,4 @@ BEGIN
 END$$
 DELIMITER ;
 
-CALL `products`.`fill_search_table`(1, '{"product_ids": list_of_products_dummy_data}');
+CALL `products`.`fill_search_table`(1, '{"product_ids": [] }');
