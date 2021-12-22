@@ -20,19 +20,22 @@ def find_products():
     """
     We use a POST method and not a simple GET one because we want to be able to make a
     request containing the ingredient_input search from the front end UI.
-    Returns a JSON file containing the list of products we asked for according to our request
-    search criteria.
+    Returns a JSON file containing the list of products we asked for according to our request search
+    criteria.
     """
     ingredient_input = request.get_json()
     print(ingredient_input)
     
-    list_of_products,product_ids = get_proper_ingredients_list(ingredient_input)
+    list_of_products = get_proper_ingredients_list(ingredient_input)
+    
     if isinstance(list_of_products,Exception):
         return jsonify('Query returns no search results')
+
+    
     list_.clear()
     list_.append(list_of_products)
 
-    store_results(product_ids)
+    result = store_results(list_of_products)
 
     return jsonify(list_of_products)
 
