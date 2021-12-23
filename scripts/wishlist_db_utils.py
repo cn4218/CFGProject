@@ -1,6 +1,12 @@
 import mysql.connector
 from mysql.connector import cursor
-from config import USER, PASSWORD, HOST
+
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent.parent.parent))
+from CFGProject.scripts.config import USER, PASSWORD, HOST
+
 
 '''
 FUNCTIONS CONTAINED IN THIS FILE:
@@ -93,6 +99,7 @@ def exception_handler(query, error_message):
     This function is the exception handler for exceptions that may arise when
     connecting to the database — it is a more general function
     """
+
     try:
         db_name = 'cfg_project'
         db_connection = _connect_to_db(db_name)
@@ -120,6 +127,7 @@ def exception_handler_wish(query, error_message):
     This function is the exception handler for exceptions that may arise when
     connecting to the database — specifically for the wishlist functions
     """
+
     try:
         db_name = 'cfg_project'
         db_connection = _connect_to_db(db_name)
@@ -197,21 +205,12 @@ def _map_values(result):
     return mapped
 
 
-'''
-It's really annoying to have all the parameters being passed as an argument but this is the only way to do it
-You cannot pass another function or such into the argument for the add_wish_list function as it outside of the localised scope
-'''
 
 '''
- Use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then MySQL inserts
- it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently without generating an error.
+Use the INSERT IGNORE command rather than the INSERT command. If a record doesn't duplicate an existing record, then 
+MySQL inserts it as usual. If the record is a duplicate, then the IGNORE keyword tells MySQL to discard it silently
+without generating an error.
 '''
-
-'''
-Consider altering the code:
-Failed insert will throw MySQLdb.IntegrityError, so you should be ready to catch it.
-'''
-
 
 
 def add_wish_list(
@@ -257,26 +256,26 @@ def add_wish_list(
     image_nutrition_small_url,
     User_ID
                 ) 
-                VALUES ( {ProductID},
-                               {Code_Wish},
-                               "{Product_name}",   
-                              "{Ingredients_Text}",  
-                               "{Quantity}",   
-                              "{Brands}",    
-                              "{Brands_tags}", 
-                              "{Categories}",
-                              "{Categories_Tags}",   
-                             "{Categories_En}", 
-                               "{Countries}",    
-                               "{Countries_Tags}",     
-                               "{Countries_en}", 
-                               "{Image_url}",      
-                               "{Image_Small_url}",     
-                               "{Image_Ingredients_url}",
-                              "{Image_Ingredients_Small_url}",  
-                               "{Image_Nutrition_url}",                     
-                              "{Image_Nutrition_Small_url}", 
-                               {UserID}
+                VALUES (  {ProductID},
+                          {Code_Wish},
+                         "{Product_name}",   
+                         "{Ingredients_Text}",  
+                         "{Quantity}",   
+                         "{Brands}",    
+                         "{Brands_tags}", 
+                         "{Categories}",
+                         "{Categories_Tags}",   
+                         "{Categories_En}", 
+                         "{Countries}",    
+                         "{Countries_Tags}",     
+                         "{Countries_en}", 
+                         "{Image_url}",      
+                         "{Image_Small_url}",     
+                         "{Image_Ingredients_url}",
+                         "{Image_Ingredients_Small_url}",  
+                         "{Image_Nutrition_url}",                     
+                         "{Image_Nutrition_Small_url}", 
+                          {UserID}
                           )
                           """.format(
         ProductID=ProductID,
@@ -310,8 +309,6 @@ def add_wish_list(
     )
 
     print(display_statement)
-
-
 
 
 # returns info for a wishlist entry at a time
@@ -349,14 +346,14 @@ def _get_wish_list_all(UserID):
         return result
     return
 
-
 def delete_wishlist_item(UserID, ProductID):
     """
     This function deletes an individual item from the wishlist
     It takes the User ID, User Name and Product ID to find the unique user
     """
+
     query = """
-    SELECT * FROM wish_list WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
+       SELECT * FROM wish_list WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
 
     error_message = "Error"
 
@@ -368,8 +365,8 @@ def delete_wishlist_item(UserID, ProductID):
 
     elif row_count != []:
         query = """
-                DELETE FROM wish_list 
-                WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
+                   DELETE FROM wish_list 
+                   WHERE User_ID = {} AND productID = {} """.format(UserID, ProductID)
 
         error_message = "Failed to read and subsequently delete data from DB"
 
@@ -388,6 +385,7 @@ def delete_wishlist(UserID):
     This function deletes an entire wishlist associated with a user
     It takes the User ID and User Name to find the unique user
     """
+
     query = """
     SELECT * FROM wish_list WHERE User_ID = {} """.format(UserID)
 
@@ -410,85 +408,4 @@ def delete_wishlist(UserID):
             "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(
                 UserID, {}))
     return display_statement
-
-
-'''
-this function updates the wishlist for a record that has already been entered into the database
-this function updates based on the user ID, username and product ID
-'''
-def update_wish_list(
-        ProductID,
-        Code_Wish,
-        Product_name,
-        Ingredients_Text,
-        Quantity,
-        Brands,
-        Brands_tags,
-        Categories,
-        Categories_Tags,
-        Categories_En,
-        Countries,
-        Countries_Tags,
-        Countries_en,
-        Image_url,
-        Image_Small_url,
-        Image_Ingredients_url,
-        Image_Ingredients_Small_url,
-        Image_Nutrition_url,
-        Image_Nutrition_Small_url,
-        UserID
-):
-
-    print('The User ID: {}.  The Product ID: {}.'.format(UserID, ProductID))
-    query = """
-                      UPDATE  wish_list
-                      SET              
-
-                      "productID" = {ProductID},
-                      "code" = {Code_Wish},
-                      "product_name" = "{Product_name}",
-                      "ingredients_text" = "{Ingredients_Text}",
-                      "quantity" = "{Quantity}",
-                       "brands" = "{Brands}",
-                       "brands_tags" = "{Brands_tags}",
-                       "categories" = "{Categories}"
-                       "categories_tags" = "{Categories_Tags}",
-                       "categories_en" = "{Categories_En}",
-                       "countries" = "{Countries}",
-                       "countries_tags" = "{Countries_Tags}",
-                       "countries_en" = "{Countries_en}",
-                        "image_url" = "{Image_url}",
-                        "image_small_url" = "{Image_Small_url}",
-                        "image_ingredients_url" = "{Image_Ingredients_url}",
-                         "image_ingredients_small_url" = "{Image_Ingredients_Small_url}",
-                         "image_nutrition_url" = "{Image_Nutrition_url}",
-                         "image_nutrition_small_url" = "{Image_Nutrition_Small_url}",
-                         "User_ID" = {UserID}
-
-                      WHERE "User_ID" = {UserID} AND  "productID" = {ProductID}
-                      """.format(
-        ProductID=ProductID,
-        Code_Wish=Code_Wish,
-        Product_name=Product_name,
-        Ingredients_Text=Ingredients_Text,
-        Quantity=Quantity,
-        Brands=Brands,
-        Brands_tags=Brands_tags,
-        Categories = Categories,
-        Categories_Tags=Categories_Tags,
-        Categories_En=Categories_En,
-        Countries=Countries,
-        Countries_Tags=Countries_Tags,
-        Countries_en=Countries_en,
-        Image_url=Image_url,
-        Image_Small_url=Image_Small_url,
-        Image_Ingredients_url=Image_Ingredients_url,
-        Image_Ingredients_Small_url=Image_Ingredients_Small_url,
-        Image_Nutrition_url=Image_Nutrition_url,
-        Image_Nutrition_Small_url=Image_Nutrition_Small_url,
-        UserID=UserID
-    )
-
-    error_message = "Failed to red data and subsequently update records from DB"
-    exception_handler(query, error_message)
 
