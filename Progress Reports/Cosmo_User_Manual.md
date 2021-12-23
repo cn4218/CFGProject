@@ -26,7 +26,7 @@
 1. First, you need to run these SQL files in MySQL Workbench:
   - sql_script folder
     - `cosmo_tables.sql` (Products DB: products and ingredients tables)
-    - `user_info_and_wish_list_db.sql` (Products DB: search table)
+    - `temp_search_results.sql` (Products DB: search table)
     - `user_info_and_wish_list_db.sql` (Users & Wishlist DB)
   Once it is done, check that all databases were properly installed.
 2. Then the password for your MySQL Workbench connection should be assigned to the PASSWORD variable in the `config.py` file
