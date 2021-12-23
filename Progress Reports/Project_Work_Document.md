@@ -271,17 +271,18 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 | *Product Owner*                         |         |     x    |           |          |          |          |
 
 ### Tools and libraries
-- `mysql.connector`
-- `flask`
+- `mysql.connector` to connect to SQL DBs
+- `flask` micro web application framework
 - `flask-cors` Cross Origin Resource Sharing (CORS): required for the frontend to send requests
-- `json`
-- `requests`
-- `pandas`
-- `math`
-- `unittest`
-- `unittest.mock`
-- `operator`
+- `json` used to write the API
+- `requests` used to write the API
+- `pandas` used to clean up the OBF DB
+- `numpy` used to create functions in the `ListDF.py` homemade module
 - `ListDF.py` (homemade module to apply functions on whole dataframe columns)
+- `unittest` for testing
+- `unittest.mock` for testing
+- `operator` for testing
+- `sys` to add folders to the Python path so other scripts can be imported
 
 ### Implementation process (achievements, challenges, decision to change something)
 Originally, we intended to use the Open Beauty Facts (OBF) DB indirectly by consuming their API, but as it was still very experimental, barely documented, and did not actually work for our purpose since it only offered the possibility to search for products barcodes, we changed our minds and resolved to use the OBF database differently.  
