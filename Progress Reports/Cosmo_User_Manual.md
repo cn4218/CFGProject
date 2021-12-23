@@ -1,4 +1,4 @@
-# <centre>Cosmo User Manual</centre>
+# <center>Cosmo User Manual</center>
 
 ## Set Up
 ### Requirements
