@@ -79,8 +79,8 @@ def _map_values(result):
                 "code": item[1],
                 "product_name": item[2],
                 "ingredients_text": item[3],
-                "brands": item[4], 
-                "quantity": item[5],
+                "brands": item[5],
+                "quantity": item[4],
                 "brands_tags": item[6],
                 "categories": item[7],   # CHECK ORDER!!!
                 "categories_tags": item[8],
