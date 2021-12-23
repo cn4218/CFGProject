@@ -1,11 +1,18 @@
 import requests
 import json
-from wishlist_db_utils import _connect_to_db, DbConnectionError
-import config
+
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent.parent.parent))
+from CFGProject.scripts.wishlist_db_utils import _connect_to_db, DbConnectionError
+from CFGProject.scripts.config import USER, PASSWORD, HOST
+
 
 """
 This file serves to test the wishlist  and mock test input
 """
+
 
 class MockFrontEnd:
 
@@ -18,33 +25,33 @@ class MockFrontEnd:
         wishlistdict = {"username": "sarah",
                         "User_ID": 1,
                         "wishlist": {
-                            "productID": 6,
-                            "code": "62263436",
-                            "product_name": "Huile'' de massage larnica",
-                            "ingredients_text": "helianthus '''annuus' (sunflower) seed oil, olea europaea (olive) fruit oil, fragrance*, arnica montana flower extract, betula alba leaf extract, limonene*,  linaloo*, geraniol*, coumarin* *composé présent dans les huiles essentielles naturelles",
-                            "quantity": "100 ml",
-                            "brands": "Weleda",
-                            "brands_tags": "weleda",
-                            "categories": "Skincare",
-                            "categories_tags": r'en:body,en:body-oils,fr:huile-de-massage',
-                            "categories_en": r'Body,Body-oils,fr:huile-de-massage',
-                            "countries": "France",
-                            "countries_tags": "en:france",
-                            "countries_en": "France",
-                            "image_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.400.jpg",
-                            "image_small_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.200.jpg",
-                            "image_ingredients_url": "",
-                            "image_ingredients_small_url": "",
-                            "image_nutrition_url": "",
-                            "image_nutrition_small_url": ""
+                        "productID": 6,
+                        "code": "62263436",
+                        "product_name": "Huile de massage à l'arnica",
+                        "ingredients_text": "helianthus annuus (sunflower) seed oil, olea europaea ' '(olive) fruit oil, fragrance*, arnica montana flower ' 'extract, betula alba leaf extract, limonene*,  ' 'linaloo*, geraniol*, coumarin* *compose present dans ' 'les huiles essentielles naturelles",
+                        "quantity": "100 ml",
+                        "brands": "Weleda",
+                        "brands_tags": "weleda",
+                        "categories": "Corps,Huiles pour le corps,Huile de massage",
+                        "categories_tags": r'en:body,en:body-oils,fr:huile-de-massage',
+                        "categories_en": r'Body,Body-oils,fr:huile-de-massage',
+                        "countries": "France",
+                        "countries_tags": "en:france",
+                        "countries_en": "France",
+                        "image_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.400.jpg",
+                        "image_small_url": "https://static.openbeautyfacts.org/images/products/000/006/226/3436/front_fr.3.200.jpg",
+                        "image_ingredients_url": "",
+                        "image_ingredients_small_url": "",
+                        "image_nutrition_url": "",
+                        "image_nutrition_small_url": ""
                         }}
 
-        result = requests.post(
-            "http://127.0.0.1:5001/wishlist/add",
+        result = requests.get(
+            "http://127.0.0.1:5001/wishlist/add/{}/{}".format(wishlistdict["User_ID"], (wishlistdict["wishlist"]["productID"]),
 
             headers={"content-type": "application/json"},
             data=json.dumps(wishlistdict),
-        )
+        ))
         print(result)
 
         return result.json()
@@ -87,30 +94,28 @@ class MockFrontEnd:
     def verify_wish_list_item(self):
         self.User_ID = input('What is your User ID ')
         self.productID = input('What is your product ID? ')
-        data = self._get_wish_list_individual(self.User_ID, self.productID)
-        return data
+        self.data = self._get_wish_list_individual(self.User_ID, self.productID)
+        return self.data
 
     def verify_wish_list(self):
         self.User_ID = input('What is your User ID ')
-        data = self._get_wish_list_all(self.User_ID)
-        return data
+        self.data = self._get_wish_list_all(self.User_ID)
+        return self.data
 
     def deleting_wishlist_item(self):
         self.User_ID = input('What is your User ID ')
         self.productID = input('What is your product ID? ')
-        dict = self.delete_wishlist_item(self.User_ID, self.productID)
-        if dict == {}:
+        self.dict = self.delete_wishlist_item(self.User_ID, self.productID)
+        if self.dict == {}:
             print('Wishlist item successfully deleted')
-        return dict
+        return self.dict
 
     def deleting_wishlist(self):
         self.User_ID = input('What is your User ID ')
-        dict = self.delete_wishlist(self.User_ID)
-        if dict == {}:
+        self.dict = self.delete_wishlist(self.User_ID)
+        if self.dict == {}:
             print('Wishlist item successfully deleted')
-        return dict
-
-
+        return self.dict
 
 
 def run():
@@ -141,3 +146,5 @@ def run():
 
 if __name__ == '__main__':
     run()
+
+
