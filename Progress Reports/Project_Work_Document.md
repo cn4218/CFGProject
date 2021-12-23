@@ -95,10 +95,12 @@ This table temporarily (?) stores the results of individual product searches so 
 
 
 ##### 2 - Users & Wishlist DB (`CFG_Projet`)
+Our application is optimised for usability, with the Users & Wishlist DB being designed to save user information, so they can come back to view their previous searches and wishlist. When users create an account, our web pages send the information their inserted into the forms to our DB.
+
 ###### Users information table (`Users_Info`)
-
+The Users Info table stores information that has been taken from the user such as their name and email address. This table is connected to the wishlist table through a primary key.
 ###### Wishlist table (`Wish_List`)
-
+The Wish List DB stores products found through our cosmetic search engine and that the user would like to come back to. The Wish List stores data for a particular user retrieved using the API.
 
 #### DB Utils (+ credentials)
 The bulk of the operations listed below is handled by the DB_utils files.
@@ -167,17 +169,56 @@ This file will contain functions responsible for querying the database and handl
 - `delete_wishlist(UserID)`
 - `update_wish_list([all columns])`
 
-#### 2-in-1 API (`app.py`)
+#### API
 Our Flask RESTful 2-in-1 API creates routes (http pipeline) for data exchange, offering endpoints to connect to our 2 databases from the website UI with which the user interacts.
 
+##### 6 - Products & Wishlist API (`obf_app.py`)
+**Endpoints**
+- `@app.route("/")`  
+The function `serve_home_page()` displays the home page when the application starts. 
+- `@app.route("/Search", methods=['POST'])`
+The function `find_products()` uses a POST method (and not a simple GET one) to make a
+  request from the front end UI containing the `ingredient_input` search formatted as a dictionary:  
+```python
+dict_ = {
+    'filter': 'ordered',
+    'data': {'1': ['water', True],
+             '2': ['glycerin ', False],
+             '3': ['alcohol', True],
+             '4': ['parfum', True],
+             '5': ['', True]
+             }
+}
+```
+- `@app.route("/Search", methods=['GET'])`  
+The function `return_list()` returns a list containing a list of products dictionaries. `[[{}{}{}{}]]`
+- `@app.route("/results", methods=['GET'])`
+The function `get_results()` calls the `fetch_results()`function from `obf_db_utils` which returns a list of product results `[{}{}{}]` and returns a jsonified version of it to the frontend.`
 
-##### 6 - Products API ()
 
+- `@app.route('/wishlist/add/<int:user_id>/<string:product_id>',methods = ['GET'])`  
+The function `add_wish_list_func(user_id,product_id)` uses the `get_products_by_ids([product_id])`function from `obf_db_utils` and the `add_wish_list([all columns])` function from `wishlist_db_utils` to add a product to the wishlist of a specific user.
+- `@app.route('/wishlist/<int:user_id>', methods=['GET'])`   # {"user_id: user_id"}
+The function `get_wishlist(user_id)`uses the `_get_wish_list_all(user_id)` function from `wishlist_db_utils` to fetch al wishlist products corresponding to a particular user and returns a jsonified list of products dictionaries. `[{}{}{}]`
 
-##### 7 - Users & Wishlist API ()
+##### 7 - Users & Wishlist API (`user_api.py`)
+**Endpoints**
+- `@app.route('/profile/<int:user_id>', methods=['GET'])`  
+The function `get_users(user_id)`retrieved the user information as a dictionary: 
+`{ "Email_Address": "nik1@mail.com", "Name_User": "nikita", "User_ID": 2, "User_Name": "niki123"}`
+- `@app.route('/profile/change/<int:user_id>/<old_user_name>/<new_user_name>')`  
+The function `change_user_name(user_id, old_user_name, new_user_name)` uses the `update_user_name` function from `user_db_utils` to update a username using their user ID.
+- `@app.route('/profile/change/email/<int:user_id>/<old_user_email>/<new_user_email>')`  
+The function `change_user_email(user_id, old_user_email, new_user_email)` uses the `update_user_email` function from `user_db_utils` to update a user email using their user ID.
+- `@app.route('/register', methods=['POST'])`  
+The function `user_acc()` takes user information as a dictionary to add it to the User_Info table.
+- `@app.route('/delete/<int:user_id>')`  
+The function `delete_user_(user_id)` uses the `delete_user(user_id)` function from `user_db_utils` to delete a user row using their user ID.
+- `@app.route("/login/<string:username>/<string:email>", methods=["GET"])`  
+The function `verify_login_api(username, email)` uses the `verify_login(username, email)` function from `user_db_utils` to check whether a user exists for them to login. 
+- 
 
 #### Website User Interface (UI)
-
 ##### Home page/ Search Tool
 As the system is designed around searching for ingredients that already exist, one of its key features is the search tool. Shows input fields for up to 5 ingredients.
 Can search for ingredients to be done in the unspecified order:
@@ -226,7 +267,7 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 ### Tools and libraries
 - `mysql.connector`
 - `flask`
-- `flask-cors`
+- `flask-cors` Cross Origin Resource Sharing (CORS): required for the frontend to send requests
 - `json`
 - `requests`
 - `pandas`
