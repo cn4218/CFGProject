@@ -1,3 +1,4 @@
-HOST="localhost"
-USER="root"
-PASSWORD="rootpass"
+HOST = "localhost"
+USER = "root"
+# Your password goes here
+PASSWORD = "RootPassword"
