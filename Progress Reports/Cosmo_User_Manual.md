@@ -42,7 +42,7 @@
 
 
 ## Unit Tests
-### Open files
+### 1. Open files
 To run the  unit tests, the following files need to be open: 
 - scripts folder
   - `app.py`
@@ -55,11 +55,17 @@ To run the  unit tests, the following files need to be open:
   - `wishlist_tests.py`
   - `wishlist_main.py`
 
-### Check credentials
-1. Check the credentials in the `config.py` file and make sure that they match yours (i.e. the user and password match your MySQL workbench credentials.)
-2. Open the `user_info_and_wish_list_db.sql` and `dummy_data.sql` scripts in MySQL Workbench and run these scripts so that the database and dummy data are created. Don't worry if you have already created these tables, the code is written to run only if the database does not already exist. 
-3. Run the `app.py` file on your Python IDE. This file creates the connection with the API, so testing will only be possible once this file has been run. 
-4. Run the `wishlist_tests.py` file. This will run unit tests on the wishlist functions used in the `wishlist_db_utils.py` and `wishlist_main.py` files.  
+### 2. Check credentials
+Check the credentials in the `config.py` file and make sure that they match yours (i.e. the user and password match your MySQL workbench credentials.)
+
+### 3. Create dummy data within the DB
+Open the `user_info_and_wish_list_db.sql` and `dummy_data.sql` scripts in MySQL Workbench and run these scripts so that the database and dummy data are created. Don't worry if you have already created these tables, the code is written to run only if the database does not already exist. 
+
+### 4. Run the app
+Run the `app.py` file on your Python IDE. This file creates the connection with the API, so testing will only be possible once this file has been run. 
+
+### Run the tests
+Run the `wishlist_tests.py` file. This will run unit tests on the wishlist functions used in the `wishlist_db_utils.py` and `wishlist_main.py` files.  
 The `wishlist_db_utils.py` contains functions called when running our application.  
 The `wishlist_main.py`, however, is a file created to mock the UI and user inputs in order to test wishlist functions.  
 Wishlist functions are primarily tested through the unit tests found in `wishlist_tests.py` and mocking input found in `wishlist_main.py`. 
