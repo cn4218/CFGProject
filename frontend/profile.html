@@ -33,20 +33,20 @@
     <div class="collapse navbar-collapse"  id="navblock"> <!--This is what makes it possible for you to list items horizontally -->
     <ul class="navbar-nav mr-auto"> <!--mr-auto wasn't working until I switched from bootstrap 5 to 4-->
         <li class="nav-item "> <!--Initially these elements appear in vertically because flex direction was set to column in css(you can see this when you inspect with developer tools)-->
-            <a href="http://127.0.0.1:5500/frontend/home.html" class="nav-link " id="Home" onclick="show_active('Home')">Home</a> <!--when you first open the website it starts off at home page-->
+            <a href="http://127.0.0.1:5500/CFGProject/frontend/home.html" class="nav-link " id="Home" onclick="show_active('Home')">Home</a> <!--when you first open the website it starts off at home page-->
         </li>
         <li class="nav-item">
-            <a href="http://127.0.0.1:5500/frontend/results.html"class="nav-link " id="Results" onclick="show_active('Results')">Results</a>
+            <a href="http://127.0.0.1:5500/CFGProject/frontend/results.html"class="nav-link " id="Results" onclick="show_active('Results')">Results</a>
         </li>
         <li class="nav-item">
-            <a href="http://127.0.0.1:5500/frontend/wishlist.html" class="nav-link" id="Wishlist" onclick="show_active('Wishlist')">Wishlist</a>
+            <a href="http://127.0.0.1:5500/CFGProject/frontend/wishlist.html" class="nav-link" id="Wishlist" onclick="show_active('Wishlist')">Wishlist</a>
         </li>
     </ul>
     
     
     <ul class="navbar-nav navbar-right">
-        <li class="nav-item"><a href="http://127.0.0.1:5500/frontend/profile.html" class="nav-link active" id="Profile" onclick="show_active('Profile')">Profile</a></li>
-        <li class="nav-item"><a href="http://127.0.0.1:5500/frontend/log_out.html" class="nav-link" id="Log-out" onclick="show_active('Log-out')">Log out</a></li>
+        <li class="nav-item"><a href="http://127.0.0.1:5500/CFGProject/frontend/profile.html" class="nav-link active" id="Profile" onclick="show_active('Profile')">Profile</a></li>
+        <li class="nav-item"><a href="http://127.0.0.1:5500/CFGProject/frontend/log_out.html" class="nav-link" id="Log-out" onclick="show_active('Log-out')">Log out</a></li>
     </ul>
     </div>
 
@@ -74,7 +74,7 @@
                 <h6 id="name-user">@janedoe7</h6>
                 <a href="#" id="email">janedoe@gmail.com</a>
                 <br>
-                <button type="button" class="btn btn-dark" ><a href="http://127.0.0.1:5500/frontend/log_out.html" style="color:white">Log out</a></button>
+                <button type="button" class="btn btn-dark" ><a href="http://127.0.0.1:5500/CFGProject/frontend/log_out.html" style="color:white">Log out</a></button>
              </div>
     </div>
   <!--
@@ -121,7 +121,7 @@
             console.log(response);
             response.text().then(function(text){
                 console.log(text);
-                text = JSON.parse(text)
+                text = (JSON.parse(text))[0]
                 console.log(text["User_Name"])
 
                 document.getElementById("username").innerHTML= text["User_Name"];
