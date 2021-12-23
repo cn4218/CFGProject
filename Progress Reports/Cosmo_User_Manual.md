@@ -4,7 +4,8 @@
 ### Requirements
 - A PC or Mac computer running on a Windows, MacOS or Linux distribution
 - MySQL Workbench (or another compatible SQL RDBMS)
-- A Python IDE such as PyCharm or VSCode
+- A Python IDE such as VSCode (recommended) or PyCharm
+- The live server extension for VSCode ([Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) or PyCharm ([Live Edit](https://www.jetbrains.com/help/pycharm/live-editing.html)) so that you can run your html script on your browser.
 - A Web Browser
 - Make sure that the following Python packages are installed:
   - `mysql.connector` to connect to SQL DBs
@@ -33,7 +34,7 @@
 
 ## Run the Cosmo Web Application
 1. Open you Python IDE and run the `app.py` file in the `scripts` folder
-2. Go to the `log_in.html` file in the `frontend` folder and open the file in a web browser
+2. Go to the `log_in.html` file in the `frontend` folder and open the file in a live server. 
 3. The webpage will prompt you to enter your username and email; please enter the following credentials:
    - Username - `sample_name`
    - Email Address - `sample@gmail.com`
