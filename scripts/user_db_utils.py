@@ -235,12 +235,16 @@ class dbConnection:
                 new username the user wants
             Returns
             ---------
-            Either:
-                1. "The username has been updated"
+            Either: bool
+                1.  True
+                    "The username has been updated"
                     returns result as True if the username is successfully updated and prints this statement
-                2. "The current username is incorrect"
-                    returns this statement if the old_user_name does not match with the record in SQL
+                2.  False 
+                    "The current username is incorrect"
+                    prints this statement if the old_user_name does not match with the record in SQL
                     and will not update the record for the specified user_id.
+            Or: Exception
+            Exception('No user with corresonding userID')
         """
         result = False
         try:
