@@ -373,9 +373,14 @@ This file uses the mock products front end UI to test products-related functions
   - `test_null_values(self,mock_inputs)`
   - `test_null_values_order(self,mock_inputs)`
   - `test_result_save(self,mock_inputs)`
+- **`class TestAPIRecall`**
+  - `test_a_recall(self, mock_inputs)`
+  - `test_null_values_a(self,mock_inputs)`
 - **`class TestDBUtils(TestCase)`**
   - `test_empty_input_list(self)`
   - `test_one_search_id(self)`
+  - `test_verify(self)`
+  - `test_verify_correct_id(self)`
 
 
 ##### `user_main.py`
@@ -429,12 +434,18 @@ This file uses the mock user front end UI to test user-related functions.
   - `test_creating_user2_ayesha(self,mock_inputs)`
   - `test_creating_user_zita(self,mock_inputs)`
   - `test_goodbye(self,mock_input)`
+- **`class TestUsersChangeDetails`**
+  - `test_update_username(self)`
+  - `test_update_email(self)`
+  - `test_wrong_update_username(self)`
 - **`TestUsersDelete(TestCase)`**
   - `setUp(self)`
   - `test_delete_zita_user(self)`
   - `test_delete_fang_user(self)`
   - `test_delete_sophie_user(self)`
   - `test_delete_ayesha_user(self)`
+  - `test_delete_karma(self)`
+  - `test_delete_daisy(self)`
   - `test_delete_unknown_id(self)`
 
 
