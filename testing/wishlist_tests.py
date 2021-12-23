@@ -11,10 +11,6 @@ from CFGProject.testing.wishlist_main import MockFrontEnd
 
 # from config import USER, PASSWORD, HOST
 
-"""
-Note to Chizu:
-This code is unfinished but I am finishing it today and tomorrow
-"""
 
 """
 FUNCTIONS CONTAINED IN THIS FILE:
@@ -61,29 +57,31 @@ Comments:
 Remember to add test at the beginning of function names or the test will not run e.g. test_get_wish_list_item rather
 than get_wish_list_item()
 
+Notes for the instructor:
+Install all the necessary modules:
+unittest, sys, pathlib, json, requests, mysql.connector, flask, flask_cors, pprint
+
 Make sure to add dummy data through the dummy data file as these functions rely on the dummy data, please run the
-dummy data SQL file before running this file
-
-Please have your cursor located at the bottom of this file before running:
-https://stackoverflow.com/questions/52472091/how-to-run-unittest-test-cases-in-the-order-they-are-declared
-
-Tests are execute in alpahbetical order of the functions 
-or string order so like
-def test_1():
-def test_2()
-etc
-so I have numbered the tests so they will run in this order
+dummy data SQL file before running this file. Ideally, add this dummy data before running the application and adding
+further data yourself, as this will interfere with my tests. But regardless, the tests should run and you can see
+the differences as a result of records you've added yourself. Alternatively, you could drop the cfg_project schema,
+then rerun the user_info_and_wish_list_db.sql script to create the database and tables from scratch, then run the 
+dummy_data.sql to create the dummy data from scratch - then finally run this file and the tests should be able to run.
 """
-
 
 
 """
 This following class tests the actual API and runs unit tests on the functions of the wishlist API
 """
 
+
 class TestWishListApiDb(unittest.TestCase):
 
     def test_1_add_wish_list(self):
+        """
+        Asserts that a new wishlist item, where the dictionary for the item has been defined in this test, has been
+        added to database
+        """
         self.ProductID = 4
         self.Code_Wish = 702
         self.Product_name = "xyz"
@@ -104,7 +102,6 @@ class TestWishListApiDb(unittest.TestCase):
         self.Image_Nutrition_url = "xyz"
         self.Image_Nutrition_Small_url = "xyz"
         self.UserID = 2
-        # the following is to delete the record if it already exists then re-add
         delete_wishlist_item(self.UserID, self.ProductID)
         add_wish_list(self.ProductID,
                       self.Code_Wish,
@@ -149,38 +146,53 @@ class TestWishListApiDb(unittest.TestCase):
                      "quantity": "xyz"}]
         self.assertEqual(expected, result)
 
-
     def test_2_get_wish_list_item_if_not_exists(self):
+        """
+        Uses an UserID and ProductID to search the wish list table in the MySQL database for a wishlist item, so as to
+        retrieve it, that does not exist so as to make sure the correct statement is printed back to the user
+        """
         self.UserID = 1500
         self.ProductID = 1500
         expected = "Wish list item for User_ID = {} and productID = {} does not exist ".format(self.UserID, self.ProductID)
         result = _get_wish_list_individual(self.UserID, self.ProductID)
         self.assertEqual(expected, result)
 
-
     def test_3_get_wish_list_all_if_not_exists(self):
+        """
+        Uses an UserID to search the wish list table in the MySQL database for an entire wishlist, so as to retrieve it
+        for a particular user, that does not exist so as to make sure the correct statement is printed back to the user
+        """
         self.UserID = 1500
         expected = "Wish list User_ID = {} is empty """.format(self.UserID)
         result = _get_wish_list_all(self.UserID)
         self.assertEqual(expected, result)
 
-
     def test_4_delete_wish_list_item_if_not_exists(self):
+        """
+        Uses an UserID and ProductID to search the wish list table in the MySQL database for a wishlist item, so as to
+        attempt to delete it, that does not exist so as to make sure the correct statement is printed back to the user
+        """
         self.UserID = 1500
         self.ProductID = 1500
-        expected = ("Wishlist item for User_ID: {} and "
-        "productID: {} does not exist").format(self.UserID, self.ProductID)
+        expected = "Wishlist item for User_ID: {} and productID: {} does not exist".format(self.UserID, self.ProductID)
         result = delete_wishlist_item(self.UserID, self.ProductID)
         self.assertEqual(expected, result)
 
-
     def test_5_delete_wish_list_all_if_not_exists(self):
+        """
+        Uses an UserID to search the wish list table in the MySQL database for a entire wishlist, so as to
+        attempt to delete it, that does not exist so as to make sure the correct statement is printed back to the user
+        """
         self.UserID = 1500
         expected = "Wishlist item for this User_ID: {} does not exist".format(self.UserID)
         result = delete_wishlist(self.UserID)
         self.assertEqual(expected, result)
 
     def test_6_get_wish_list_item_if_exists(self):
+        """
+        Uses an UserID and ProductID to search the wish list table in the MySQL database for a wishlist item, so as to
+        retrieve it, that exists so as to make sure the wishlist item is printed back to the user in a readable format
+        """
         expected = [{"User_ID": 1,
                      "brands": "xyz",
                      "brands_tags": "xyz",
@@ -206,8 +218,12 @@ class TestWishListApiDb(unittest.TestCase):
         result = _get_wish_list_individual(self.UserID, self.ProductID)
         self.assertEqual(expected, result)
 
-
     def test_7_get_wish_list_all_if_exists(self):
+        """
+        Uses an UserID to search the wish list table in the MySQL database for a entire wishlist, so as to
+        attempt to delete it, that exists so as to make sure the entire wishlist is printed back to the user in a
+        readable format
+        """
         expected = [{'User_ID': 2,
                      'brands': 'xyz',
                      'brands_tags': 'xyz',
@@ -294,22 +310,28 @@ class TestWishListApiDb(unittest.TestCase):
 
 
 """
-The following test is to delete data first before later testing a function that adds data in the class after it.
+The following class is to delete data first before later testing a function that adds data in the class after it.
 
-I had to have this following function in a seperate class as for some reason when I test delete functions in the same
+I had to have these following functions in a separate class as for some reason when I test delete functions in the same
 class as other functions such as add functions they interfere with each other and mess up the tests as they don't 
 seem to run in the order they are written.
-"""
 
+This following class is to test the wishlist_main file which serves to mock the UI to test it.
+"""
 
 
 class TestMockFrontEndDeleteDataFirst(unittest.TestCase):
     def setUp(self):
         self.mock = MockFrontEnd("cfg_project")
 
-
     @patch('builtins.input', side_effect=[1, 6])
     def test_8_delete_wish_list_item_before_re_adding(self, mock_inputs):
+        """
+        The following test was written to delete a wishlist item that presumably already exists, so that I can later
+        test my function from my wishlist_main file (mocking the UI) that serves to re-add the data. I decided to
+        write it as a test so as too delete the data simultaneously as testing the delete function from the
+        wishlist_main file.
+        """
         expected = "The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}".format(
             1, 6, {})
         result = self.mock.deleting_wishlist_item()
@@ -339,13 +361,15 @@ input(). The return_value is good to functions that call input() once.
 """
 
 
-
 class TestMockFrontEnd(unittest.TestCase):
     def setUp(self):
         self.mock = MockFrontEnd("cfg_project")
 
-
     def test_9_add_new_wishlist(self):
+        """
+        Asserts that a new wishlist item, where the dictionary for the item has been defined in the wishlist_main file,
+        has been added to database
+        """
         self.mock.add_new_wishlist()
         result = _get_wish_list_individual(1, 6)
         expected = [{"User_ID": 1,
@@ -368,12 +392,17 @@ class TestMockFrontEnd(unittest.TestCase):
                      "image_ingredients_small_url": "None",
                      "image_nutrition_url": "None",
                      "image_nutrition_small_url": "None"
-                        }]
+                     }]
         self.assertEqual(expected, result)
-
 
     @patch('builtins.input', side_effect=[1, 2])
     def test_10_verify_wish_list_item(self, mock_inputs):
+        """
+        Uses an UserID and ProductID that was patched into this function through the side_effect to search the wishlist
+        table in the MySQL database for a wishlist item, so as to retrieve it, that exists so as to make sure the
+        wishlist item is printed back to the user in a readable format. This is done to verify a wishlist item has
+        indeed exists in the wishlist table.
+        """
         expected = [{"User_ID": 1,
                      "brands": "xyz",
                      "brands_tags": "xyz",
@@ -397,9 +426,14 @@ class TestMockFrontEnd(unittest.TestCase):
         result = self.mock.verify_wish_list_item()
         self.assertEqual(expected, result)
 
-
     @patch('builtins.input', side_effect=[3])
     def test_11_verify_wish_list(self, mock_inputs):
+        """
+        Uses an UserID that was patched into this function through the side_effect to search the wishlist
+        table in the MySQL database for an entire wishlist, so as to retrieve it, that exists so as to make sure the
+        entire wishlist is printed back to the user in a readable format. This is done to verify the wishlist has
+        indeed exists in the wishlist table.
+        """
         expected = [
             {
                 "User_ID": 3,
@@ -463,31 +497,46 @@ class TestMockFrontEndDelete(unittest.TestCase):
     def setUp(self):
         self.mock = MockFrontEnd("cfg_project")
 
-
     @patch('builtins.input', side_effect=[2, 2])
     def test_13_delete_wish_list_item(self, mock_inputs):
+        """
+        The following test was written to delete a wishlist item using the delete function from the wishlist_main file.
+        Uses an UserID and ProductID that was patched into this function through the side_effect to search the wishlist
+        table in the MySQL database for a wishlist item, so as to delete it, that exists so as to make sure the correct
+        statement is printed back to the user to signify that a wishlist item has indeed been deleted.
+        """
         expected = "The wish list item for User ID: {} and  Product ID: {}, has now been deleted. This wishlist record is now empty: {}".format(
             2, 2, {})
         result = self.mock.deleting_wishlist_item()
         self.assertEqual(expected, result)
 
-
     @patch('builtins.input', side_effect=[3])
     def test_14_delete_wish_list_all(self, mock_inputs):
-        expected = expected = "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(3, {})
+        """
+        The following test was written to delete an entire wishlist using the delete function from the wishlist_main
+        file. Uses an UserID that was patched into this function through the side_effect to search the wishlist table in
+        the MySQL database for a wishlist item, so as to delete it, that exists so as to make sure the correct statement
+        is printed back to the user to signify that a wishlist item has indeed been deleted.
+        """
+        expected = "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(3, {})
         result = self.mock.deleting_wishlist()
         self.assertEqual(expected, result)
+
 
 """
 The following class is to re-add data that was just deleted by testing delete functions from wishlist_main file
 """
 
 
-
 class TestReAddingData(unittest.TestCase):
 
-
     def test_15_re_add_mock_wish_list(self):
+        """
+        The following test was written to re-add a wishlist item that has been deleted by previous tests testing the
+        delete wishlist item functions where I deleted a specific wishlist item for user ID 2. This is to keep the
+        integrity of the data and to readd data that would have been deleted by a test. I decided to write it as a test
+        so as too add the data simultaneously as testing the add function from the wishlist_main file.
+        """
         self.ProductID = 2
         self.Code_Wish = 101
         self.Product_name = "xyz"
@@ -551,9 +600,13 @@ class TestReAddingData(unittest.TestCase):
                      "quantity": "xyz"}]
         self.assertEqual(expected, result)
 
-# The following code is to re-add two records as I deleted all of wishlist for user ID 3
-
     def test_16_re_add_wish_list_1(self):
+        """
+        The following test was written to re-add a wishlist item that has been deleted by previous tests testing the
+        delete wishlist item functions where I deleted the entire wishlist for user ID 3. This is to keep the
+        integrity of the data and to re-add data that would have been deleted by a test. I decided to write it as a test
+        so as too add the data simultaneously as testing the add function from the wishlist_main file.
+        """
         self.ProductID = 1
         self.Code_Wish = 101
         self.Product_name = "xyz"
@@ -617,8 +670,13 @@ class TestReAddingData(unittest.TestCase):
                      "quantity": "xyz"}]
         self.assertEqual(expected, result)
 
-
     def test_17_re_add_wish_list_2(self):
+        """
+        The following test was written to re-add a wishlist item that has been deleted by previous tests testing the
+        delete wishlist item functions where I deleted the entire wishlist for user ID 3. This is to keep the
+        integrity of the data and to readd data that would have been deleted by a test. I decided to write it as a test
+        so as too add the data simultaneously as testing the add function from the wishlist_main file.
+        """
         self.ProductID = 2
         self.Code_Wish = 101
         self.Product_name = "xyz"
@@ -681,6 +739,7 @@ class TestReAddingData(unittest.TestCase):
                      "product_name": "xyz",
                      "quantity": "xyz"}]
         self.assertEqual(expected, result)
+
 
 """
 I put the following code even though they are also testing the API into a seperate class, as the tests don't seem to be
@@ -695,11 +754,15 @@ I readded the data after running the delete tests
 """
 
 
-
 class TestWishListApiDbDeletingUsers(unittest.TestCase):
 
-
     def test_18_delete_wish_list_item(self):
+        """
+        The following test was written to delete a wishlist item using the delete function from the wishlist_db_utils
+        file. Uses an UserID and ProductID to search the wishlist table in the MySQL database for a wishlist item, so as
+        to delete it, that exists so as to make sure the correct statement is printed back to the user to signify that
+        a wishlist item has indeed been deleted.
+        """
         self.UserID = 2
         self.ProductID = 2
         expected = (
@@ -709,10 +772,13 @@ class TestWishListApiDbDeletingUsers(unittest.TestCase):
         result = delete_wishlist_item(self.UserID, self.ProductID)
         self.assertEqual(expected, result)
 
-# The following test re-adds the data, I decided to do it as a test to make sure the right data was indeed re-added
-
-
     def test_19_re_add_wish_list(self):
+        """
+        The following test was written to re-add a wishlist item that has been deleted by previous tests testing the
+        delete wishlist item functions where I deleted a specific wishlist item for user ID 2. This is to keep the
+        integrity of the data and to re-add data that would have been deleted by a test. I decided to write it as a test
+        so as too add the data simultaneously as testing the add function from the wishlist_main file.
+        """
         self.ProductID = 2
         self.Code_Wish = 101
         self.Product_name = "xyz"
@@ -776,8 +842,13 @@ class TestWishListApiDbDeletingUsers(unittest.TestCase):
                      "quantity": "xyz"}]
         self.assertEqual(expected, result)
 
-
     def test_20_delete_wish_list_all(self):
+        """
+        The following test was written to delete an entire wishlist using the delete function from the wishlist_db_utils
+        file. Uses an UserID to search the wishlist table in the MySQL database for a wishlist item, so as to delete it,
+        that exists so as to make sure the correct statement is printed back to the user to signify that a wishlist item
+        has indeed been deleted.
+        """
         self.UserID = 3
         expected = (
             "The entire wishlist for User ID: {}, has now been deleted. The wishlist is now empty as such: {}".format(
@@ -785,10 +856,13 @@ class TestWishListApiDbDeletingUsers(unittest.TestCase):
         result = delete_wishlist(self.UserID)
         self.assertEqual(expected, result)
 
-# The following test re-adds the data, I decided to do it as a test to make sure the right data was indeed re-added
-
-
     def test_21_re_add_wish_list_1(self):
+        """
+        The following test was written to re-add a wishlist item that has been deleted by previous tests testing the
+        delete wishlist item functions where I deleted the entire wishlist for user ID 3. This is to keep the
+        integrity of the data and to re-add data that would have been deleted by a test. I decided to write it as a test
+        so as too add the data simultaneously as testing the add function from the wishlist_main file.
+        """
         self.ProductID = 1
         self.Code_Wish = 101
         self.Product_name = "xyz"
@@ -852,8 +926,13 @@ class TestWishListApiDbDeletingUsers(unittest.TestCase):
                      "quantity": "xyz"}]
         self.assertEqual(expected, result)
 
-
     def test_22_re_add_wish_list_2(self):
+        """
+        The following test was written to re-add a wishlist item that has been deleted by previous tests testing the
+        delete wishlist item functions where I deleted the entire wishlist for user ID 3. This is to keep the
+        integrity of the data and to readd data that would have been deleted by a test. I decided to write it as a test
+        so as too add the data simultaneously as testing the add function from the wishlist_main file.
+        """
         self.ProductID = 2
         self.Code_Wish = 101
         self.Product_name = "xyz"
@@ -917,11 +996,6 @@ class TestWishListApiDbDeletingUsers(unittest.TestCase):
                      "quantity": "xyz"}]
         self.assertEqual(expected, result)
 
-
-
-"""
-This following code will hopefully make my tests run in order
-"""
 
 if __name__ == '__main__':
     unittest.main()
