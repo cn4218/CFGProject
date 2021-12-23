@@ -19,34 +19,36 @@
   - `unittest` for testing
   - `unittest.mock` for testing
   - `operator` for testing
+  - `pathlib` to represent paths for OOP
   - `sys` to add folders to the Python path so other scripts can be imported
 
 ### Import and set up databases + config files
-- First, you need to run these SQL files in MySQL Workbench:
+1. First, you need to run these SQL files in MySQL Workbench:
   - sql_script folder
     - `cosmo_tables.sql` (Products DB: products and ingredients tables)
     - `user_info_and_wish_list_db.sql` (Products DB: search table)
     - `user_info_and_wish_list_db.sql` (Users & Wishlist DB)
   Once it is done, check that all databases were properly installed.
-- Then the password for your MySQL Workbench connection should be assigned to the PASSWORD variable in the `config.py` file
+2. Then the password for your MySQL Workbench connection should be assigned to the PASSWORD variable in the `config.py` file
 
 ## Run the Cosmo Web Application
 1. Open you Python IDE and run the `app.py` file in the `scripts` folder
 2. Go to the `log_in.html` file in the `frontend` folder and open the file in a web browser
 3. The webpage will prompt you to enter your username and email; please enter the following credentials:
-   - Username - sample_name
-   - Email Address - sample@gmail.com
+   - Username - `sample_name`
+   - Email Address - `sample@gmail.com`
 4. This will lead you to the `Home`/`Search` page where you can run searches for different ingredients and review the results under the `Results` tab. 
 5. You can also add specific products to your wishlist by inserting their productID at the top of the page and clicking on the button "add to wishlist". 
 6. Everything you add to the wishlist can be viewed on the `Wishlist` tab.
 
-
+*** 
 ## Unit Tests
 ### 1. Open files
-To run the  unit tests, the following files need to be open: 
+To run the unit tests, first open the following files: 
 - scripts folder
   - `app.py`
   - `wishlist_db_utils.py`
+  - `user_db_utils.py`
   - `config.py`
 - sql_script folder
   - `user_info_and_wish_list_db.sql`
@@ -54,18 +56,33 @@ To run the  unit tests, the following files need to be open:
 - testing folder
   - `wishlist_tests.py`
   - `wishlist_main.py`
+  - `user_tests.py`
+  - `user_main.py`
 
 ### 2. Check credentials
 Check the credentials in the `config.py` file and make sure that they match yours (i.e. the user and password match your MySQL workbench credentials.)
 
-### 3. Create dummy data within the DB
+### 3. Create Users & Wishlist DB with dummy data
 Open the `user_info_and_wish_list_db.sql` and `dummy_data.sql` scripts in MySQL Workbench and run these scripts so that the database and dummy data are created. Don't worry if you have already created these tables, the code is written to run only if the database does not already exist. 
 
 ### 4. Run the app
-Run the `app.py` file on your Python IDE. This file creates the connection with the API, so testing will only be possible once this file has been run. 
+Run the `app.py` file on your Python IDE and keep it running whilst running the tests. This file creates the connection with the API, so testing will only be possible once this file has been run. 
 
-### Run the tests
+### 5. Run the tests
+#### Wishlist Tests
 Run the `wishlist_tests.py` file. This will run unit tests on the wishlist functions used in the `wishlist_db_utils.py` and `wishlist_main.py` files.  
 The `wishlist_db_utils.py` contains functions called when running our application.  
 The `wishlist_main.py`, however, is a file created to mock the UI and user inputs in order to test wishlist functions.  
 Wishlist functions are primarily tested through the unit tests found in `wishlist_tests.py` and mocking input found in `wishlist_main.py`. 
+
+#### Users Tests
+Run the `user_tests.py` file. This will run unit tests on the user functions used in the  `user_db_utils.py` and `user_main.py` file.
+The `user_db_utils.py` contains functions called when running our application.  
+The `user_main.py`, however, is a file created to mock the UI and user inputs in order to test wishlist functions.  
+Wishlist functions are primarily tested through the unit tests found in `user_tests.py` and mocking input found in `user_main.py`.
+
+
+
+3 - Run the user_db_utils.py within the scripts folder
+4 - Run the app.py file within the scripts folder (keep this running whilst running the tests)
+5 - Run the user_main.py file within the testing folder
