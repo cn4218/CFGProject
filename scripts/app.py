@@ -56,7 +56,12 @@ def return_list():
 @app.route("/Results", methods=['GET'])
 def send_results():
     """
-    Retrieves ssearch results for given search id
+    Function that retrieves most recent search result using the fetch_results function in obf_db_utils, which uses search_results table within the products SQL database.
+
+    Returns
+    -------
+    list
+        list of product dictionaries for most recent search, if an exception is returned from fetch_results an empty list is returned
     """
     
     list_of_products = fetch_results(1)
