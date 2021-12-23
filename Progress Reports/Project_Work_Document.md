@@ -12,13 +12,13 @@ Our project aimed at building a cosmetic search engine by ingredient: Cosmo.
 Our objectives were to allow users to: 
 - sign up, create an account and log in to it (Users side) <!--arm/wing-->
 - search for products meeting several ingredient-related criteria (Products side)
-- save selected products to their wishlist and manage it as they want (Wishlist side)
+- save selected products to their 'wishlist' and manage it as they want (Wishlist side)
 
 ### Roadmap of the report
-First we will introduce our product and the needs it addresses, then describe its requirements and high-level design. We will then go on a more detailed description of its parts such as its databases, DB Utils files, its API and website UI, listing individual files and the functions they perform.  
-We will then talk about the implementation and execution process of this project, outline our development approach and team member roles, our challenges, achievements and thought process as we made decisions.  
-Then we will review out testing and evaluation strategy, here agin listing individual files and describe their functions.  
-Finally, we will discuss our system limitations and conclude.
+First, we introduce our product and the needs it addresses, then describe its requirements and high-level design. We then present a more detailed description of its parts such as its databases, DB Utils files, its API and website UI, listing individual files and the functions they perform.  
+We then talk about the implementation and execution process of this project, outline our development approach and team member roles, as well as our challenges, achievements and thought process as we made decisions.  
+Next we review our testing and evaluation strategy, here again listing individual files and describing their functions.  
+Finally, we discuss our system limitations and conclude.
 
 
 ## BACKGROUND
@@ -28,27 +28,27 @@ Imagine looking for a replacement to your favourite conditioner which has been d
 
 The world of cosmetics can be difficult to navigate: marketing often presents products as some sort of magic potions wrapped in a pretty packaging, using fancy buzzwords and making inaccurate and/or unrealistic claims about their benefits.  
 
-In reality, cosmetics are formulas composed of specific molecules with a particular biological effect, and even though their exact recipe usually remains a trade secret, the order of ingredients on the label reveals important information, as it reflects their relative concentrations: the first has the highest concentration, the last one the lowest.
+In reality, cosmetics are formulas composed of specific chemical molecules with particular biological effects, and even though their exact recipe usually remains a trade secret, the order of ingredients on the label reveals important information, as it reflects their relative concentrations: the first one has the highest concentration, the last one the lowest.
 
-In theory, an informed consumer should thus be able to make a choice based on this objective criteria. Given the host of choice we are given on the market, however, this deceptively simple task can prove nigh impossible. One cannot realistically browse the entire web, systematically comb every shop shelf and read every single product label… This is where data comes into play at our rescue.
+In theory, an informed consumer should thus be able to make a choice based on this objective criterion. Given the multiplicity of choice we are given on the market, however, this deceptively simple task can prove nearly impossible. One cannot realistically browse the entire web, systematically comb every shop shelf and read every single product label… This is where data comes into play at our rescue.
 
-Some cosmetic-related tools and search engines such as Open Beauty Facts (OBF) or INCIDecoder already exist, but so far they only offer a list of products containing or not a specific ingredient, regardless of their position within the list.
+Some cosmetic-related tools and search engines such as Open Beauty Facts (OBF) or INCIDecoder already exist, but so far they offer only a list of products containing or not a specific ingredient, regardless of its position within the list.
 
-Cosmo is a web application that not only returns a list of products containing a particular ingredient, but also takes into account its position in the ingredient list. Moreover, it allows you to search for products without a specific ingredient, and to perform a multi-criteria search up to the 5<sup>th</sup> ingredient.
+Cosmo is a web application that not only returns a list of products containing a particular ingredient, but also takes into account its position within the ingredient list. Moreover, it allows users to search for products without a specific ingredient, and to perform a multi-criteria search up to the 5<sup>th</sup> ingredient.
 
 
 ## SPECIFICATIONS AND DESIGN
 ### Requirements 
 #### Technical requirements 
-We used portable tools and languages to build our application, specifically:
+We decided to use portable tools and languages to build our application, specifically:
 - Languages: Python 3.9, SQL, javascript, html and css
 - RDBMS: MySQL Workbench and DB Browser for SQLite
-- IDEs: PyCharm and VSCode
-- Version Control: GitHub.com and IDEs Git tools
+- IDE: PyCharm and VSCode
+- Version Control: GitHub.com and IDE Git tools
 
 #### Non-technical requirements
-We aimed at implementing Agile philosophy and make our application user-friendly, fast, practical and reliable.
-We also thought about its maintainability by writing documentation in order for our code to be easily understandable by later developers. 
+We aimed at implementing the Agile philosophy and make our application user-friendly, fast, practical and reliable.
+We also thought about its maintainability by writing documentation in order for our code to be easily understandable by future developers. 
 
 ### Design and architecture
 Our application comprises the following components, here ordered from back to front end:
@@ -79,53 +79,54 @@ Our application comprises the following components, here ordered from back to fr
 <div style="text-align: right"> High-level Diagram of the Cosmo application</div>
 
 #### Databases (DB)
-Because we originally planned to use the remote Open Beauty Facts products DB through their API and to create our own Cosmo DB containing Users information and their Wishlists, we decided to keep the "Products" and the "Users & Wishlist" DB artificially separated. In reality, this is not absolutely necessary, and we could put them together, but we kept them apart in order to conserve our original design with an external and an internal DB. For this project, they are still run on the same local RDBMS, but ultimately we would like to host them on a remote server . 
+Because we originally planned to use the remote Open Beauty Facts products DB through their API and to create our own Cosmo DB containing Users information and their Wishlists, we decided to keep the "Products" and the "Users & Wishlist" DB artificially separated. In reality, this is not absolutely necessary, and we could put them together, but we kept them apart in order to conserve our original design with an external and an internal DB. For this project, they still run on the same local RDBMS, but ultimately we would like to host them on a remote server . 
 
 ![Cosmo_EER_Diagram.png](Cosmo_EER_Diagram.png)  
 <div style="text-align: right">Databases EER diagram</div>
 
 ##### 1 - Products DB (`cosmo_tables.sql` and `Products` DB)
-The `Products` database, also referred to as `OBF DB`, contains cosmetic products related information and is divided into two large `products_table`and `ingredients_table` and a smaller `search_products` tables.
+The `Products` database, also referred to as `OBF DB`, contains cosmetic products related information and is divided into two large tables, `products_table`and `ingredients_table`, and a smaller one, `search_products`.
 
 ###### Products table (`products_table`)
-The product table is a cleaned up version of the database downloaded from [Open Beauty Facts](https://world.openbeautyfacts.org/data/en.openbeautyfacts.org.products.csv). This 18843 rows x 176 columns table was modified by the `clean_csv_tables.py` script using the `pandas` library and a homemade `ListDF.py` module in order to only keep products for which a proper list of ingredients was available. A unique `productID` was created for each row and only 17 columns were selected, resulting in a 7082 rows x 18 columns table. A monotonically increasing `index` field was also added because as the database was being cleaned up, some rows were deleted but the others kept the same `productID` for consistency. *(see EER diagram above)*  
+The product table is a cleaned up version of the database downloaded from [Open Beauty Facts](https://world.openbeautyfacts.org/data/en.openbeautyfacts.org.products.csv). This 18843 rows x 176 columns table was first modified by our `clean_csv_tables.py` script using the `pandas` library and a homemade `ListDF.py` module in order to only keep products for which a proper list of ingredients was available. A unique `productID` was created for each row, and only 17 columns were selected, resulting in a 7082 rows x 18 columns table. A monotonically increasing `field1` index field was also added because, as the database was being cleaned up, some rows were deleted but the others kept the same `productID` for consistency. *(see EER diagram above)*  
 
 ###### Ingredients table (`ingredients_table`)
-The `ingredients_text` column from the products table was then parsed, transformed into a list and expanded, so that for each `productID`, every single ingredient would go into a single column according to its index in the list. This step created a new 7082 rows x 119 columns table in which the first field corresponds to the productID, and the others to the index of ingredients within the ingredients list, from `0` to `117`. *(see EER diagram above)*  
+The `ingredients_text` column from the products table was then parsed, transformed into a list and expanded, so that for each `productID`, every single ingredient would go into a single column according to its index in the list. This step created a new 7082 rows x 119 columns table in which the first field corresponds to the `productID, and the others to the index of ingredients within the ingredients list, from `0` to `117`. *(see EER diagram above)*  
 
 
-###### Search table (`search_table`)
+###### Search table (`search_products`)
 This table temporarily (?) stores the results of individual product searches so that they can be retrieved and displayed on the `Results` web page while doing another search. *(see EER diagram above)*
 
 
 ##### 2 - Users & Wishlist DB (`CFG_Projet`)
-Our application is optimised for usability, with the Users & Wishlist DB being designed to save user information, so they can come back to view their previous searches and wishlist. When users create an account, our web pages send the information they inserted into the forms to our DB.
+Our application is optimised for usability, with the Users & Wishlist DB being designed to save user information, so that they can come back to view their previous searches and wishlist. When users create an account, our web pages send the information they inserted into the forms to our DB.
 
 ###### Users information table (`Users_Info`)
 The Users Info table stores information that has been taken from the user such as their name and email address. This table is connected to the wishlist table through a primary key.
+
 ###### Wishlist table (`Wish_List`)
-The Wish List DB stores products found through our cosmetic search engine and that the user would like to come back to. The Wish List stores data for a particular user retrieved using the API.
+The Wish List DB stores products found through our cosmetic search engine, and to which the user would like to come back. The Wish List stores data for a particular user retrieved using the API.
 
 #### DB Utils (+ credentials)
 The bulk of the operations listed below is handled by the DB_utils files.
 A few of them include but are not limited to:
-- Use the user's product ingredient search to query the `Products` DB
+- Use the user's product ingredient search input to query the `Products` DB
 - Send the results from this query to be displayed on the `Results` display webpage
 - Transfer new wishlist data from the website to the wishlist table in the User Info DB
 - Send all the wishlist data from the wishlist table to the website whenever the user wants to view them on the `Wishlist` page
 
 ##### 3 - For products (`obf_db_utils.py` + `config.py`)
-This file contains functions responsible for querying the `Products` DB according to the user input's search criteria. They work by retrieving the `productIDs` corresponding to products fulfilling these conditions, then fetch the rest of the product information from either the `product_table` table or the `ingredient_table` one, depending on whether the filter search criteria was set on 'unordered' or 'ordered' respectively.  
+This file contains functions responsible for querying the `Products` DB according to the user input's search criteria. They work by retrieving the `productIDs` corresponding to products fulfilling these conditions, then fetch the rest of the product information from either `product_table` or `ingredient_table`, depending on whether the filter search criteria was set on 'unordered' or 'ordered' respectively.  
 
-They allow for the following searching functionalities:
-- ingredient simply present in the product ingredient list (fuzzy search)
+They allow for the following fuzzy search criteria:
+- ingredient simply present in the product ingredient list
 - ingredient not present in the list
 - ingredient present at a specific place in the list (from 1<sup>st</sup> to <sup>5th</sup>)
 
 In addition, a few other functions allow the search results to be processed and presented in a more user-friendly and less resource-intensive way, by:
-- returning them in pages
+- returning them in several pages (instead of one very long page)
 - avoiding to display products containing too many null values
-- storing them in the `search_table` table on the `Products` DB and fetching them to be presented on the Results webpage. 
+- storing them in the `search_products` table on the `Products` DB and fetching them to be presented on the Results webpage. 
 
 **Functions in this file**  
 - `_connect_to_db(db_name)`
@@ -190,9 +191,9 @@ The function `find_products()` uses a POST method (and not a simple GET one) to 
 dict_ = {
     'filter': 'ordered',
     'data': {'1': ['water', True],
-             '2': ['glycerin ', False],
-             '3': ['alcohol', True],
-             '4': ['parfum', True],
+             '2': ['glycerin ', True],
+             '3': ['alcohol', False],
+             '4': ['parfum', False],
              '5': ['', True]
              }
 }
@@ -206,13 +207,13 @@ The function `get_results()` calls the `fetch_results()`function from `obf_db_ut
 - `@app.route('/wishlist/add/<int:user_id>/<string:product_id>',methods = ['GET'])`  
 The function `add_wish_list_func(user_id,product_id)` uses the `get_products_by_ids([product_id])`function from `obf_db_utils` and the `add_wish_list([all columns])` function from `wishlist_db_utils` to add a product to the wishlist of a specific user.
 - `@app.route('/wishlist/<int:user_id>', methods=['GET'])`  
-The function `get_wishlist(user_id)`uses the `_get_wish_list_all(user_id)` function from `wishlist_db_utils` to fetch al wishlist products corresponding to a particular user and returns a jsonified list of products dictionaries. `[{}{}{}{}]`
+The function `get_wishlist(user_id)`uses the `_get_wish_list_all(user_id)` function from `wishlist_db_utils` to fetch all wishlist products corresponding to a particular user and returns a jsonified list of products dictionaries. `[{}{}{}{}]`
 
 ##### 7 - Users & Wishlist API (`user_api.py`)
 **Endpoints**  
 - `@app.route('/profile/<int:user_id>', methods=['GET'])`  
-The function `get_users(user_id)`retrieved the user information as a dictionary: 
-`{ "Email_Address": "nik1@mail.com", "Name_User": "nikita", "User_ID": 2, "User_Name": "niki123"}`
+The function `get_users(user_id)`retrieved the user information as a dictionary:  
+`{"Email_Address": "nik1@mail.com", "Name_User": "nikita", "User_ID": 2, "User_Name": "niki123"}`
 - `@app.route('/profile/change/<int:user_id>/<old_user_name>/<new_user_name>')`  
 The function `change_user_name(user_id, old_user_name, new_user_name)` uses the `update_user_name` function from `user_db_utils` to update a username using their user ID.
 - `@app.route('/profile/change/email/<int:user_id>/<old_user_email>/<new_user_email>')`  
@@ -229,13 +230,13 @@ The function `verify_login_api(username, email)` uses the `verify_login(username
 ![Ingredient_search.png](Ingredient_search.png)  
 On the the `Search` page are input fields for up to 5 ingredients.  
 - When the button on the right side is toggled on the green ✅ "include" option, Cosmo will search for products containing this specific ingredient and take into account the state of the `Filter` button.  
-- When the `Filter` button above the search fields is toggled on `unordered`, the search is done in an unspecified order. Otherwise, if it is on `ordered`, the number on the left of the search field corresponds to the position of the ingredient in the product ingredient list.  
+- When the `Filter` button above the search fields is toggled on `unordered`, the search is done in an unspecified order. Otherwise, if it is on `ordered`, the number on the left of the search field corresponds to the position of the ingredient within the product ingredient list.  
 - When the button on the right side is toggled on the red ❌ "exclude" option, Cosmo will search for products **not** containing this specific ingredient at all, that is without taking into account the state of the `Filter` button for this specific ingredient.
 
 <!--![Search.png](Search.png) -->
 
 ##### Login and Sign up page
-New users can sign up for an account and existing users can just log into their previously created account at any time.
+New users can sign up for an account, and existing users can just log into their previously created account at any time.
 ![Login.png](Login.png)
 
 ##### Results display page
@@ -286,21 +287,23 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 
 ### Implementation process (achievements, challenges, decision to change something)
 Originally, we intended to use the Open Beauty Facts (OBF) DB indirectly by consuming their API, but as it was still very experimental, barely documented, and did not actually work for our purpose since it only offered the possibility to search for products barcodes, we changed our minds and resolved to use the OBF database differently.  
-At the beginning, we even considered webscraping it, but it was not practical, and eventually we settled for downloading it as a CSV file. We then cleaned it up to obtain the `products_table` table, which was then used to create the `ingredients_table` table. As some of us ran through codec errors preventing the these files from being normally imported into MySQL Workbench, it was done into DB Browser for SQLite instead. The resulting `Products` database was eventually exported as a SQL file, then imported back into MySQL Workbench and its syntax slightly modified to function on this RDBMS.
+At the beginning, we even considered webscraping it, but it was not practical, and eventually we settled for downloading it as a CSV file. We then cleaned it up to obtain `products_table`, which was then used to create `ingredients_table`. As some of us ran through codec errors preventing the these files from being normally imported into MySQL Workbench, it was done into DB Browser for SQLite instead. The resulting `Products` database was eventually exported as a SQL file, then imported back into MySQL Workbench and its syntax slightly modified to function on this RDBMS.
 
 ### Agile development (did team use any agile elements like iterative approach, refactoring, code reviews)
 We strove to follow the Software Development Life Cycle (SDLC) framework and to implement Agile methodology. 
-In particular, we had our Scrum Master organise Daily Scrum and weekly Sprint Planning meetings on Zoom. 
- Through our Daily Scrum meeting, we updated each other on what we had been worked on, the problems we encountered and on what we were intending to work next. 
-or added to the GitHub, we will check our code works as intended and review it or clean up the code when necessary.
+In particular, we had our Scrum Master organise Daily Scrum and weekly Sprint Planning meetings on Zoom.  
+ Through our Daily Scrum meeting, we updated each other on what we had been working, on the problems we encountered, and on what we were intending to work next.   
+We also had longer meetings within our subgroups during which we mutually checked that our code worked as intended, reviewing or cleaning it up when necessary.   
+We held long Sprint Review Meeting on Sundays, in which we reviewed the work we had done during the week, discussing what had been completed and what was left to complete during the next week. These meetings also gave us the opportunity ensure that our code was globally consistent.  
 
-We also created "User Stories" to present features to implement in our product. 
+We created "User Stories" to present features to implement in our product. 
 We started by creating a very minimal core app with only a few functions, made sure that they worked, then incrementally improved our app. 
 
-We managed our code with GitHub, and created a branch `X_branch` for each team member to push their modifications on the remote repository for others to see.
+We managed our code with GitHub, and created a branch `X_branch` for each team member X to push their modifications on the remote repository for others to see.
 Our team was split into task-based subgroups in which members reviewed each other's code.
+
 - Before we push our code to GitHub, we ensure our code is consistent within the sub-groups we’re working in.
-- We have longer meetings on Sundays in which we review the work we have done and discuss what we completed within the week and what there is left to complete or do for the week which is coming up. This is also a chance to come together and ensure our code is consistent with each other.
+-  
 
 ### Implementation challenges
 One of the main challenges we had to overcome was actually the coordinated use of GitHub, which could sometimes prove confusing, which led to regular conflicts, failed pulls or pushes ,and even an unexpected "detached head state" at some point. This should improve with time as we get used to handle GitHub on a daily basis.   
