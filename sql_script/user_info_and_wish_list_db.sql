@@ -60,6 +60,9 @@ FOREIGN KEY (User_ID) REFERENCES User_Info(User_ID),
 CONSTRAINT PK_User PRIMARY KEY (User_ID, productID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- Need to have one line as dummy data so the instructor will be able to login
+INSERT IGNORE INTO User_Info (User_ID, User_Name, Name_User, Email_Address) VALUES (10234, 'sample_name', 'sample_user','sample@gmail.com');
+
 -- this stored procedure called `fill_wish_list` to create dummy data within our database
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_wish_list`(
