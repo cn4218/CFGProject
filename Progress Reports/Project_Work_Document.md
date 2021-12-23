@@ -91,7 +91,7 @@ The `ingredients_text` column from the products table was then parsed, transform
 
 
 ###### Search table (`search_table`)
-This table temporarily (?) stores the results of individual product searches so that they can be retrieved and displayed on the Results web page while doing another search. *(see EER diagram above)*
+This table temporarily (?) stores the results of individual product searches so that they can be retrieved and displayed on the `Results` web page while doing another search. *(see EER diagram above)*
 
 
 ##### 2 - Users & Wishlist DB (`CFG_Projet`)
@@ -141,22 +141,25 @@ In addition, a few other functions allow the search results to be processed and 
 
 
 ##### 4 - For users (OOP) (`db_utils_user_oop.py` + `config.py`?)
-**Methods in this file**
-**`class dbConnection`**
-- `__init__(self)`
-- `conn(self)`
-- `add_user(self, user_id)`
-- `_get_user(self, user_id)`
-- `update_user(self)`
-- `delete_user(self)`
-- `verify_login(self, user_id, username, name_user, email_address)`
-- `get_user_id(self, username, name, email)`
+This file contains functions responsible for querying the database and handling db connection errors if they occur. Some of these functions will insert user info into the user info table and retrieve it whenever the user logs in, and are used depending on the nature of the API request. *(see details in the API section)*
+This particular DB Utils script was written in OOP because user data is more easily conducive to this programming paadigm/model.
+
+**Methods in this file**  
+- **`class dbConnection`**  
+  - `__init__(self)`
+  - `conn(self)`
+  - `add_user(self, user_id)`
+  - `_get_user(self, user_id)`
+  - `update_user(self)`
+  - `delete_user(self)`
+  - `verify_login(self, user_id, username, name_user, email_address)`
+  - `get_user_id(self, username, name, email)`
 
 
 ##### 5 - For wishlists (`wishlist_db_utils.py` + `wishlist_config.py`)
-This file will contain functions responsible for querying the database and handling db connection errors if they occur. Some of these functions will insert user info into the user info table and retrieve it whenever the user logs in, other functions will either insert or retrieve wishlist data and are used depending on the nature of the API request.
+This file contains functions responsible for querying the database and handling db connection errors if they occur. Some of these functions either insert or retrieve wishlist data and are used depending on the nature of the API request. *(see details in the API section)*
 
-**Functions in this file**
+**Functions in this file**  
 - `_connect_to_db(db_name)`
 - `exception_handler(query, error_message)`
 - `exception_handler_wish(query, error_message)`
@@ -173,7 +176,7 @@ This file will contain functions responsible for querying the database and handl
 Our Flask RESTful 2-in-1 API creates routes (http pipeline) for data exchange, offering endpoints to connect to our 2 databases from the website UI with which the user interacts.
 
 ##### 6 - Products & Wishlist API (`obf_app.py`)
-**Endpoints**
+**Endpoints**  
 - `@app.route("/")`  
 The function `serve_home_page()` displays the home page when the application starts. 
 - `@app.route("/Search", methods=['POST'])`
@@ -202,7 +205,7 @@ The function `add_wish_list_func(user_id,product_id)` uses the `get_products_by_
 The function `get_wishlist(user_id)`uses the `_get_wish_list_all(user_id)` function from `wishlist_db_utils` to fetch al wishlist products corresponding to a particular user and returns a jsonified list of products dictionaries. `[{}{}{}]`
 
 ##### 7 - Users & Wishlist API (`user_api.py`)
-**Endpoints**
+**Endpoints**  
 - `@app.route('/profile/<int:user_id>', methods=['GET'])`  
 The function `get_users(user_id)`retrieved the user information as a dictionary: 
 `{ "Email_Address": "nik1@mail.com", "Name_User": "nikita", "User_ID": 2, "User_Name": "niki123"}`
