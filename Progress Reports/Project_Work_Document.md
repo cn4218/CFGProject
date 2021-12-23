@@ -25,9 +25,9 @@ Imagine looking for a replacement to your favourite conditioner which has been d
 
 The world of cosmetics can be difficult to navigate: marketing often presents products as some sort of magic potions wrapped in a pretty packaging, using fancy buzzwords and making inaccurate and/or unrealistic claims about their benefits.  
 
-In reality, cosmetics are formulas composed of specific molecules with a particular biological effect, and even though their exact recipe remains a trade secret, the order of ingredients on the label reveals important information, as it reflects their relative concentrations: the first has the highest concentration, the last one the lowest.
+In reality, cosmetics are formulas composed of specific molecules with a particular biological effect, and even though their exact recipe usually remains a trade secret, the order of ingredients on the label reveals important information, as it reflects their relative concentrations: the first has the highest concentration, the last one the lowest.
 
-In theory, an informed user should thus be able to make a choice based on this objective criteria. Given the host of choice we are given on the market, however, this deceptively simple task can prove nigh impossible. One cannot realistically browse the entire web, systematically comb every shop shelf and read every single product label… This is where data comes into play at our rescue.
+In theory, an informed consumer should thus be able to make a choice based on this objective criteria. Given the host of choice we are given on the market, however, this deceptively simple task can prove nigh impossible. One cannot realistically browse the entire web, systematically comb every shop shelf and read every single product label… This is where data comes into play at our rescue.
 
 Some cosmetic-related tools and search engines such as Open Beauty Facts (OBF) or INCIDecoder already exist, but so far they only offer a list of products containing or not a specific ingredient, regardless of their position within the list.
 
@@ -47,7 +47,7 @@ We used portable tools and languages to build our application, specifically:
 ???
 
 ### Design and architecture
-Our application comprises the following components, here ordered from the back end to the front end:
+Our application comprises the following components, here ordered from back to front end:
 - **2 Databases**
   - Products DB
     - Products table
@@ -101,8 +101,25 @@ This table temporarily (?) stores the results of individual product searches so 
 
 
 #### DB Utils (+ credentials)
+The bulk of the operations listed below is handled by the DB_utils files.
+A few of them include but are not limited to:
+- Use the user's product ingredient search to query the Products DB
+- Send the results from this query to be displayed on the Results display webpage
+- Transfer new wishlist data from the website to the wishlist table in the User Info DB
+- Send all the wishlist data from the wishlist table to the website whenever the user wants to view them on the wishlist page
+
 ##### 3 - For products (`obf_db_utils.py` + `config.py`)
-This file will contain functions responsible for querying the DB. Some of these functions will get the productIDs corresponding to the ingredients the user requested and fetch the product info linked to those ID’s. This search could either be done in an ordered way where ingredients must be in a fixed position in the ingredient list or in an unordered way. Another function to include would be one searching for products that do not contain a particular ingredient or set of ingredients.
+This file contains functions responsible for querying the `Products` DB according to the user input's search criteria. They work by retrieving the `productIDs` corresponding to products fulfilling these conditions, then fetch the rest of the product information from either the `product_table` table or the `ingredient_table` one, depending on whether the filter search criterioa was set on 'unordered' or 'ordered' respectively.  
+
+They allow for the following searching functionalities:
+- ingredient simply present in the product ingredient list (fuzzy search)
+- ingredient not present in the list
+- ingredient present at a specific place in the list (from 1<sup>st</sup> to <sup>5th</sup>)
+
+In addition, a few other functions allow the search results to be processed and presented in a more user-friendly and less resource-intensive way, by:
+- returning them in pages
+- avoiding to display products containing too many null values
+- storing them in the `search_table` table on the `Products` DB and fetching them to be presented on the Results webpage. 
 
 **Functions in this file**  
 - `_connect_to_db(db_name)`
@@ -138,18 +155,21 @@ This file will contain functions responsible for querying the DB. Some of these 
 This file will contain functions responsible for querying the database and handling db connection errors if they occur. Some of these functions will insert user info into the user info table and retrieve it whenever the user logs in, other functions will either insert or retrieve wishlist data and are used depending on the nature of the API request.
 
 **Functions in this file**
-
+- `_connect_to_db(db_name)`
+- `exception_handler(query, error_message)`
+- `exception_handler_wish(query, error_message)`
+- `exception_record_exists(query, error_message)`
+- `_map_values(result)`
+- `add_wish_list([all columns])`
+- `_get_wish_list_individual(UserID, ProductID)`
+- `_get_wish_list_all(UserID)`
+- `delete_wishlist_item(UserID, ProductID)`
+- `delete_wishlist(UserID)`
+- `update_wish_list([all columns])`
 
 #### 2-in-1 API (`app.py`)
-Our Flask RESTful 2-in-1 API creates routes (http pipeline) for data exchange by offering endpoints to connect to our 2 databases from the website UI with which the user interacts.
+Our Flask RESTful 2-in-1 API creates routes (http pipeline) for data exchange, offering endpoints to connect to our 2 databases from the website UI with which the user interacts.
 
-A few of the operations will include but are not limited to:
-- Use the user's product ingredient search to query the Products DB
-- Send the results from this query to be displayed on the Results display webpage
-- Transfer new wishlist data from the website to the wishlist table in the User Info DB
-- Send all the wishlist data from the wishlist table to the website whenever the user wants to view them on the wishlist page
-
-The API is primarily responsible for creating the routes (http pipeline) for this data exchange and the bulk of the operations listed above is handled by the DB_utils files we will discuss below.
 
 ##### 6 - Products API ()
 
