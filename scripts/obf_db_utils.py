@@ -1,6 +1,5 @@
 #In[]
 import mysql.connector
-from config import USER, PASSWORD, HOST
 from pprint import pp 
 import json
 import pandas as pd
