@@ -284,6 +284,7 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 - `unittest` for testing
 - `unittest.mock` for testing
 - `operator` for testing
+- `pathlib` to represent paths for OOP
 - `sys` to add folders to the Python path so other scripts can be imported
 
 ### Implementation process (achievements, challenges, decision to change something)
