@@ -260,7 +260,7 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 | Products DB (Cosmo-OBF)                 |    X    |     X    |           |          |          |     x     |
 | Users & Wishlist DB                     |         |          |           |     X    |          |          |
 | Products DB_Utils & Config              |    X    |     X    |           |          |          |     X    |
-| Users DB_Utils & Config                 |         |          |     X     |          |     X    |          |
+| Users DB_Utils & Config                 |         |          |           |          |     X    |     X    |
 | Wishlist DB_Utils & Config              |         |          |           |     X    |          |          |
 | Products API                            |    X    |     X    |           |          |          |     x    |
 | Users & Wishlist API                    |         |          |           |          |     X    |     X    |
