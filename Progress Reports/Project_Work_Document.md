@@ -223,13 +223,13 @@ The function `verify_login_api(username, email)` uses the `verify_login(username
 
 #### Website User Interface (UI)
 ##### Home page/ Search Tool
-![Search.png](Search.png)  
+![Ingredient_search.png](Ingredient_search.png)  
 On the the `Search` page are input fields for up to 5 ingredients.  
 - When the button on the right side is toggled on the green ✅ "include" option, Cosmo will search for products containing this specific ingredient and take into account the state of the `Filter` button.  
 - When the `Filter` button above the search fields is toggled on `unordered`, the search is done in an unspecified order. Otherwise, if it is on `ordered`, the number on the left of the search field corresponds to the position of the ingredient in the product ingredient list.  
 - When the button on the right side is toggled on the red ❌ "exclude" option, Cosmo will search for products **not** containing this specific ingredient at all, that is without taking into account the state of the `Filter` button for this specific ingredient.
 
-![UI_Search_Fields.png](UI_Search_Fields.png) 
+<!--![Search.png](Search.png) -->
 
 ##### Login and Sign up page
 New users can sign up for an account and existing users can just log into their previously created account at any time.
