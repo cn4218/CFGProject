@@ -181,6 +181,7 @@ def exception_handler_wish(query, error_message):
             print("DB connection is closed")
     return wish
 
+
 def exception_record_exists(query, error_message):
     """
     This function is the exception handler for exceptions that may arise when executing queries on the database. This
@@ -315,22 +316,22 @@ def add_wish_list(
     Product_name: str
         Data retrieved from OBF database.
 
-    Ingredients_Text str
+    Ingredients_Text: str
         Data retrieved from OBF database.
 
-    Quantity str
+    Quantity: str
         Data retrieved from OBF database.
 
-    Brands str
+    Brands: str
         Data retrieved from OBF database.
 
-    Brands_tags str
+    Brands_tags: str
         Data retrieved from OBF database.
 
-    Categories str
+    Categories: str
         Data retrieved from OBF database.
 
-    Categories_Tags str
+    Categories_Tags: str
         Data retrieved from OBF database.
 
     Categories_En: str
@@ -364,7 +365,7 @@ def add_wish_list(
         Data retrieved from OBF database.
 
     UserID: int
-    Data retrieved from OBF database.
+        Data retrieved from OBF database.
 
     Returns
     --------
