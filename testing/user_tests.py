@@ -12,6 +12,7 @@ from CFGProject.scripts.config import PASSWORD, USER, HOST
 To run user tests:
 1 - Install all the necessary modules:
 unittest, sys, pathlib, json, requests, mysql.connector, flask, flask_cors, pprint
+2 - Enter correct user, password and host into config.py in scripts
 2 - run the user_info_and_wish_list_db.sql within the sql_scripts folder in the repository, to create the user table
 3 - Run the user_db_utils.py within the scripts folder
 4 - Run the app.py file within the scripts folder (keep this running whilst running the tests)
