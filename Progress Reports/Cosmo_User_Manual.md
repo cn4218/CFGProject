@@ -32,6 +32,11 @@
   Once it is done, check that all databases were properly installed.
 2. Then the password for your MySQL Workbench connection should be assigned to the PASSWORD variable in the `config.py` file
 
+### Clone GitHub repository
+Clone this [GitHub repository](https://github.com/cn4218/CFGProject) in your Python IDE, preferably VSCode, and checkout the `temp_v3_branch`
+
+
+
 ## Run the Cosmo Web Application
 1. Open you Python IDE and run the `app.py` file in the `scripts` folder
 2. Go to the `log_in.html` file in the `frontend` folder and open the file in a live server. 
