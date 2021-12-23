@@ -71,14 +71,29 @@ def send_results():
 # At the moment, wishlist code will not work unless you have the dummy data in the user_info table:
 # 10234,'sample_name','sample_user','sample@gmail.com'
 
-
 new_list = []
 
 @app.route('/wishlist/add/<int:user_id>/<string:product_id>',methods = ['GET']) #now we know we are getting information
 def add_wish_list_func(user_id,product_id):
-    
+    """
+    API Endpoint that takes in a user id and product id, checks if the product exists for the given product_id,
+    retrieves the product dictionary from the products database products_table table  and formats the ditionary into inputs for the wishlist_db_utils function add_wish_list
+    and the function adds the resulting product dictionary to the sql table wish_list in the cfg_project database
+
+    Parameters
+    ----------
+    user_id : int
+        id of user
+    product_id : int
+        id of product
+
+    Returns
+    -------
+    str
+        1. 'Error' if an exception is raised when retrieving the wishlist item
+        2. 'Added' if the wishlist item has been added to the sql table wish_list in cfg_project database
+    """
     try:
-        
         product_id = int(product_id.strip())
         verify_product_id(product_id)
         user_id = int(user_id) 
@@ -134,6 +149,16 @@ def get_wishlist(user_id):
     This function fetches all the wishlist items corresponding to one
     particluar user and returns a jsonified list of dictionaries when a 
     request is made to this endpoint
+
+    Parameters
+    ----------
+    user_id : int
+        id of user
+    Returns
+    --------
+    wishlist : list or str
+        1 - list of product dictionaries within wishlist
+        2 - string returned for when wishlist is empty
     """
     wishlist = _get_wish_list_all(user_id)
     return jsonify(wishlist)
@@ -142,22 +167,65 @@ def get_wishlist(user_id):
 
 @app.route('/wishlist/delete/<int:user_id>/<int:product_id>', methods=['GET'])
 def delete_wislist_individual(user_id, product_id):
+    """
+    Function API endpoint that deletes an individual product item within a wishlist by calling the delete_wishlist_item in wishlist_db_utils
+
+    Parameters
+    ----------
+    user_id : int
+        id of user
+    product_id : int
+        id of product to be deleted
+
+    Returns
+    -------
+    wishlist_item : str
+        string containig description of whether the item has been successfully deleted from the sql wish_list table or not
+    """
     empty_wishlist_item = delete_wishlist_item(user_id,product_id)
     return jsonify(empty_wishlist_item)
 
-#### used in wishlist_main.py
+
 @app.route('/wishlist/<int:user_id>/<int:product_id>', methods=['GET'])  ##success
 def get_wishlist_item(user_id, product_id):
+    """
+    Function with API endpoint that retrieves the specific wishlist item for given user and product id using _get_wish_list_individual from wishlist_db_utils
+
+    Parameters
+    ----------
+    user_id : int
+        id of user
+    product_id : int
+        id of product to be retrieved
+
+    Returns
+    -------
+    wishlist_item : list or str
+        Either:
+        1 - list conaining product dictionary from wishlist
+        2 - string detailing why the product dictionary hasn't been retrieved
+    """
     wishlist_item = _get_wish_list_individual(user_id,product_id)
     return jsonify(wishlist_item)
 
-## app route that deletes entire wishlist for user
 @app.route('/wishlist/delete/<int:user_id>', methods=['GET'])
 def delete_entire_wishlist(user_id):
+    """
+    API endpoint that uses delete_wishlist from wishlist_db_utils to delete all products within a wishlist for an user
+
+    Parameters
+    ----------
+    user_id : int
+        id for user
+
+    Returns
+    -------
+    empty_user_wishlist : str
+        string containig information detailing whether the wishlist has been deleted or if there is an issue deleting it
+
+    """
     empty_user_wishlist = delete_wishlist(user_id)
-    return jsonify(empty_user_wishlist) ## this should be an empty list so can just return an empty list instead
-
-
+    return jsonify(empty_user_wishlist)
 
 
 
