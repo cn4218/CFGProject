@@ -13,6 +13,16 @@ from CFGProject.scripts.obf_db_utils import _get_all_product_ids, get_productids
 from CFGProject.scripts.config import USER,PASSWORD,HOST
 
 """
+Steps to run obf_tests.py:
+1 - install all necessary modules: unittest, pandas, operator, mysql.connector, sys, pathlib, requests, json, pprint, math, flask, flask_cors, pprint
+2 - Enter correct user, password and host into config.py in scripts
+2 - Run cosmo_tables.sql and temp_search_results.sql from sql_script in the repository
+3 - Run obf_db_utils.py, app.py from scripts and obf_main.py from testing
+4 - Keep app.py running so the server is running
+5 - Run the obf_tests.py from testing
+"""
+
+"""
 File contains:
 TestProductFrontEnd:
     test_unordered_containing_water(self,mock_inputs)
