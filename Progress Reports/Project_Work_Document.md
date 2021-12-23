@@ -280,6 +280,7 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 - `pandas` used to clean up the OBF DB
 - `numpy` used to create functions in the `ListDF.py` homemade module
 - `ListDF.py` (homemade module to apply functions on whole dataframe columns)
+- `pprint` to display messages to the terminal while debugging/testing
 - `unittest` for testing
 - `unittest.mock` for testing
 - `operator` for testing
