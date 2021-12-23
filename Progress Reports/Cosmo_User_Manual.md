@@ -1,4 +1,4 @@
-# Cosmo User Manual
+# <centre>Cosmo User Manual</centre>
 
 ## Set Up
 ### Requirements
@@ -19,7 +19,7 @@
   - `unittest` for testing
   - `unittest.mock` for testing
   - `operator` for testing
-  - `pathlib` to represent paths for OOP
+  - `pathlib` to add folders to the Python path so other scripts can be imported
   - `sys` to add folders to the Python path so other scripts can be imported
 
 ### Import and set up databases + config files
