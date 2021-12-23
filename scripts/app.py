@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from config import USER, PASSWORD, HOST
-from flask_cors import CORS
+# from flask_cors import CORS
 from obf_db_utils import get_proper_ingredients_list, get_productids_containing , get_products_by_ids, fetch_results, store_results ,verify_product_id
 from wishlist_db_utils import _get_wish_list_all, add_wish_list, delete_wishlist_item, _get_wish_list_individual, delete_wishlist
 from user_db_utils import dbConnection #importing the class only since all the methods are contained within it 
@@ -8,7 +8,7 @@ from pprint import pp
 
 
 app = Flask(__name__)
-CORS(app) # Cross Origin Resource Sharing   # Required for the to frontend send requests
+# CORS(app) # Cross Origin Resource Sharing   # Required for the to frontend send requests
 list_ = []
 
 #OBF 

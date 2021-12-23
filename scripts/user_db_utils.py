@@ -1,6 +1,11 @@
 import mysql.connector
 from mysql.connector import Error
+import sys
+from pathlib import Path
 
+sys.path.append(str(Path(__file__).parent.parent.parent))
+
+from CFGProject.scripts.config import USER, PASSWORD, HOST
 
 class dbConnection:
     def __init__(self, password, db_name="CFG_Project", tb_name="user_info", user='root', host='localhost'):
@@ -19,9 +24,9 @@ class dbConnection:
             host: str
                 host of SQL workbench
         """
-        self.host = host
-        self.user = user
-        self.password = password
+        self.host = HOST
+        self.user = USER
+        self.password = PASSWORD
         self.db_name = db_name
         self.tb_name = tb_name
         self.conn()
