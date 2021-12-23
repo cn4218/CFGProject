@@ -95,7 +95,7 @@ The `ingredients_text` column from the products table was then parsed, transform
 
 
 ###### Search table (`search_products`)
-This table temporarily (?) stores the results of individual product searches so that they can be retrieved and displayed on the `Results` web page while doing another search. *(see EER diagram above)*
+This table temporarily stores the results of individual product searches so that they can be retrieved and displayed on the `Results` web page while doing another search. *(see EER diagram above)*
 
 
 ##### 2 - Users & Wishlist DB (`CFG_Projet`)
@@ -299,14 +299,12 @@ We held long Sprint Review Meeting on Sundays, in which we reviewed the work we 
 We created "User Stories" to present features to implement in our product. 
 We started by creating a very minimal core app with only a few functions, made sure that they worked, then incrementally improved our app. 
 
-We managed our code with GitHub, and created a branch `X_branch` for each team member X to push their modifications on the remote repository for others to see.
-Our team was split into task-based subgroups in which members reviewed each other's code.
-
-- Before we push our code to GitHub, we ensure our code is consistent within the sub-groups we’re working in.
--  
+Our team was split into task-based subgroups in which members reviewed each other's code.  
+We managed our code with GitHub, and created a branch `X_branch` for each team member X to push their modifications on the remote repository for others to see.  
+Before pushing our code to GitHub, we ensured that our code was consistent within our sub-groups.
 
 ### Implementation challenges
-One of the main challenges we had to overcome was actually the coordinated use of GitHub, which could sometimes prove confusing, which led to regular conflicts, failed pulls or pushes ,and even an unexpected "detached head state" at some point. This should improve with time as we get used to handle GitHub on a daily basis.   
+One of the main challenges we had to overcome was actually the coordinated use of GitHub, which could sometimes prove confusing, which led to regular conflicts, failed pulls or pushes, and even an unexpected "detached head state" at some point. This should improve with time as we get used to handle GitHub on a daily basis.   
 
 A ClickUp workspace was set up for our group to help us organise our tasks, but it proved difficult to get everyone to use it consistently and communicate efficiently with everyone else. This was also probably due to the fact that we had different schedules and could not always be all present together at the same time for meetings.  
 
@@ -314,7 +312,7 @@ Besides, some of us fell sick (and still are!), which meant that others unexpect
 
 On the database side, out plan was initially to run a script (`clean_tables.py`) which would regularly automatically download the OBF CSV Products file from the Open Beauty Facts website, then clean it up, produce the products and ingredients table and created the Products DB from them... But when the certificate of their website expired, we had to find another solution, changed our mind and worked from a downloaded backup CSV file. Maybe this data pipeline would work again now, but in the meantime we moved on. 
 
-The RDBMS MySQL Workbench was also the source of some codec errors apparently linked to the fact that it was not originally meant to run on some operating systems. This problem was work around but never actually solved. 
+The RDBMS MySQL Workbench was also the source of some codec errors apparently linked to the fact that it was not originally meant to run on some operating systems. This problem was worked around but never actually solved. 
 
 Another issue that we encountered was linked to out IDEs, with PyCharm or VSCode not being always able to import modules which were properly installed, and here again, no reliable solution was found and the reasons why a specific module was found or not remained unclear. 
 
@@ -340,11 +338,11 @@ This file serves to mock the products side of the front end UI to test our produ
   - `selecting_ingredients(self)`
   - `input_products(self)`
   - `results_again(self)`
-  - `run()`  
+- `run()`  
 
 
 ##### `obf_tests.py`
-This files uses the mock products front end UI to test products-related functions.
+This file uses the mock products front end UI to test products-related functions.
 
 **Test Cases**
 - Ordered ingredients input
@@ -353,7 +351,7 @@ This files uses the mock products front end UI to test products-related function
 - Input with only ingredients to exclude
 - Tests no null values in output
 - Tests product dictionaries with more null values appear at bottom of results
-- Testss retrieving most recent search result brings back exact same result
+- Tests retrieving most recent search result brings back exact same result
 - Tests for exception handling in `obf_db_utils`
 
 **Test Classes & Methods in this file**  
@@ -396,7 +394,7 @@ This file serves to mock the user side of the front end UI to test our user-rela
 - `run()`
 
 ##### `user_tests.py`
-This files uses the mock user front end UI to test user-related functions.
+This file uses the mock user front end UI to test user-related functions.
 
 **Test Cases**
 - Creating a new user
@@ -458,7 +456,7 @@ This file serves to mock the wishlist side of the front end UI to test our wishl
 
 
 ##### `wishlist_tests.py`
-This files uses the mock wishlist front end UI to test wishlist-related functions. 
+This file uses the mock wishlist front end UI to test wishlist-related functions. 
 
 **Test cases** 
 - Add product to the wishlist
@@ -500,24 +498,26 @@ This files uses the mock wishlist front end UI to test wishlist-related function
 
 
 ### Functional and user testing
-*We want to test:
-- The creation of a new user account in which the user will input their name, email and password - to make sure this information is both updated to the sql database and actually creates an account for the user to login to.
-- We want to test our data and ensure we can get information associated with a specific user through their user ID/ name - one way would be to have a Test case ID to ensure all users have a unique ID to represent them
-- We want to test the searching facility to make sure ingredients are found in the correct order.
-- We also expect to test the ability of our system to retrieve and display items with a specific ingredient defined by the user.
-- We want to test the wishlist feature to make sure all items on the wish-list are displayed qon the wishlist page, with a dictionary containing product information. This test would also need to show that the items a user saves in their wishlist basket is also updated to a SQL database so that the user is able to retrieve their saved wishlist items at a later date.*
+**We perform the following tests:**  
+- Create a new user account in which the user will input their name, email and password 
+- Make sure that this information is both updated to the sql database and actually creates an account for the user to login to.
+- Ensure that we can get the information associated with a specific user through their user ID/name
+- Make sure that ingredients are found in the correct order when using the search tool
+- Test the ability of our system to retrieve and display items with a specific ingredient defined by the user.
+- Make sure that items on the wishlist are displayed on the wishlist page as a dictionary containing product information. This test demonstrates that the items a user saves in their wishlist basket are also updated to the `Wish_List` SQL database, so that the user is able to retrieve their saved wishlist items at a later date.
+- Make sure that wishlist items can actually be retrieved from the `Wish_List` SQL database.
 
 ### System limitations
-Because the OBF database on which we relied was not perfectly clean, and its data entry having not always beeen done in a consistent manner, it is still a bit difficult go retrieve clean search results. For example, the `ìngredients_text` column of the original OBF CSV table contained ingredients which were not always separated by commas, and sometimes contained a lot of other completely irrelevant information such as usage instructions or company addresses for example. We tried to clean up the data, but there was a lot of it, it is still not completely done.  
+Because the OBF database on which we relied was not perfectly clean, and its data entry having not always been done in a consistent manner, it is still a bit difficult go retrieve clean search results from it. For example, the `ìngredients_text` column of the original OBF CSV table contained ingredients which were not always separated by commas, and sometimes contained a lot of other completely irrelevant information such as usage instructions or company addresses for example. We tried to clean up the data, but there was a lot of it, so it is still not completely done.  
 
-Also at this stage we are still relying on the user installing our databases on their system, which is not realistic in the real world. Therefore, one of the first things that we would improve being given more time would be to host these DB on a remote server so that Cosmo would be made available from anywhere on the Internet and behave as a normal web application.  
+Also, at this stage we are still relying on the user installing our databases on their system, which is not realistic in the real world. Therefore, one of the first things that we would improve, being given more time, would be to host these DB on a remote server, so that Cosmo would be made available from anywhere on the Internet and behave as a normal web application.  
 
-Besides, some functionalities that we had initially planned to implement in the Cosmo app are still not in the first version of the finished working product, but we would like to add them as soon as possible. For example, we need a function to search products in reverse order (button `Filter`toggled on `from last on the `Search` page).  
+Besides, some functionalities that we had initially planned to implement in the Cosmo app are still not in the first version of the finished working product, but we would like to add them as soon as possible. For example, we need a function to search products in reverse order (button `Filter`toggled on `from last` on the `Search` page).  
 
-Finally, there are features that we would like to add later but that we could implement during this nanodegree.
-For example, we would like Cosmo to act as a one-stop shop by giving links to online shops selling a product. We would also enable users to avoid or favour products made or sold in a particular country, or search only for vegan products for example. All of this information does exist in the OBF DB but we have not taken advantage of it yet. 
+Finally, there are features that we would like to add later, but that we could not implement during this nanodegree.
+For example, we would like Cosmo to act as a one-stop shop by giving links to online shops selling a product. We would also like to enable users to avoid or favour products made or sold in a particular country, or search only for vegan products for example. All of this information does exist in the OBF DB, but we have not taken advantage of it yet. 
 Another interesting but more complex option could be to find products having the closest composition to another one, which would require calculating similarity scores between products (NLP cosine similarity?).
 
 ## CONCLUSION
 
-Creating a web app such as Cosmo as a team proved a very enriching, teaching and rewarding project, although challenging on a technical and interpersonal/organisational level at times. Our product is still a prototype and could certainly be improved, but it fulfils our basic requirements, and other features could now be incrementally added to it. 
+Creating a web app such as Cosmo as a team proved a very enriching, teaching and rewarding project, although sometimes challenging, both on a technical and interpersonal/organisational level. Our product is still a prototype, and could certainly be improved, but it fulfils our basic requirements, and other features could now be incrementally added to it. 
