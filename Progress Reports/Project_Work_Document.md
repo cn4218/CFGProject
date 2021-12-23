@@ -44,8 +44,7 @@ We used portable tools and languages to build our application, specifically:
 - Version Control: GitHub.com and IDEs Git tools
 
 #### Non-technical requirements
-We strove to follow the Software Development Life Cycle (SDLC) framework and to implement Agile methodology. In particular, we had our Scrum Master organise Daily Scrum and weekly Sprint Planning meetings on Zoom. We also created "User Stories" to present features to implement in our product. We started by creating a very minimal core app with only a few functions, made sure that they worked, then incrementally improved our app.
-A ClickUp workspace was also for our group to help us organise our tasks.
+???
 
 ### Design and architecture
 Our application comprises the following components, here ordered from the back end to the front end:
@@ -222,9 +221,36 @@ Originally, we intended to use the Open Beauty Facts (OBF) DB indirectly by cons
 At the beginning, we even considered webscraping it, but it was not practical, and eventually we settled for downloading it as a CSV file. We then cleaned it up to obtain the `products_table` table, which was then used to create the `ingredients_table` table. As some of us ran through codec errors preventing the these files from being normally imported into MySQL Workbench, it was done into DB Browser for SQLite instead. The resulting `Products` database was eventually exported as a SQL file, then imported back into MySQL Workbench and its syntax slightly modified to function on this RDBMS.
 
 ### Agile development (did team use any agile elements like iterative approach, refactoring, code reviews)
+We strove to follow the Software Development Life Cycle (SDLC) framework and to implement Agile methodology. 
+In particular, we had our Scrum Master organise Daily Scrum and weekly Sprint Planning meetings on Zoom. 
+ Through our Daily Scrum meeting, we updated each other on what we had been worked on, the problems we encountered and on what we were intending to work next. 
+or added to the GitHub, we will check our code works as intended and review it or clean up the code when necessary.
+
+We also created "User Stories" to present features to implement in our product. 
+We started by creating a very minimal core app with only a few functions, made sure that they worked, then incrementally improved our app. 
+
+We managed our code with GitHub, and created a branch `X_branch` for each team member to push their modifications on the remote repository for others to see.
+Our team was split into task-based subgroups in which members reviewed each other's code.
+- Before we push our code to GitHub, we ensure our code is consistent within the sub-groups we’re working in.
+- We have longer meetings on Sundays in which we review the work we have done and discuss what we completed within the week and what there is left to complete or do for the week which is coming up. This is also a chance to come together and ensure our code is consistent with each other.
 
 ### Implementation challenges
-One of the main challenges we had to overcome was actually the coordinated use of GitHub. 
+One of the main challenges we had to overcome was actually the coordinated use of GitHub, which could sometimes prove confusing to use, which led to regular conflicts, failed pulls or pushes an,nd even an unexpected detached head at some point. This should improve with time as we get used to handle GitHub on a daily basis.   
+
+A ClickUp workspace was set up for our group to help us organise our tasks, but it proved difficult to get everyone to use it consistently and communicate efficiently with everyone else. This was also probably due to the fact that we had different schedules and could not always be all present together at the same time for meetings.  
+
+Besides, some of us fell sick (and still are!), which meant that others unexpectedly had to take care of their tasks alongside their owns.
+
+On the database side, out plan was initially to run a script (`clean_tables.py`) which would regularly automatically download the OBF CSV Products file from the Open Beauty Facts website, then clean it up, produce the products and ingredients table and created the Products DB from them... But when the certificate of their website expired, we had to find another solution, cha,nged our mind and worked from a downloaded backup CSV file. Maybe it would work again now, but in the meantime we moved on. 
+
+The RDBMS MySQL Workbench was also the source of some codec errors apparently linked to the fact that it was not originally meant to run on some operating systems. This problem was work around but never actually solved. 
+
+Another issue that we encountered was linked to out IDEs, with PyCharm or VSCode not being always able to import modules which were properly installed, and here again, no reliable solution was found and the reasons why a specific module was found or not remained unclear. 
+
+Implementing Object Oriented Programming in our app did not come noturally, so we had to refactor our code to transform the Users DB Utils script into OOP, but it eventually worked. 
+
+Other than that, creating the front end in javascript came with its own challenges, as well as using `@patch` to perform mock testing of our app for example, but eventually these
+
 
 ## TESTING AND EVALUATION
 ### Testing strategy
