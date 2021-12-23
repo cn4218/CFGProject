@@ -6,6 +6,11 @@ import json
 import pandas as pd
 import math
 
+
+sys.path.append(str(Path(__file__).parent.parent.parent)) 
+
+from CFGProject.scripts.config import USER, PASSWORD, HOST
+
 ## FUNCTIONS IN THIS SCRIPT:
 """
 _connect_to_db(db_name)
