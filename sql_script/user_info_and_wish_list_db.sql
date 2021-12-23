@@ -1,3 +1,6 @@
+-- Note to the instructor:
+-- Please run this file first to create the relevant databases for the user info and wishlist
+
 CREATE DATABASE if not exists CFG_Project;
 use CFG_Project;
 
