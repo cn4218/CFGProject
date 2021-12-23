@@ -8,6 +8,7 @@ run : function
 """
 
 
+
 class MockProductFrontEnd:
     """
     Class that Mocks front end for the products search result
