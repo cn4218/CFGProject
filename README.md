@@ -1,4 +1,4 @@
-# CFG-Project
+# CFGProject
 
 ## Cosmetics Search Engine by Ingredient
 
