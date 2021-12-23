@@ -1,4 +1,5 @@
 # <center>Cosmo User Manual</center>
+<small><div style="text-align: right">Thu 23/12/2020</div></small>
 
 ## Set Up
 ### Requirements
@@ -6,6 +7,7 @@
 - MySQL Workbench (or another compatible SQL RDBMS)
 - A Python IDE such as VSCode (recommended) or PyCharm
 - The live server extension for VSCode ([Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) or PyCharm ([Live Edit](https://www.jetbrains.com/help/pycharm/live-editing.html)) so that you can run your html script on your browser.
+/!\ At the moment, only VSCode has all the plugins required to properly run our front end. PyCharm is not recommended because the Live Edit pach plugin relies on another plugin which will not be available before a month
 - A Web Browser
 - Make sure that the following Python packages are installed:
   - `mysql.connector` to connect to SQL DBs
