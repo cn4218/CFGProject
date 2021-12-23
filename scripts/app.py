@@ -152,7 +152,7 @@ def get_wishlist_item(user_id, product_id):
     return jsonify(wishlist_item)
 
 ## app route that deletes entire wishlist for user
-@app.route('/wishlist/delete/<int:user_id>')
+@app.route('/wishlist/delete/<int:user_id>', methods=['GET'])
 def delete_entire_wishlist(user_id):
     empty_user_wishlist = delete_wishlist(user_id)
     return jsonify(empty_user_wishlist) ## this should be an empty list so can just return an empty list instead
