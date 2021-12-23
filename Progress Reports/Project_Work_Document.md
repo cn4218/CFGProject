@@ -323,153 +323,183 @@ We intend to test the system using unit testing for various aspects of our code 
 Our testing strategy was to create a file where we mocked the UI and mocked input to test our functions, and then we also did unit tests on all our functions in both wishlist db utils and also in our file where we mocked the UI
 
 #### Test Files
+##### `obf_main.py`
+This file serves to mock the products side of the front end UI to test our products-related functions.
 
-- `obf_main.py`
-  - **`class MockProductFrontEnd`**
-    - `get_every_product(self,order,ingredient1,boolean1,ingredient2,boolean2,ingredient3,boolean3,ingredient4,boolean4,ingredient5,boolean5)`
-    - `fetch_existing_search_result(self)`
-    - `welcome_message(self)`
-    - `selecting_ingredients(self)`
-    - `input_products(self)`
-    - `results_again(self)`
-    - `run()`  
-
-
-- `obf_tests.py`
-  - **`class TestAPIProductFrontEnd(TestCase)`**
-    - `setUp(self)`
-    - `test_unordered_containing_water(self,mock_inputs)`
-    - `test_unordered_containing_glycerin(self,mock_inputs)`
-    - `test_unordered_containing_parfum(self, mock_inputs)`
-    - `test_unordered_bicarb(self,mock_inputs)`
-    - `test_ordered_aqua(self, mock_inputs)`
-    - `test_ordered_water(self, mock_inputs)`
-    - `test_bad_input(self,mock_inputs)`
-    - `test_bad_input_result(self,mock_inputs)`
-    - `test_allergic_to_ingredients_aqua(self,mock_inputs)`
-    - `test_allergic_to_ingredients(self,mock_inputs)`
-    - `test_no_water(self, mock_inputs)`
-    - `test_null_values(self,mock_inputs)`
-    - `test_null_values_order(self,mock_inputs)`
-    - `test_result_save(self,mock_inputs)`
-  - **`class TestDBUtils(TestCase)`**
-    - `test_empty_input_list(self)`
-    - `test_one_search_id(self)`
+**Test Classes & Methods in this file**
+- **`class MockProductFrontEnd`**
+  - `get_every_product(self,order,ingredient1,boolean1,ingredient2,boolean2,ingredient3,boolean3,ingredient4,boolean4,ingredient5,boolean5)`
+  - `fetch_existing_search_result(self)`
+  - `welcome_message(self)`
+  - `selecting_ingredients(self)`
+  - `input_products(self)`
+  - `results_again(self)`
+  - `run()`  
 
 
-TEST CASES `obf_tests.py`:
+##### `obf_tests.py`
+This files uses the mock products front end UI to test products-related functions.
+
+**Test Cases**
 - Ordered ingredients input
 - Unordered ingredients input
-- Input that returns no results
-- Input with only ingredients not wanted
+- Input returning no result
+- Input with only ingredients to exclude
 - Tests no null values in output
 - Tests product dictionaries with more null values appear at bottom of results
-- Tests retrieving most recent search result brings back exact same result
-- Tests exception handling in obf db utils
+- Testss retrieving most recent search result brings back exact same result
+- Tests for exception handling in `obf_db_utils`
+
+**Test Classes & Methods in this file**  
+- **`class TestAPIProductFrontEnd(TestCase)`**
+  - `setUp(self)`
+  - `test_unordered_containing_water(self,mock_inputs)`
+  - `test_unordered_containing_glycerin(self,mock_inputs)`
+  - `test_unordered_containing_parfum(self, mock_inputs)`
+  - `test_unordered_bicarb(self,mock_inputs)`
+  - `test_ordered_aqua(self, mock_inputs)`
+  - `test_ordered_water(self, mock_inputs)`
+  - `test_bad_input(self,mock_inputs)`
+  - `test_bad_input_result(self,mock_inputs)`
+  - `test_allergic_to_ingredients_aqua(self,mock_inputs)`
+  - `test_allergic_to_ingredients(self,mock_inputs)`
+  - `test_no_water(self, mock_inputs)`
+  - `test_null_values(self,mock_inputs)`
+  - `test_null_values_order(self,mock_inputs)`
+  - `test_result_save(self,mock_inputs)`
+- **`class TestDBUtils(TestCase)`**
+  - `test_empty_input_list(self)`
+  - `test_one_search_id(self)`
 
 
-- `user_main.py`
-  - **`class MockFrontEnd`**
-    - `__init__(self)`
-    - `get_profile_by_id(self,user_id)`
-    - `add_new_user(self,user_name,name,email)`
-    - `delete_user_func(self,user_id)`
-    - `user_login(self,user_name,email)`
-    - `welcome_message(self)`
-    - `enter_details(self)`
-    - `verify_account_added(self)`
-    - `displaying_user(self)`
-    - `deleting_account(self)`
-    - `run()`
+##### `user_main.py`
+This file serves to mock the user side of the front end UI to test our user-related functions. 
+
+**Test Classes & Methods in this file**  
+- **`class MockFrontEnd`**
+  - `__init__(self)`
+  - `get_profile_by_id(self,user_id)`
+  - `add_new_user(self,user_name,name,email)`
+  - `delete_user_func(self,user_id)`
+  - `user_login(self,user_name,email)`
+  - `welcome_message(self)`
+  - `enter_details(self)`
+  - `verify_account_added(self)`
+  - `displaying_user(self)`
+  - `deleting_account(self)`
+- `run()`
+
+##### `user_tests.py`
+This files uses the mock user front end UI to test user-related functions.
+
+**Test Cases**
+- Creating a new user
+- Deleting an existing user
+- Test login success or failure
+- Check for incorrect input (email, name)
+
+**Test Classes & Methods in this file**  
+- **`class TestApiDb(TestCase)`**
+  - `setUp(self)`
+  - `test_add_new_user(self)`
+  - `test_add_new_user_2(self)`
+  - `test_get_fang_profile(self)`
+  - `test_add_new_user_has_been_added(self)`
+  - `test_deleting_user(self)`
+  - `test_user_login(self)`
+  - `test_user_login_false(self)`
+  - `test_delete_non_existing_user(self)`
+- **`TestMockFrontEnd(TestCase)`**
+  - `test_positive_input(self, mock_input)`
+  - `test_negative_input(self, mock_input)`
+  - `test_wrong_input(self, mock_inputs)`
+  - `test_incorrect_email(self, mock_inputs)`
+  - `test_incorrect_email_2(self, mock_inputs)`
+  - `test_adding_user(self,mock_inputs)`
+- **`class TestRunFunction(TestCase)`**
+  - `test_incorrect_email_3(self,mock_inputs)`
+  - `test_creating_user(self,mock_inputs)`
+  - `test_deleting_user(self,mock_inputs)`
+  - `test_creating_user2_ayesha(self,mock_inputs)`
+  - `test_creating_user_zita(self,mock_inputs)`
+  - `test_goodbye(self,mock_input)`
+- **`TestUsersDelete(TestCase)`**
+  - `setUp(self)`
+  - `test_delete_zita_user(self)`
+  - `test_delete_fang_user(self)`
+  - `test_delete_sophie_user(self)`
+  - `test_delete_ayesha_user(self)`
+  - `test_delete_unknown_id(self)`
 
 
-- `user_tests.py`
-  - **`class TestApiDb(TestCase)`**
-    - `setUp(self)`
-    - `test_add_new_user(self)`
-    - `test_add_new_user_2(self)`
-    - `test_get_fang_profile(self)`
-    - `test_add_new_user_has_been_added(self)`
-    - `test_deleting_user(self)`
-    - `test_user_login(self)`
-    - `test_user_login_false(self)`
-    - `test_delete_non_existing_user(self)`
-  - **`TestMockFrontEnd(TestCase)`**
-    - `test_positive_input(self, mock_input)`
-    - `test_negative_input(self, mock_input)`
-    - `test_wrong_input(self, mock_inputs)`
-    - `test_incorrect_email(self, mock_inputs)`
-    - `test_incorrect_email_2(self, mock_inputs)`
-    - `test_adding_user(self,mock_inputs)`
-  - **`class TestRunFunction(TestCase)`**
-    - `test_incorrect_email_3(self,mock_inputs)`
-    - `test_creating_user(self,mock_inputs)`
-    - `test_deleting_user(self,mock_inputs)`
-    - `test_creating_user2_ayesha(self,mock_inputs)`
-    - `test_creating_user_zita(self,mock_inputs)`
-    - `test_goodbye(self,mock_input)`
-  - **`TestUsersDelete(TestCase)`**
-    - `setUp(self)`
-    - `test_delete_zita_user(self)`
-    - `test_delete_fang_user(self)`
-    - `test_delete_sophie_user(self)`
-    - `test_delete_ayesha_user(self)`
-    - `test_delete_unknown_id(self)`
+##### `wishlist_main.py`
+This file serves to mock the wishlist side of the front end UI to test our wishlist-related functions.
+
+**Test Classes & Methods in this file**  
+- **`class MockFrontEnd`**
+  - `__init__(self, db_name)`
+  - `def add_new_wishlist(self)`
+  - `_get_wish_list_individual(self, User_ID, productID)`
+  - `_get_wish_list_all(self, User_ID)`
+  - `delete_wishlist_item(self, User_ID, productID)`
+  - `delete_wishlist(self, User_ID)`
+  - `welcome_message(self)`
+  - `verify_wish_list_item(self)`
+  - `verify_wish_list(self)`
+  - `deleting_wishlist_item(self)`
+  - `deleting_wishlist(self)`
+- `run()`
 
 
-- `wishlist_main.py`
-  - **`class MockFrontEnd`**
-    - `__init__(self, db_name)`
-    - `def add_new_wishlist(self)`
-    - `_get_wish_list_individual(self, User_ID, productID)`
-    - `_get_wish_list_all(self, User_ID)`
-    - `delete_wishlist_item(self, User_ID, productID)`
-    - `delete_wishlist(self, User_ID)`
-    - `welcome_message(self)`
-    - `verify_wish_list_item(self)`
-    - `verify_wish_list(self)`
-    - `deleting_wishlist_item(self)`
-    - `deleting_wishlist(self)`
-    - `run()`
+##### `wishlist_tests.py`
+This files uses the mock wishlist front end UI to test wishlist-related functions. 
 
+**Test cases** 
+- Add product to the wishlist
+- Get product from the wishlist
+- Get whole whishlist
+- Delete wishlist product
+- Delete whole wishlist
+- Create a new wishlist
 
-- `wishlist_tests.py`
-  - `class TestWishListApiDb(unittest.TestCase)`
-    - `test_1_add_wish_list(self)`
-    - `test_2_get_wish_list_item_if_not_exists(self)`
-    - `test_3_get_wish_list_all_if_not_exists(self)`
-    - `test_4_delete_wish_list_item_if_not_exists(self)`
-    - `test_5_delete_wish_list_all_if_not_exists(self)`
-    - `test_6_get_wish_list_item_if_exists(self)`
-    - `test_7_get_wish_list_all_if_exists(self)`
-  - `class TestMockFrontEnd(unittest.TestCase)`
-    - `setUp(self)`
-    - `test_8_add_new_wishlist(self)`
-    - `test_9_verify_wish_list_item(self, mock_inputs)`
-    - `test_10_verify_wish_list(self, mock_inputs)`
-    - `test_11_add_new_wishlist_mocked_values(self, mock_wish_list_dict)`
-  - `class TestMockFrontEndDelete(unittest.TestCase)`
-    - `setUp(self)`
-    - `test_12_delete_wish_list_item(self, mock_inputs)`
-    - `test_13_delete_wish_list_all(self, mock_inputs)`
-  - `class ReAddingData(unittest.TestCase)`
-    - `test_14_re_add_mock_wish_list(self)`
-    - `test_15_re_add_wish_list_1(self)`
-    - `test_16_re_add_wish_list_2(self)`
-  - `class TestWishListApiDbDeletingUsers(unittest.TestCase)`
-    - `test_17_delete_wish_list_item(self)`
-    - `test_18_re_add_wish_list(self)`
-    - `test_19_delete_wish_list_all(self)`
-    - `test_20_re_add_wish_list_1(self)`
-    - `test_21_re_add_wish_list_2(self)`
+**Test Classes & Methods in this file**  
+- **`class TestWishListApiDb(unittest.TestCase)`**
+  - `test_1_add_wish_list(self)`
+  - `test_2_get_wish_list_item_if_not_exists(self)`
+  - `test_3_get_wish_list_all_if_not_exists(self)`
+  - `test_4_delete_wish_list_item_if_not_exists(self)`
+  - `test_5_delete_wish_list_all_if_not_exists(self)`
+  - `test_6_get_wish_list_item_if_exists(self)`
+  - `test_7_get_wish_list_all_if_exists(self)`
+- **`class TestMockFrontEnd(unittest.TestCase)`**
+  - `setUp(self)`
+  - `test_8_add_new_wishlist(self)`
+  - `test_9_verify_wish_list_item(self, mock_inputs)`
+  - `test_10_verify_wish_list(self, mock_inputs)`
+  - `test_11_add_new_wishlist_mocked_values(self, mock_wish_list_dict)`
+- **`class TestMockFrontEndDelete(unittest.TestCase)`**
+  - `setUp(self)`
+  - `test_12_delete_wish_list_item(self, mock_inputs)`
+  - `test_13_delete_wish_list_all(self, mock_inputs)`
+- **`class ReAddingData(unittest.TestCase)`**
+  - `test_14_re_add_mock_wish_list(self)`
+  - `test_15_re_add_wish_list_1(self)`
+  - `test_16_re_add_wish_list_2(self)`
+- **`class TestWishListApiDbDeletingUsers(unittest.TestCase)`**
+  - `test_17_delete_wish_list_item(self)`
+  - `test_18_re_add_wish_list(self)`
+  - `test_19_delete_wish_list_all(self)`
+  - `test_20_re_add_wish_list_1(self)`
+  - `test_21_re_add_wish_list_2(self)`
+
 
 ### Functional and user testing
-we want to test:
+*We want to test:
 - The creation of a new user account in which the user will input their name, email and password - to make sure this information is both updated to the sql database and actually creates an account for the user to login to.
 - We want to test our data and ensure we can get information associated with a specific user through their user ID/ name - one way would be to have a Test case ID to ensure all users have a unique ID to represent them
 - We want to test the searching facility to make sure ingredients are found in the correct order.
 - We also expect to test the ability of our system to retrieve and display items with a specific ingredient defined by the user.
-- We want to test the wishlist feature to make sure all items on the wish-list are displayed qon the wishlist page, with a dictionary containing product information. This test would also need to show that the items a user saves in their wishlist basket is also updated to a SQL database so that the user is able to retrieve their saved wishlist items at a later date.
+- We want to test the wishlist feature to make sure all items on the wish-list are displayed qon the wishlist page, with a dictionary containing product information. This test would also need to show that the items a user saves in their wishlist basket is also updated to a SQL database so that the user is able to retrieve their saved wishlist items at a later date.*
 
 ### System limitations
 Because the OBF database on which we relied was not perfectly clean, and its data entry having not always beeen done in a consistent manner, it is still a bit difficult go retrieve clean search results. For example, the `ìngredients_text` column of the original OBF CSV table contained ingredients which were not always separated by commas, and sometimes contained a lot of other completely irrelevant information such as usage instructions or company addresses for example. We tried to clean up the data, but there was a lot of it, it is still not completely done.  
