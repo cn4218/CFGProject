@@ -220,31 +220,30 @@ The function `user_acc()` takes user information as a dictionary to add it to th
 The function `delete_user_(user_id)` uses the `delete_user(user_id)` function from `user_db_utils` to delete a user row using their user ID.
 - `@app.route("/login/<string:username>/<string:email>", methods=["GET"])`  
 The function `verify_login_api(username, email)` uses the `verify_login(username, email)` function from `user_db_utils` to check whether a user exists for them to login. 
-- 
 
 #### Website User Interface (UI)
 ##### Home page/ Search Tool
-![UI_Search_Fields.png](UI_Search_Fields.png)  
+![Search.png](Search.png)  
 On the the `Search` page are input fields for up to 5 ingredients.  
 - When the button on the right side is toggled on the green ✅ "include" option, Cosmo will search for products containing this specific ingredient and take into account the state of the `Filter` button.  
 - When the `Filter` button above the search fields is toggled on `unordered`, the search is done in an unspecified order. Otherwise, if it is on `ordered`, the number on the left of the search field corresponds to the position of the ingredient in the product ingredient list.  
 - When the button on the right side is toggled on the red ❌ "exclude" option, Cosmo will search for products **not** containing this specific ingredient at all, that is without taking into account the state of the `Filter` button for this specific ingredient.
+
+![UI_Search_Fields.png](UI_Search_Fields.png) 
 
 ##### Login and Sign up page
 New users can sign up for an account and existing users can just log into their previously created account at any time.
 ![Login.png](Login.png)
 
 ##### Results display page
-This is where user search results will be displayed according to the ingredients they input on the `Home`/`Search` webpage.
-
-##### Login and Sign up page
-New users can sign up for an account and old users can just log into their previously created account at any time.
+This is where user search results are displayed according to the ingredients they input on the `Home`/`Search` webpage.
+![Results2.png](Results2.png)
 
 ##### Wishlist page
 The `Wishlist` feature enables users to save products to which they want to be able to come back from their search results. Product added to their wishlist will be stored on the `Wish_List` table of the Users & Wishlist DB, and displayed on the `Wishlist`webpage. This relies on the creation of an account which would store all products specified by the user. Each wishlist is unique to the user, and stores only the products they have selected from their own search results.
 
 ##### Account page
-The Account webpage hows the user's personal information, such as their username, email address, etc.
+The Account webpage shows the user's personal information, such as their username, email address, etc.
 
 
 
