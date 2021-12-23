@@ -9,6 +9,17 @@ from CFGProject.scripts.user_db_utils import dbConnection
 from CFGProject.scripts.config import PASSWORD, USER, HOST
 
 """
+To run user tests:
+1 - Install all the necessary modules:
+unittest, sys, pathlib, json, requests, mysql.connector, flask, flask_cors, pprint
+2 - run the user_info_and_wish_list_db.sql within the sql_scripts folder in the repository, to create the user table
+3 - Run the user_db_utils.py within the scripts folder
+4 - Run the app.py file within the scripts folder (keep this running whilst running the tests)
+5 - Run the user_main.py file within the testing folder
+
+"""
+
+"""
 In this script:
 TestApiDb:
     test_add_new_user(self)
@@ -336,3 +347,4 @@ class TestUsersDelete(TestCase):
 
 if __name__ == "__main__":
     main()
+
