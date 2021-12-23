@@ -58,6 +58,8 @@ To run the unit tests, first open the following files:
   - `wishlist_main.py`
   - `user_tests.py`
   - `user_main.py`
+  - `obf_tests.py`
+  - `obf_main.py`
 
 ### 2. Check credentials
 Check the credentials in the `config.py` file and make sure that they match yours (i.e. the user and password match your MySQL workbench credentials.)
@@ -76,13 +78,14 @@ The `wishlist_main.py`, however, is a file created to mock the UI and user input
 Wishlist functions are primarily tested through the unit tests found in `wishlist_tests.py` and mocking input found in `wishlist_main.py`. 
 
 #### Users Tests
-Run the `user_tests.py` file. This will run unit tests on the user functions used in the  `user_db_utils.py` and `user_main.py` file.
+Run the `user_tests.py` file. This will run unit tests on the user functions used in the `user_db_utils.py` and `user_main.py` file.
 The `user_db_utils.py` contains functions called when running our application.  
-The `user_main.py`, however, is a file created to mock the UI and user inputs in order to test wishlist functions.  
-Wishlist functions are primarily tested through the unit tests found in `user_tests.py` and mocking input found in `user_main.py`.
+The `user_main.py`, however, is a file created to mock the UI and user inputs in order to test user functions.  
+User functions are primarily tested through the unit tests found in `user_tests.py` and mocking input found in `user_main.py`.
 
-
-
-3 - Run the user_db_utils.py within the scripts folder
-4 - Run the app.py file within the scripts folder (keep this running whilst running the tests)
-5 - Run the user_main.py file within the testing folder
+#### Products Tests
+Run the `obf_tests.py` file. This will run unit tests on the products functions used in the `obf_db_utils.py` and `obf_main.py` file.
+The `obf_db_utils.py` contains functions called when running our application.  
+The `obf_main.py`, however, is a file created to mock the UI and products inputs in order to test products functions.  
+Products functions are primarily tested through the unit tests found in `obf_tests.py` and mocking input found in `obf_main.py`.
+ the testing folder
