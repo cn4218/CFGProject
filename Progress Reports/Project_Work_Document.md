@@ -44,7 +44,8 @@ We used portable tools and languages to build our application, specifically:
 - Version Control: GitHub.com and IDEs Git tools
 
 #### Non-technical requirements
-???
+We aimed at implementing Agile philosophy and make our application user-friendly, fast, practical and reliable.
+We also thought about its maintainability by writing documentation in order for our code to be easily understandable by later developers. 
 
 ### Design and architecture
 Our application comprises the following components, here ordered from back to front end:
@@ -105,13 +106,13 @@ The Wish List DB stores products found through our cosmetic search engine and th
 #### DB Utils (+ credentials)
 The bulk of the operations listed below is handled by the DB_utils files.
 A few of them include but are not limited to:
-- Use the user's product ingredient search to query the Products DB
-- Send the results from this query to be displayed on the Results display webpage
+- Use the user's product ingredient search to query the `Products` DB
+- Send the results from this query to be displayed on the `Results` display webpage
 - Transfer new wishlist data from the website to the wishlist table in the User Info DB
-- Send all the wishlist data from the wishlist table to the website whenever the user wants to view them on the wishlist page
+- Send all the wishlist data from the wishlist table to the website whenever the user wants to view them on the `Wishlist` page
 
 ##### 3 - For products (`obf_db_utils.py` + `config.py`)
-This file contains functions responsible for querying the `Products` DB according to the user input's search criteria. They work by retrieving the `productIDs` corresponding to products fulfilling these conditions, then fetch the rest of the product information from either the `product_table` table or the `ingredient_table` one, depending on whether the filter search criterioa was set on 'unordered' or 'ordered' respectively.  
+This file contains functions responsible for querying the `Products` DB according to the user input's search criteria. They work by retrieving the `productIDs` corresponding to products fulfilling these conditions, then fetch the rest of the product information from either the `product_table` table or the `ingredient_table` one, depending on whether the filter search criteria was set on 'unordered' or 'ordered' respectively.  
 
 They allow for the following searching functionalities:
 - ingredient simply present in the product ingredient list (fuzzy search)
@@ -141,8 +142,8 @@ In addition, a few other functions allow the search results to be processed and 
 
 
 ##### 4 - For users (OOP) (`db_utils_user_oop.py` + `config.py`?)
-This file contains functions responsible for querying the database and handling db connection errors if they occur. Some of these functions will insert user info into the user info table and retrieve it whenever the user logs in, and are used depending on the nature of the API request. *(see details in the API section)*
-This particular DB Utils script was written in OOP because user data is more easily conducive to this programming paadigm/model.
+This file contains functions responsible for querying the database and handling db connection errors if they occur. Some of these functions will insert user information into the `User_Info table` and retrieve it whenever the user logs in, and are used depending on the nature of the API request. *(see details in the API section)*  
+This particular DB Utils script was written in OOP because user data is more easily conducive to this programming paradigm/model.
 
 **Methods in this file**  
 - **`class dbConnection`**  
@@ -157,7 +158,7 @@ This particular DB Utils script was written in OOP because user data is more eas
 
 
 ##### 5 - For wishlists (`wishlist_db_utils.py` + `wishlist_config.py`)
-This file contains functions responsible for querying the database and handling db connection errors if they occur. Some of these functions either insert or retrieve wishlist data and are used depending on the nature of the API request. *(see details in the API section)*
+This file contains functions responsible for querying the database and handling database connection errors if they occur. Some of these functions either insert or retrieve wishlist data, and are used depending on the nature of the API request. *(see details in the API section)*
 
 **Functions in this file**  
 - `_connect_to_db(db_name)`
@@ -179,9 +180,9 @@ Our Flask RESTful 2-in-1 API creates routes (http pipeline) for data exchange, o
 **Endpoints**  
 - `@app.route("/")`  
 The function `serve_home_page()` displays the home page when the application starts. 
-- `@app.route("/Search", methods=['POST'])`
+- `@app.route("/Search", methods=['POST'])`  
 The function `find_products()` uses a POST method (and not a simple GET one) to make a
-  request from the front end UI containing the `ingredient_input` search formatted as a dictionary:  
+  request from the front end UI containing the `ingredient_input` search formatted as a dictionary, i.e.:  
 ```python
 dict_ = {
     'filter': 'ordered',
@@ -195,14 +196,14 @@ dict_ = {
 ```
 - `@app.route("/Search", methods=['GET'])`  
 The function `return_list()` returns a list containing a list of products dictionaries. `[[{}{}{}{}]]`
-- `@app.route("/results", methods=['GET'])`
-The function `get_results()` calls the `fetch_results()`function from `obf_db_utils` which returns a list of product results `[{}{}{}]` and returns a jsonified version of it to the frontend.`
+- `@app.route("/results", methods=['GET'])`  
+The function `get_results()` calls the `fetch_results()`function from `obf_db_utils` which returns a list of product results `[{}{}{}{}]` and returns a jsonified version of it to the frontend.
 
 
 - `@app.route('/wishlist/add/<int:user_id>/<string:product_id>',methods = ['GET'])`  
 The function `add_wish_list_func(user_id,product_id)` uses the `get_products_by_ids([product_id])`function from `obf_db_utils` and the `add_wish_list([all columns])` function from `wishlist_db_utils` to add a product to the wishlist of a specific user.
-- `@app.route('/wishlist/<int:user_id>', methods=['GET'])`   # {"user_id: user_id"}
-The function `get_wishlist(user_id)`uses the `_get_wish_list_all(user_id)` function from `wishlist_db_utils` to fetch al wishlist products corresponding to a particular user and returns a jsonified list of products dictionaries. `[{}{}{}]`
+- `@app.route('/wishlist/<int:user_id>', methods=['GET'])`  
+The function `get_wishlist(user_id)`uses the `_get_wish_list_all(user_id)` function from `wishlist_db_utils` to fetch al wishlist products corresponding to a particular user and returns a jsonified list of products dictionaries. `[{}{}{}{}]`
 
 ##### 7 - Users & Wishlist API (`user_api.py`)
 **Endpoints**  
@@ -223,47 +224,47 @@ The function `verify_login_api(username, email)` uses the `verify_login(username
 
 #### Website User Interface (UI)
 ##### Home page/ Search Tool
-As the system is designed around searching for ingredients that already exist, one of its key features is the search tool. Shows input fields for up to 5 ingredients.
-Can search for ingredients to be done in the unspecified order:
-We designed this tool to search a database that lists all the specific ingredients in beauty products and return results where specified ingredients appear.
-We also designed the opposite feature, so the search results in only products without certain ingredients. For example, if a searcher was allergic to ingredient x, all products containing ingredient x would be removed from all of their search results.
-
-Or in the specified order: Another feature of the search tool is the ability to search for an ingredient in a specific position on a product’s ingredient list. Generally, in beauty products, ingredients are listed in order of what has been used most, so our tool enables searchers to look for ingredients with a larger percentage of each ingredient.
+![UI_Search_Fields.png](UI_Search_Fields.png)  
+On the the `Search` page are input fields for up to 5 ingredients.  
+- When the button on the right side is toggled on the green ✅ "include" option, Cosmo will search for products containing this specific ingredient and take into account the state of the `Filter` button.  
+- When the `Filter` button above the search fields is toggled on `unordered`, the search is done in an unspecified order. Otherwise, if it is on `ordered`, the number on the left of the search field corresponds to the position of the ingredient in the product ingredient list.  
+- When the button on the right side is toggled on the red ❌ "exclude" option, Cosmo will search for products **not** containing this specific ingredient at all, that is without taking into account the state of the `Filter` button for this specific ingredient.
 
 ##### Login and Sign up page
-New users can sign up for an account and old users can just log into their previously created account at any time.
+New users can sign up for an account and existing users can just log into their previously created account at any time.
+![Login.png](Login.png)
 
 ##### Results display page
-This is where the users search results will be displayed according to the ingredients they put in on the home page.
+This is where user search results will be displayed according to the ingredients they input on the `Home`/`Search` webpage.
 
 ##### Login and Sign up page
 New users can sign up for an account and old users can just log into their previously created account at any time.
 
 ##### Wishlist page
-Another important component of the system is a wishlist which enables users to save products from their search results. When a user likes a particular product from the search results page, they have the option to add it to the wishlist. Any product added to the wishlist will be stored and displayed on the wishlist page. This relies on the creation of an account which would store all products specified by the user. Each wishlist is unique to the user, and stores only the products they have selected from their own search results.
+The `Wishlist` feature enables users to save products to which they want to be able to come back from their search results. Product added to their wishlist will be stored on the `Wish_List` table of the Users & Wishlist DB, and displayed on the `Wishlist`webpage. This relies on the creation of an account which would store all products specified by the user. Each wishlist is unique to the user, and stores only the products they have selected from their own search results.
 
 ##### Account page
-Shows the user's personal information such as their username, email address, etc.
+The Account webpage hows the user's personal information, such as their username, email address, etc.
 
 
 
 ## IMPLEMENTATION AND EXECUTION
 ### Development approach and team member roles
-We tried to give ourselves roles as in a typical Agile team, but as we all had the same experience with this methodology (that is, none), it was not really possible to rely on a senior Agile expert "Scrum Master", and the role of "Product Owner" was also difficult to implement in a self-organising "democratic" team. Therefore, the workload was distributed based on the sections on which team members wanted to work, because they enjoyed this particular part of the project or in order to improve these particular programming skills.
+We tried to give ourselves roles as in a typical Agile team, but as we all had the same experience with this methodology (that is, none), it was not really possible to rely on a senior Agile expert "Scrum Master", and the role of "Product Owner" was also difficult to implement in a self-organising "democratic" team. Therefore, the workload was distributed based on the sections on which team members wanted to work, because they enjoyed this particular part of the project or in order to improve their programming skills. Some focused more on some specific aspects of the project, others worked on more diverse ones. 
 
 |                **TASKS**                |**Chizu**|**Claire**|**Georgia**|**Nasian**|**Nikita**|**Sophie**|
 | :-------------------------------------- | :-----: | :------: | :-------: | :------: | :------: | :------: |
-| Products DB (Cosmo-OBF)                 |    X    |     X    |           |          |          |          |
-| Users & Wishlist DB                     |         |          |     X     |     X    |     X    |          |
+| Products DB (Cosmo-OBF)                 |    X    |     X    |           |          |          |     x     |
+| Users & Wishlist DB                     |         |          |           |     X    |     X    |          |
 | Products DB_Utils & Config              |    X    |     X    |           |          |          |     X    |
-| Users DB_Utils & Config                 |         |          |     X     |     X    |     X    |          |
+| Users DB_Utils & Config                 |         |          |     X     |     X    |     X    |     X    |
 | Wishlist DB_Utils & Config              |         |          |           |     X    |     X    |     X    |
-| Products API                            |    X    |     X    |           |          |          |          |
+| Products API                            |    X    |     X    |           |          |          |     x    |
 | Users & Wishlist API                    |         |          |           |          |     X    |     X    |
 | Tests                                   |         |          |           |     X    |          |     X    |
 | Backend Main (mock Front End for tests) |         |          |           |          |          |     X    |
 | Front End Web UI                        |    X    |          |     X     |          |          |          |
-| Documentation, organisation             |    X    |     X    |           |          |          |          |
+| Documentation, organisation             |    X    |     X    |           |          |          |     x    |
 | *Scrum Master*                          |    x    |          |     x     |          |          |          |
 | *Product Owner*                         |         |     x    |           |          |          |          |
 
@@ -299,13 +300,13 @@ Our team was split into task-based subgroups in which members reviewed each othe
 - We have longer meetings on Sundays in which we review the work we have done and discuss what we completed within the week and what there is left to complete or do for the week which is coming up. This is also a chance to come together and ensure our code is consistent with each other.
 
 ### Implementation challenges
-One of the main challenges we had to overcome was actually the coordinated use of GitHub, which could sometimes prove confusing to use, which led to regular conflicts, failed pulls or pushes an,nd even an unexpected detached head at some point. This should improve with time as we get used to handle GitHub on a daily basis.   
+One of the main challenges we had to overcome was actually the coordinated use of GitHub, which could sometimes prove confusing, which led to regular conflicts, failed pulls or pushes ,and even an unexpected "detached head state" at some point. This should improve with time as we get used to handle GitHub on a daily basis.   
 
 A ClickUp workspace was set up for our group to help us organise our tasks, but it proved difficult to get everyone to use it consistently and communicate efficiently with everyone else. This was also probably due to the fact that we had different schedules and could not always be all present together at the same time for meetings.  
 
 Besides, some of us fell sick (and still are!), which meant that others unexpectedly had to take care of their tasks alongside their owns.
 
-On the database side, out plan was initially to run a script (`clean_tables.py`) which would regularly automatically download the OBF CSV Products file from the Open Beauty Facts website, then clean it up, produce the products and ingredients table and created the Products DB from them... But when the certificate of their website expired, we had to find another solution, cha,nged our mind and worked from a downloaded backup CSV file. Maybe it would work again now, but in the meantime we moved on. 
+On the database side, out plan was initially to run a script (`clean_tables.py`) which would regularly automatically download the OBF CSV Products file from the Open Beauty Facts website, then clean it up, produce the products and ingredients table and created the Products DB from them... But when the certificate of their website expired, we had to find another solution, changed our mind and worked from a downloaded backup CSV file. Maybe this data pipeline would work again now, but in the meantime we moved on. 
 
 The RDBMS MySQL Workbench was also the source of some codec errors apparently linked to the fact that it was not originally meant to run on some operating systems. This problem was work around but never actually solved. 
 
@@ -313,12 +314,13 @@ Another issue that we encountered was linked to out IDEs, with PyCharm or VSCode
 
 Implementing Object Oriented Programming in our app did not come noturally, so we had to refactor our code to transform the Users DB Utils script into OOP, but it eventually worked. 
 
-Other than that, creating the front end in javascript came with its own challenges, as well as using `@patch` to perform mock testing of our app for example, but eventually these
+Other than that, creating the front end in javascript came with its own challenges, as well as using `@patch` to perform mock testing of our app for example, but eventually these issues were overcome.
 
 
 ## TESTING AND EVALUATION
 ### Testing strategy
 We intend to test the system using unit testing for various aspects of our code and system.
+Our testing strategy was to create a file where we mocked the UI and mocked input to test our functions, and then we also did unit tests on all our functions in both wishlist db utils and also in our file where we mocked the UI
 
 #### Test Files
 
@@ -470,6 +472,16 @@ we want to test:
 - We want to test the wishlist feature to make sure all items on the wish-list are displayed qon the wishlist page, with a dictionary containing product information. This test would also need to show that the items a user saves in their wishlist basket is also updated to a SQL database so that the user is able to retrieve their saved wishlist items at a later date.
 
 ### System limitations
+Because the OBF database on which we relied was not perfectly clean, and its data entry having not always beeen done in a consistent manner, it is still a bit difficult go retrieve clean search results. For example, the `ìngredients_text` column of the original OBF CSV table contained ingredients which were not always separated by commas, and sometimes contained a lot of other completely irrelevant information such as usage instructions or company addresses for example. We tried to clean up the data, but there was a lot of it, it is still not completely done.  
 
+Also at this stage we are still relying on the user installing our databases on their system, which is not realistic in the real world. Therefore, one of the first things that we would improve being given more time would be to host these DB on a remote server so that Cosmo would be made available from anywhere on the Internet and behave as a normal web application.  
+
+Besides, some functionalities that we had initially planned to implement in the Cosmo app are still not in the first version of the finished working product, but we would like to add them as soon as possible. For example, we need a function to search products in reverse order (button `Filter`toggled on `from last on the `Search` page).  
+
+Finally, there are features that we would like to add later but that we could implement during this nanodegree.
+For example, we would like Cosmo to act as a one-stop shop by giving links to online shops selling a product. We would also enable users to avoid or favour products made or sold in a particular country, or search only for vegan products for example. All of this information does exist in the OBF DB but we have not taken advantage of it yet. 
+Another interesting but more complex option could be to find products having the closest composition to another one, which would require calculating similarity scores between products (NLP cosine similarity?).
 
 ## CONCLUSION
+
+Creating a web app such as Cosmo as a team proved a very enriching, teaching and rewarding project, although challenging on a technical and interpersonal/organisational level at times. Our product is still a prototype and could certainly be improved, but it fulfils our basic requirements, and other features could now be incrementally added to it. 
