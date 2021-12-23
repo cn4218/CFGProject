@@ -4,7 +4,7 @@
 This document would be used to assess your project work and understand your approach to the project delivery. It will also provide an insight into your architecture, testing and implementation strategy as a team.
 
 NOTE: Your instructors team would also use this documents as part of the mock interview assessments to support their enquiries about your work and ‘rehearse’ live-like interview scenarios.
-We expect this report to be concise, but very detailed, so that every key point is explained and covered. It should be no more than 5-7 pages (A4) long. The report can and should include diagrams, images with descriptive captions.-->
+We expect this report to be concise, but very detailed, so that every key point is explained and covered. It should be no more than 5-7 pages (A4) long. The report can and should include diagrams, images with descriptive captions. -->
 
 ## INTRODUCTION
 ### Aims and objectives of the project
@@ -15,7 +15,10 @@ Our objectives were to allow users to:
 - save selected products to their wishlist and manage it as they want (Wishlist side)
 
 ### Roadmap of the report
-xxxxxxxxxxxxxxxxxxxxxxxxxxx
+First we will introduce our product and the needs it addresses, then describe its requirements and high-level design. We will then go on a more detailed description of its parts such as its databases, DB Utils files, its API and website UI, listing individual files and the functions they perform.  
+We will then talk about the implementation and execution process of this project, outline our development approach and team member roles, our challenges, achievements and thought process as we made decisions.  
+Then we will review out testing and evaluation strategy, here agin listing individual files and describe their functions.  
+Finally, we will discuss our system limitations and conclude.
 
 
 ## BACKGROUND
@@ -31,7 +34,7 @@ In theory, an informed consumer should thus be able to make a choice based on th
 
 Some cosmetic-related tools and search engines such as Open Beauty Facts (OBF) or INCIDecoder already exist, but so far they only offer a list of products containing or not a specific ingredient, regardless of their position within the list.
 
-Cosmo is an app that not only returns a list of products containing a particular ingredient, but also takes into account its position in the ingredient list. Moreover, it allows you to search for products without a specific ingredient, and to perform a multi-criteria search up to the 5<sup>th</sup> ingredient.
+Cosmo is a web application that not only returns a list of products containing a particular ingredient, but also takes into account its position in the ingredient list. Moreover, it allows you to search for products without a specific ingredient, and to perform a multi-criteria search up to the 5<sup>th</sup> ingredient.
 
 
 ## SPECIFICATIONS AND DESIGN
