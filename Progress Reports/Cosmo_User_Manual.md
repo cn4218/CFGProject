@@ -6,7 +6,7 @@
 - A PC or Mac computer running on a Windows, MacOS or Linux distribution
 - MySQL Workbench (or another compatible SQL RDBMS)
 - A Python IDE such as VSCode (recommended) or PyCharm
-- The `Live Server` extension for VSCode ([Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) or PyCharm ([Live Edit](https://www.jetbrains.com/help/pycharm/live-editing.html)) so that you can run your html script on your browser.
+- The `Live Server` extension for VSCode ([Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)) or PyCharm ([Live Edit](https://www.jetbrains.com/help/pycharm/live-editing.html)) so that you can run your html script on your browser.
 /!\ At the moment, only VSCode has all the plugins required to properly run our front end. PyCharm is not recommended because the `Live Edit` patch plugin relies on another plugin, `com. intellij.css` which will not be available before a month 
 - A Web Browser
 - Make sure that the following Python packages are installed:
@@ -25,6 +25,9 @@
   - `pathlib` to add folders to the Python path so other scripts can be imported
   - `sys` to add folders to the Python path so other scripts can be imported
 
+### Clone GitHub repository
+Clone this [GitHub repository](https://github.com/cn4218/CFGProject) in your Python IDE, preferably VSCode, and checkout the `temp_v3_branch`
+
 ### Import and set up databases + config files
 1. First, you need to run these SQL files in MySQL Workbench:
   - sql_script folder
@@ -33,9 +36,6 @@
     - `user_info_and_wish_list_db.sql` (Users & Wishlist DB)
   Once it is done, check that all databases were properly installed.
 2. Then the password for your MySQL Workbench connection should be assigned to the PASSWORD variable in the `config.py` file
-
-### Clone GitHub repository
-Clone this [GitHub repository](https://github.com/cn4218/CFGProject) in your Python IDE, preferably VSCode, and checkout the `temp_v3_branch`
 
 
 
@@ -48,6 +48,8 @@ Clone this [GitHub repository](https://github.com/cn4218/CFGProject) in your Pyt
 4. This will lead you to the `Home`/`Search` page where you can run searches for different ingredients and review the results under the `Results` tab. 
 5. You can also add specific products to your wishlist by inserting their productID at the top of the page and clicking on the button "add to wishlist". 
 6. Everything you add to the wishlist can be viewed on the `Wishlist` tab.
+
+
 
 *** 
 ## Unit Tests
