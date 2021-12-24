@@ -41,7 +41,7 @@ Clone this [GitHub repository](https://github.com/cn4218/CFGProject) in your Pyt
 
 ## Run the Cosmo Web Application
 1. Open your Python IDE and run the `app.py` file in the `scripts` folder
-2. Go to the `log_in.html` file in the `frontend` folder and open the file in a live server. 
+2. Right click the `log_in.html` file in the `frontend` folder and click on 'Open the file in a live server'. 
 3. The webpage will prompt you to enter your username and email; please enter the following credentials:
    - Username - `sample_name`
    - Email Address - `sample@gmail.com`
