@@ -57,9 +57,9 @@ Clone this [GitHub repository](https://github.com/cn4218/CFGProject) in your Pyt
 To run the unit tests, first open the following files: 
 - scripts folder
   - `app.py`
-  - `wishlist_db_utils.py`
-  - `user_db_utils.py`
   - `config.py`
+  - `user_db_utils.py`
+  - `wishlist_db_utils.py`
 - sql_script folder
   - `user_info_and_wish_list_db.sql`
   - `dummy_data.sql`
