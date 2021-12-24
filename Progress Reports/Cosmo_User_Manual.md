@@ -26,7 +26,7 @@
   - `sys` to add folders to the Python path so other scripts can be imported
 
 ### Clone GitHub repository
-Clone this [GitHub repository](https://github.com/cn4218/CFGProject) in your Python IDE, preferably VSCode, and checkout the `temp_v3_branch`
+Clone [this GitHub repository](https://github.com/cn4218/CFGProject) in your Python IDE, preferably VSCode, and checkout the `temp_v3_branch`
 
 ### Import and set up databases + config files
 1. First, you need to run these SQL files in MySQL Workbench:
