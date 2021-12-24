@@ -34,8 +34,18 @@ Clone this [GitHub repository](https://github.com/cn4218/CFGProject) in your Pyt
     - `cosmo_tables.sql` (Products DB: products and ingredients tables)
     - `temp_search_results.sql` (Products DB: search table)
     - `user_info_and_wish_list_db.sql` (Users & Wishlist DB)
-  Once it is done, check that all databases were properly installed.
-2. Then the password for your MySQL Workbench connection should be assigned to the PASSWORD variable in the `config.py` file
+  
+  Once it is done, check that all databases are properly installed.
+
+2. Then, the password for your MySQL Workbench connection should be assigned to the PASSWORD variable in the `config.py` file.  
+
+Example:
+```python
+HOST = "localhost"
+USER = "root"
+# Your password goes here
+PASSWORD = "RootPassword"
+```
 
 
 
