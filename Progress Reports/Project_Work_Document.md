@@ -84,28 +84,28 @@ Because we originally planned to use the remote Open Beauty Facts products DB th
 ![Cosmo_EER_Diagram.png](Cosmo_EER_Diagram.png)  
 <div style="text-align: right">Databases EER diagram</div>
 
-##### 1 - Products DB (`cosmo_tables.sql` and `Products` DB)
+##### 1 - Products DB (`cosmo_tables.sql` file --> `Products` DB)
 The `Products` database, also referred to as `OBF DB`, contains cosmetic products related information and is divided into two large tables, `products_table`and `ingredients_table`, and a smaller one, `search_products`.
 
 ###### Products table (`products_table`)
 The product table is a cleaned up version of the database downloaded from [Open Beauty Facts](https://world.openbeautyfacts.org/data/en.openbeautyfacts.org.products.csv). This 18843 rows x 176 columns table was first modified by our `clean_csv_tables.py` script using the `pandas` library and a homemade `ListDF.py` module in order to only keep products for which a proper list of ingredients was available. A unique `productID` was created for each row, and only 17 columns were selected, resulting in a 7082 rows x 18 columns table. A monotonically increasing `field1` index field was also added because, as the database was being cleaned up, some rows were deleted but the others kept the same `productID` for consistency. *(see EER diagram above)*  
 
 ###### Ingredients table (`ingredients_table`)
-The `ingredients_text` column from the products table was then parsed, transformed into a list and expanded, so that for each `productID`, every single ingredient would go into a single column according to its index in the list. This step created a new 7082 rows x 119 columns table in which the first field corresponds to the `productID, and the others to the index of ingredients within the ingredients list, from `0` to `117`. *(see EER diagram above)*  
+The `ingredients_text` column from the products table was then parsed, transformed into a list and expanded, so that for each `productID`, every single ingredient would go into a single column according to its index in the list. This step created a new 7082 rows x 119 columns table in which the first field corresponds to the `productID`, and the others to the index of ingredients within the ingredients list, from `0` to `117`. *(see EER diagram above)*  
 
 
-###### Search table (`search_products`)
+###### Search table (`temp_search_results.sql`file --> `search_products` table)
 This table temporarily stores the results of individual product searches so that they can be retrieved and displayed on the `Results` web page while doing another search. *(see EER diagram above)*
 
 
-##### 2 - Users & Wishlist DB (`CFG_Projet`)
+##### 2 - Users & Wishlist DB (`user_info_and_wish_list_db.sql` file --> `CFG_Projet` DB)
 Our application is optimised for usability, with the Users & Wishlist DB being designed to save user information, so that they can come back to view their previous searches and wishlist. When users create an account, our web pages send the information they inserted into the forms to our DB.
 
 ###### Users information table (`Users_Info`)
-The Users Info table stores information that has been taken from the user such as their name and email address. This table is connected to the wishlist table through a primary key.
+The Users Info table stores information that has been provided by users, such as their name and email address. This table is connected to the Wishlist table through a primary key.
 
 ###### Wishlist table (`Wish_List`)
-The Wish List DB stores products found through our cosmetic search engine, and to which the user would like to come back. The Wish List stores data for a particular user retrieved using the API.
+The Wishlist DB stores products found through our cosmetic search engine, and to which the user would like to come back. The Wish List stores data for a particular user retrieved using the API.
 
 #### DB Utils (+ credentials)
 The bulk of the operations listed below is handled by the DB_utils files.
@@ -126,7 +126,7 @@ They allow for the following fuzzy search criteria:
 In addition, a few other functions allow the search results to be processed and presented in a more user-friendly and less resource-intensive way, by:
 - returning them in several pages (instead of one very long page)
 - avoiding to display products containing too many null values
-- storing them in the `search_products` table on the `Products` DB and fetching them to be presented on the Results webpage. 
+- storing them in the `search_products` table on the `Products` DB and fetching them to be presented on the `Results` webpage. 
 
 **Functions in this file**  
 - `_connect_to_db(db_name)`
@@ -312,21 +312,21 @@ A ClickUp workspace was set up for our group to help us organise our tasks, but 
 
 Besides, some of us fell sick (and still are!), which meant that others unexpectedly had to take care of their tasks alongside their owns.
 
-On the database side, out plan was initially to run a script (`clean_tables.py`) which would regularly automatically download the OBF CSV Products file from the Open Beauty Facts website, then clean it up, produce the products and ingredients table and created the Products DB from them... But when the certificate of their website expired, we had to find another solution, changed our mind and worked from a downloaded backup CSV file. Maybe this data pipeline would work again now, but in the meantime we moved on. 
+On the database side, out plan was initially to run a script (`clean_tables.py`) which would regularly automatically download the OBF CSV Products file from the Open Beauty Facts website, then clean it up, produce the products and ingredients table and create the Products DB from them... But when the certificate of their website expired, we had to find another solution, changed our mind and worked from a downloaded backup CSV file. Maybe this data pipeline would work again now, but in the meantime we moved on. 
 
 The RDBMS MySQL Workbench was also the source of some codec errors apparently linked to the fact that it was not originally meant to run on some operating systems. This problem was worked around but never actually solved. 
 
 Another issue that we encountered was linked to out IDEs, with PyCharm or VSCode not being always able to import modules which were properly installed, and here again, no reliable solution was found and the reasons why a specific module was found or not remained unclear. 
 
-Implementing Object Oriented Programming in our app did not come noturally, so we had to refactor our code to transform the Users DB Utils script into OOP, but it eventually worked. 
+Implementing Object Oriented Programming in our app did not come naturally, so we had to refactor our code to transform the Users DB Utils script into OOP, but it eventually worked. 
 
 Other than that, creating the front end in javascript came with its own challenges, as well as using `@patch` to perform mock testing of our app for example, but eventually these issues were overcome.
 
 
 ## TESTING AND EVALUATION
 ### Testing strategy
-We intend to test the system using unit testing for various aspects of our code and system.
-Our testing strategy was to create a file where we mocked the UI and mocked input to test our functions, and then we also did unit tests on all our functions in both wishlist db utils and also in our file where we mocked the UI
+We tested the system using unit testing for various aspects of our code and system.
+Our testing strategy was to create a file in which we mocked the UI and user input in order to test our functions. We also performed unit tests on all our functions in both wishlist db utils as well as the in which where we mocked the UI.
 
 #### Test Files
 ##### `obf_main.py`
