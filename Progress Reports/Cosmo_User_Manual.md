@@ -6,7 +6,7 @@
 - A PC or Mac computer running on a Windows, MacOS or Linux distribution
 - MySQL Workbench (or another compatible SQL RDBMS)
 - A Python IDE such as VSCode (recommended) or PyCharm
-- The `Live Server` extension for VSCode ([Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)) or PyCharm ([Live Edit](https://www.jetbrains.com/help/pycharm/live-editing.html)) so that you can run your html script on your browser.
+- The `Live Server` extension for VSCode ([Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)) or PyCharm ([Live Edit](https://www.jetbrains.com/help/pycharm/live-editing.html)) so that you can run an html script on a web browser.
 /!\ At the moment, only VSCode has all the plugins required to properly run our front end. PyCharm is not recommended because the `Live Edit` patch plugin relies on another plugin, `com. intellij.css` which will not be available before a month 
 - A Web Browser
 - Make sure that the following Python packages are installed:
