@@ -455,7 +455,7 @@ This file serves to mock the wishlist side of the front end UI to test our wishl
 **Test Classes & Methods in this file**  
 - **`class MockFrontEnd`**
   - `__init__(self, db_name)`
-  - `def add_new_wishlist(self)`
+  - `add_new_wishlist(self)`
   - `_get_wish_list_individual(self, User_ID, productID)`
   - `_get_wish_list_all(self, User_ID)`
   - `delete_wishlist_item(self, User_ID, productID)`
@@ -511,7 +511,7 @@ This file uses the mock wishlist front end UI to test wishlist-related functions
 
 
 ### Functional and user testing
-**We perform the following tests:**  
+**We performed the following tests:**  
 - Create a new user account in which the user will input their name, email and password 
 - Make sure that this information is both updated to the sql database and actually creates an account for the user to login to.
 - Ensure that we can get the information associated with a specific user through their user ID/name
