@@ -75,7 +75,7 @@ Our application comprises the following components, here ordered from back to fr
   - Wishlist page
   - Account page
 
-![Cosmo_Diagram_3.png](Cosmo_Diagram_3.png)  
+![Cosmo_Diagram_4.png](Cosmo_Diagram_4.png)  
 <div style="text-align: right"> High-level Diagram of the Cosmo application</div>
 
 #### Databases (DB)
