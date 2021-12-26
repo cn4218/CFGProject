@@ -108,4 +108,3 @@ Run the `obf_tests.py` file. This will run unit tests on the products functions 
 The `obf_db_utils.py` contains functions called when running our application.  
 The `obf_main.py`, however, is a file created to mock the UI and products inputs in order to test products functions.  
 Products functions are primarily tested through the unit tests found in `obf_tests.py` and mocking input found in `obf_main.py`.
- the testing folder
