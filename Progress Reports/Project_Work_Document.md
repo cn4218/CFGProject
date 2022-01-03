@@ -267,7 +267,7 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 | Tests                                   |         |          |           |     X    |          |     X    |
 | Backend Main (mock Front End for tests) |         |          |           |     X    |          |     X    |
 | Front End Web UI                        |    X    |          |     X     |          |          |          |
-| Documentation, organisation             |    X    |     X    |           |          |          |     x    |
+| Documentation, organisation             |    X    |     X    |           |     x    |          |     x    |
 | *Scrum Master*                          |    x    |          |     x     |          |          |          |
 | *Product Owner*                         |         |     x    |           |          |          |          |
 
