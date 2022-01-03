@@ -254,7 +254,7 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 
 |                **TASKS**                |**Chizu**|**Claire**|**Georgia**|**Nasian**|**Nikita**|**Sophie**|
 | :-------------------------------------- | :-----: | :------: | :-------: | :------: | :------: | :------: |
-| Products DB (Cosmo-OBF)                 |    X    |     X    |           |          |          |     x     |
+| Products DB (Cosmo-OBF)                 |    X    |     X    |           |          |          |     x    |
 | Users & Wishlist DB                     |         |          |           |     X    |     X    |          |
 | Products DB_Utils & Config              |    X    |     X    |           |          |          |     X    |
 | Users DB_Utils & Config                 |         |          |     X     |     X    |     X    |     X    |
@@ -264,7 +264,7 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 | Tests                                   |         |          |           |     X    |          |     X    |
 | Backend Main (mock Front End for tests) |         |          |           |     X    |          |     X    |
 | Front End Web UI                        |    X    |          |     X     |          |          |          |
-| Documentation, organisation             |    X    |     X    |           |          |          |     x    |
+| Documentation, organisation             |    X    |     X    |           |     x    |          |     x    |
 | *Scrum Master*                          |    x    |          |     x     |          |          |          |
 | *Product Owner*                         |         |     x    |           |          |          |          |
 
