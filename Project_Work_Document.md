@@ -262,7 +262,7 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 | Products API                            |    X    |     X    |           |          |          |     x    |
 | Users & Wishlist API                    |         |          |           |          |     X    |     X    |
 | Tests                                   |         |          |           |     X    |          |     X    |
-| Backend Main (mock Front End for tests) |         |          |           |          |          |     X    |
+| Backend Main (mock Front End for tests) |         |          |           |     X    |          |     X    |
 | Front End Web UI                        |    X    |          |     X     |          |          |          |
 | Documentation, organisation             |    X    |     X    |           |          |          |     x    |
 | *Scrum Master*                          |    x    |          |     x     |          |          |          |
