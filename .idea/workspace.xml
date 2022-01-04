@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="61d32e97-52b2-47a6-b995-ba9810f7483b" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/Cosmo_Diagram_4.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_12_2021__19_24__Changes_.xml" beforeDir="false" />
@@ -11,6 +12,9 @@
       <change beforePath="$PROJECT_DIR$/Progress Reports/Project_Work_Document.md" beforeDir="false" afterPath="$PROJECT_DIR$/Progress Reports/Project_Work_Document.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/app.py" afterDir="false" />
     </list>
+=======
+    <list default="true" id="61d32e97-52b2-47a6-b995-ba9810f7483b" name="Changes" comment="" />
+>>>>>>> ce00b43 (Some corrections, typos mainly)
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,6 +40,9 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="22ZSNZOGcDYMa1C8gEIqGjWy5g6" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
