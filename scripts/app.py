@@ -82,7 +82,8 @@ new_list = []
 def add_wish_list_func(user_id,product_id):
     """
     API Endpoint that takes in a user id and product id, checks if the product exists for the given product_id,
-    retrieves the product dictionary from the products database products_table table  and formats the ditionary into inputs for the wishlist_db_utils function add_wish_list
+    retrieves the product dictionary from the products database products_table table  and formats the dictionary into
+    inputs for the wishlist_db_utils function add_wish_list
     and the function adds the resulting product dictionary to the sql table wish_list in the cfg_project database
 
     Parameters

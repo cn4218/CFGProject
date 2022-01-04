@@ -257,18 +257,19 @@ We tried to give ourselves roles as in a typical Agile team, but as we all had t
 
 |                **TASKS**                |**Chizu**|**Claire**|**Georgia**|**Nasian**|**Nikita**|**Sophie**|
 | :-------------------------------------- | :-----: | :------: | :-------: | :------: | :------: | :------: |
-| Products DB (Cosmo-OBF)                 |    X    |     X    |           |          |          |     x     |
-| Users & Wishlist DB                     |         |          |           |     X    |          |          |
-| Products DB_Utils & Config              |    X    |     X    |           |          |          |     X    |
-| Users DB_Utils & Config                 |         |          |           |          |     X    |     X    |
-| Wishlist DB_Utils & Config              |         |          |           |     X    |          |          |
-| Products API                            |    X    |     X    |           |          |          |     x    |
-| Users & Wishlist API                    |         |          |           |          |     X    |     X    |
-| Tests                                   |         |          |           |     X    |          |     X    |
-| Backend Main (mock Front End for tests) |         |          |           |     X    |          |     X    |
-| Front End Web UI                        |    X    |          |     X     |          |          |          |
-| Documentation, organisation             |    X    |     X    |           |     x    |          |     x    |
-| *Scrum Master*                          |    x    |          |     x     |          |          |          |
+| Products DB (Cosmo-OBF)                 |    X    |    XXX   |           |          |          |     X     |
+| Users & Wishlist DB                     |         |          |           |    XXX   |          |          |
+| Products DB_Utils & Config              |   XXX   |    XXX   |           |          |          |     XX   |
+| Users DB_Utils & Config                 |         |          |           |          |    XXX   |     XX   |
+| Wishlist DB_Utils & Config              |         |          |           |    XXX   |          |          |
+| Products API                            |   XX    |    XX    |           |          |          |     X    |
+| Users & Wishlist API                    |         |          |           |          |    XX    |     XX   |
+| Tests                                   |         |          |           |    XXX   |          |    XXX   |
+| Backend Main (mock Front End for tests) |         |          |           |    XX    |          |     XX   |
+| Front End Web UI                        |  XXXX   |          |     X     |          |          |          |
+| Merging App                             |   XX    |          |           |          |          |          |
+| Documentation, organisation             |    X    |   XXXX   |           |     X    |     X    |     X    |
+| *Scrum Master*                          |    X    |     x    |     x     |          |          |          |
 | *Product Owner*                         |         |     x    |           |          |          |          |
 
 ### Tools and libraries
